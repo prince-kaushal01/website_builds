@@ -6,7 +6,6 @@ import { CountdownSection } from './components/CountdownSection';
 import { VenueSection } from './components/VenueSection';
 import { TimelineSection } from './components/TimelineSection';
 import { InformationSection } from './components/InformationSection';
-import { FallingPetals } from './components/FallingPetals';
 import { MusicButton } from './components/MusicButton';
 
 export default function App() {
@@ -38,9 +37,6 @@ export default function App() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.5 }}
           >
-            {/* Falling Petals Animation */}
-            <FallingPetals />
-            
             {/* Music Button */}
             <MusicButton />
             

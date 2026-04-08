@@ -1,4 +1,6 @@
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
+import card from "../../assests/envelope2.jpeg";
+import button from "../../assests/button.png";
 
 interface EnvelopeIntroProps {
   onOpen: () => void;
@@ -12,7 +14,7 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
       <div className="absolute top-8 right-8 text-6xl opacity-20">🌸</div>
       <div className="absolute bottom-8 left-8 text-6xl opacity-20">🌿</div>
       <div className="absolute bottom-8 right-8 text-6xl opacity-20">🌿</div>
-      
+
       {/* Envelope Container */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
@@ -21,55 +23,56 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
         className="relative"
       >
         {/* Envelope */}
-        <div className="relative w-80 h-60 md:w-96 md:h-72">
+        <div className="relative h-screen w-full flex items-center justify-center">
           {/* Envelope Back */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white to-[#f5f0eb] rounded-lg shadow-2xl border-4 border-[#c8a882]" />
-          
+          <img
+            src={card}
+            className="md:h-full md:py-4 h-full rounded-2xl md:rounded-xl"
+          />
           {/* Decorative Pattern */}
           <div className="absolute inset-0 flex items-center justify-center opacity-10">
             <div className="text-8xl">🌺</div>
           </div>
-          
+
           {/* Seal Button */}
+
           <motion.button
             onClick={onOpen}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-gradient-to-br from-[#c8a882] to-[#b8986a] shadow-lg flex items-center justify-center cursor-pointer border-4 border-white"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-54 md:h-54 w-72 h-72 mt-2 flex items-center justify-center"
             whileHover={{ scale: 1.1, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
             initial={{ rotate: 0 }}
-            animate={{ 
-              boxShadow: [
-                '0 0 20px rgba(200, 168, 130, 0.4)',
-                '0 0 40px rgba(200, 168, 130, 0.6)',
-                '0 0 20px rgba(200, 168, 130, 0.4)',
-              ]
-            }}
-            transition={{ 
+            transition={{
               boxShadow: { duration: 2, repeat: Infinity },
             }}
           >
-            <div className="text-center">
-              <div className="text-white text-4xl mb-1">💐</div>
-              <div className="text-white text-xs font-['Cormorant']">Open</div>
-            </div>
+            <img
+              src={button}
+              alt="Open"
+              className="w-full h-full object-contain"
+            />
           </motion.button>
-          
+
+          {/* Invitation Text */}
+<motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.5, duration: 0.8 }}
+  className="absolute top-[65%] left-1/2 -translate-x-1/2 text-center px-4"
+>
+  <h2 className="font-['Great_Vibes'] text-3xl md:text-5xl text-[#3e3935] drop-shadow-md">
+    You’re Invited
+  </h2>
+
+  <p className="font-['Cormorant'] text-lg md:mt-1 md:text-lg text-[#3e3935]/80 mt-4 tracking-wide">
+    Tap to open your invitation
+  </p>
+</motion.div>
+
           {/* Gold accents */}
           <div className="absolute top-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-[#c8a882] to-transparent opacity-30" />
           <div className="absolute bottom-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-[#c8a882] to-transparent opacity-30" />
         </div>
-        
-        {/* Text Below */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="text-center mt-8"
-        >
-          <p className="font-['Great_Vibes'] text-4xl text-white drop-shadow-lg">
-            You're Invited
-          </p>
-        </motion.div>
       </motion.div>
     </div>
   );
