@@ -1,9 +1,21 @@
-import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from "motion/react";
+import { useEffect, useState, useRef } from "react";
+import bg from "../../assests/counter_bg.png";
+import { ScratchCard } from "./ScratchCard";
 
 export function CountdownSection() {
-  const weddingDate = new Date('2026-12-15T10:00:00').getTime();
-  
+  const ref = useRef<HTMLDivElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 80%", "end 20%"],
+  });
+
+  // Reveal → Stay → Disappear
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7], [0, 1, 0]);
+  const yText = useTransform(scrollYProgress, [0, 0.3], [40, 0]);
+  const weddingDate = new Date("2026-06-05T10:00:00").getTime();
+
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -17,10 +29,16 @@ export function CountdownSection() {
       const distance = weddingDate - now;
 
       setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+        days: Math.max(0, Math.floor(distance / (1000 * 60 * 60 * 24))),
+        hours: Math.max(
+          0,
+          Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+        ),
+        minutes: Math.max(
+          0,
+          Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        ),
+        seconds: Math.max(0, Math.floor((distance % (1000 * 60)) / 1000)),
       });
     }, 1000);
 
@@ -28,62 +46,64 @@ export function CountdownSection() {
   }, [weddingDate]);
 
   const items = [
-    { label: 'Days', value: timeLeft.days },
-    { label: 'Hours', value: timeLeft.hours },
-    { label: 'Minutes', value: timeLeft.minutes },
-    { label: 'Seconds', value: timeLeft.seconds },
+    { label: "Days", value: timeLeft.days },
+    { label: "Hours", value: timeLeft.hours },
+    { label: "Minutes", value: timeLeft.minutes },
+    { label: "Seconds", value: timeLeft.seconds },
   ];
 
   return (
-    <section className="py-20 md:py-32 px-6 bg-gradient-to-br from-[#c8d5b9] via-[#a8bfa2] to-[#c8d5b9] relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-10 left-10 text-6xl opacity-10">🌸</div>
-      <div className="absolute bottom-10 right-10 text-6xl opacity-10">🌸</div>
-      
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-['Playfair_Display'] text-4xl md:text-5xl text-white mb-4">
-            Countdown to Forever
+    <section
+      ref={ref}
+      className="relative py-20 md:py-32 px-6 overflow-hidden bg-cover bg-center"
+      style={{ backgroundImage: `url(${bg})` }}
+    >
+      <div className="relative max-w-6xl mx-auto">
+        {/* Heading */}
+        <motion.div style={{ opacity, y: yText }} className="text-center mb-14">
+          <h2 className="font-['Great_Vibes'] text-5xl md:text-7xl text-white mb-3">
+            Countdown
           </h2>
-          <div className="w-24 h-1 bg-white/50 mx-auto rounded-full" />
+
+          <p className="font-['Cormorant'] text-lg md:text-xl md:font-bold text-white">
+            To The Most Special Day of Our Lives
+          </p>
         </motion.div>
 
-        {/* Countdown Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+        <div className="mb-16">
+          <ScratchCard />
+        </div>
+
+        {/* Countdown */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
           {items.map((item, index) => (
             <motion.div
               key={item.label}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
               className="relative"
             >
-              <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-xl border border-white/50">
+              {/* Glass Card */}
+              <div className="rounded-2xl p-6 md:p-8 text-center backdrop-blur-md bg-white/10 border border-white/20 shadow-xl hover:scale-105 transition duration-300">
                 <motion.div
                   key={item.value}
                   initial={{ scale: 1.2, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.3 }}
-                  className="text-center"
                 >
-                  <div className="font-['Playfair_Display'] text-5xl md:text-6xl font-bold text-[#3e3935] mb-2">
-                    {item.value.toString().padStart(2, '0')}
+                  <div className="font-['Playfair_Display'] text-4xl md:text-5xl font-bold text-white mb-2">
+                    {item.value.toString().padStart(2, "0")}
                   </div>
-                  <div className="font-['Cormorant'] text-lg md:text-xl text-[#3e3935]/70 uppercase tracking-wider">
+
+                  <div className="font-['Cormorant'] text-sm md:text-lg text-white/80 tracking-widest uppercase">
                     {item.label}
                   </div>
                 </motion.div>
               </div>
-              
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#c8a882]/20 to-transparent rounded-2xl blur-xl -z-10" />
+
+              {/* Soft Glow */}
+              <div className="absolute inset-0 bg-white/10 blur-xl rounded-2xl -z-10" />
             </motion.div>
           ))}
         </div>

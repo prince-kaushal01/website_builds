@@ -38,7 +38,7 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
 
           <motion.button
             onClick={onOpen}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-54 md:h-54 w-72 h-72 mt-2 flex items-center justify-center"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:w-54 md:h-54 w-74 h-74 mt-2 flex items-center justify-center"
             whileHover={{ scale: 1.1, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
             initial={{ rotate: 0 }}

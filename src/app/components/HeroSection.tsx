@@ -3,12 +3,12 @@ import { useRef, useEffect, useState } from "react";
 import heroImage from "../../assests/background.jpeg";
 import land_bg from "../../assests/land_bg.jpeg";
 import groom from "../../assests/Groom.png";
-import ganesha from "../../assests/Ganesha.png";
+import video from "../../assests/marriage_view.mp4";
 
 export function HeroSection() {
-    const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
-    const { scrollYProgress } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
   });
@@ -59,71 +59,70 @@ export function HeroSection() {
       </div>
 
       {/* 🖥️ Desktop Background */}
-      <motion.div
-  style={{ y }}
-  className="hidden md:block"
->
-  <img
-    src={land_bg}
-    className="w-screen h-screen object-center "
-  />
+      <motion.div style={{ y }} className="hidden md:block relative h-screen w-full overflow-hidden">
+        <video
+          autoPlay
+          muted
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+        {/* Wedding Text */}
+        <motion.div
+          style={{ opacity, y: yText }}
+          className="absolute top-22 left-1/2 -translate-x-1/2 text-center z-20"
+        >
+          <h2 className="font-['Great_Vibes'] text-6xl text-white drop-shadow-lg">
+            Kabir
+          </h2>
 
-  {/* Wedding Text */}
-  <motion.div
-  style={{ opacity, y: yText }}
-  className="absolute top-22 left-1/2 -translate-x-1/2 text-center z-20"
->
-  
-  <h2 className="font-['Great_Vibes'] text-6xl text-white drop-shadow-lg">
-    Kabir
-  </h2>
+          <h3 className="font-['Great_Vibes'] text-4xl text-[#e8c873] my-2">
+            &
+          </h3>
 
-  <h3 className="font-['Great_Vibes'] text-4xl text-[#e8c873] my-2">
-    &
-  </h3>
+          <h1 className="font-['Great_Vibes'] text-7xl text-white drop-shadow-lg">
+            Diksha
+          </h1>
 
-  <h1 className="font-['Great_Vibes'] text-7xl text-white drop-shadow-lg">
-    Diksha
-  </h1>
+          {/* Divider */}
+          <div className="flex items-center justify-center gap-3 my-4 z-20">
+            <div className="h-[2px] w-24 bg-white" />
+            <span className="text-[#e8c873] text-2xl">✦</span>
+            <div className="h-[2px] w-24 bg-white" />
+          </div>
 
-  {/* Divider */}
-  <div className="flex items-center justify-center gap-3 my-4">
-    <div className="h-[2px] w-24 bg-white" />
-    <span className="text-[#e8c873] text-2xl">✦</span>
-    <div className="h-[2px] w-24 bg-white" />
-  </div>
+          {/* Date */}
+          <p className="font-['Playfair_Display'] text-2xl text-white tracking-wide z-20">
+            05<sup>th</sup> June 2026
+          </p>
+        </motion.div>
 
-  {/* Date */}
-  <p className="font-['Playfair_Display'] text-2xl text-white tracking-wide">
-    05<sup>th</sup> June 2026
-  </p>
-
-</motion.div>
-
-  {/* Groom Image (Bottom Center with animation) */}
-  <motion.img
-    src={groom}
-    alt="Couple"
-    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-52 object-contain z-20"
-    animate={{
-      scale: [1, 1.04, 1],
-      y: [0, -8, 0],
-    }}
-    transition={{
-      duration: 5,
-      repeat: Infinity,
-      ease: "easeInOut",
-    }}
-  />
+        {/* Groom Image (Bottom Center with animation) */}
+        <motion.img
+          src={groom}
+          alt="Couple"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-52 object-contain z-30"
+          animate={{
+            scale: [1, 1.04, 1],
+            y: [0, -8, 0],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
       </motion.div>
 
       {/* 📱 Mobile Background (FIXED) */}
       <div className="md:hidden relative w-full h-screen overflow-hidden">
         {/* Background */}
-        <img
-          src={heroImage}
-          className="absolute inset-0 w-full h-full object-cover"
-        />        
+        <video
+          autoPlay
+          muted
+          className="absolute inset-0 w-full h-full object-cover z-0">
+          <source src={video} type="video/mp4" />
+        </video>
         {/* Wedding Text */}
         <div className="absolute top-32 left-1/2 -translate-x-1/2 text-center z-20 px-4">
           <h2 className="font-['Great_Vibes'] text-4xl text-white drop-shadow-lg">
@@ -139,7 +138,7 @@ export function HeroSection() {
           </h1>
 
           {/* Divider */}
-          <div className="flex items-center justify-center gap-2 my-3">
+          <div className="flex items-center justify-center gap-2 my-3 z-20">
             <div className="h-[2px] w-18 bg-white" />
             <span className="text-[#e8c873] text-xl">✦</span>
             <div className="h-[2px] w-18 bg-white" />
@@ -155,7 +154,7 @@ export function HeroSection() {
         <motion.img
           src={groom}
           alt="Couple"
-          className="absolute bottom-0 left-[55%] -translate-x-1/2 w-64 object-contain z-20"
+          className="absolute bottom-0 left-[52%] -translate-x-1/2 w-64 object-contain z-30"
           animate={{
             scale: [1, 1.05, 1],
             y: [0, -5, 0],

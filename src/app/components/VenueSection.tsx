@@ -1,12 +1,14 @@
 import { motion } from 'motion/react';
 import { MapPin, Navigation } from 'lucide-react';
+import venue_bg from '../../assests/venue_bg.png';
 
 export function VenueSection() {
-  const venueAddress = "Taj Mahal Palace, Apollo Bunder, Mumbai, Maharashtra 400001, India";
-  const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3774.2059267159877!2d72.83080741489629!3d18.921983987216726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7d1c0c4d5ac1b%3A0xac82d2d2d448e434!2sTaj%20Mahal%20Palace%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1234567890`;
+  const venueAddress = "A-12,Amaara Farms, Mandir Rd, Main Chhatarpur Rd, Bhatti Kalan, New Delhi, Delhi 110074";
+  const mapUrl = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3508.26321221717!2d77.19045737528172!3d28.441480875769557!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1ffe408ba181%3A0x3e7db9286fdc6d7e!2sAmaara%20Farms!5e0!3m2!1sen!2sin!4v1775711120008!5m2!1sen!2sin`;
 
   return (
-    <section className="py-20 md:py-32 px-6 bg-[#fdfcf9]">
+    <section className="relative py-20 md:py-32 px-6 bg-cover bg-center"
+      style={{ backgroundImage: `url(${venue_bg})` }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

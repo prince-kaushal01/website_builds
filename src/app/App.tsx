@@ -7,6 +7,7 @@ import { VenueSection } from './components/VenueSection';
 import { TimelineSection } from './components/TimelineSection';
 import { InformationSection } from './components/InformationSection';
 import { MusicButton } from './components/MusicButton';
+import { FamilySection } from './components/FamilySection';
 
 export default function App() {
   const [showEnvelope, setShowEnvelope] = useState(true);
@@ -44,8 +45,9 @@ export default function App() {
             <HeroSection />
             <CountdownSection />
             <VenueSection />
+            <FamilySection />
             <TimelineSection />
-            <InformationSection />
+            
             
             {/* Footer */}
             <footer className="py-12 px-6 bg-gradient-to-br from-[#3e3935] to-[#2a2725] text-white">
@@ -57,7 +59,7 @@ export default function App() {
                   transition={{ duration: 0.8 }}
                 >
                   <p className="font-['Great_Vibes'] text-4xl mb-4">
-                    Priya & Raj
+                    Kabir & Diksha
                   </p>
                   <div className="flex items-center justify-center gap-4 mb-6">
                     <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#c8a882]" />
@@ -65,10 +67,10 @@ export default function App() {
                     <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#c8a882]" />
                   </div>
                   <p className="font-['Cormorant'] text-lg opacity-80 mb-2">
-                    December 15, 2026
+                    June 05, 2026
                   </p>
                   <p className="font-['Cormorant'] text-sm opacity-60">
-                    #PriyaRajForever
+                    #KabirDikshaForever
                   </p>
                 </motion.div>
               </div>
