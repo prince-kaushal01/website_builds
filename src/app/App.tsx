@@ -6,8 +6,8 @@ import { CountdownSection } from './components/CountdownSection';
 import { VenueSection } from './components/VenueSection';
 import { TimelineSection } from './components/TimelineSection';
 import { InformationSection } from './components/InformationSection';
-import { MusicButton } from './components/MusicButton';
 import { FamilySection } from './components/FamilySection';
+import { MusicAutoPlay } from './components/MusicButton';
 
 export default function App() {
   const [showEnvelope, setShowEnvelope] = useState(true);
@@ -39,7 +39,7 @@ export default function App() {
             transition={{ duration: 1, delay: 0.5 }}
           >
             {/* Music Button */}
-            <MusicButton />
+            <MusicAutoPlay />
             
             {/* Main Content Sections */}
             <HeroSection />
