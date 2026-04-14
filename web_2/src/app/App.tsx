@@ -33,7 +33,7 @@ function App() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-            {/* <MusicAutoPlay /> */}
+            <MusicAutoPlay />
             <HeroSection /> 
             <ScratchCard />
             <Mehndi />

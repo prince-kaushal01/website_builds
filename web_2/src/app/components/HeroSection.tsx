@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 import bgimage from "../assets/main_section.png";
+import bgimage2 from "../../assests/bg-d-firstpage.png";
 import video from "../assets/marriage_view.mp4";
 import groom from "../assets/Groom_walk.png";
 
@@ -17,31 +18,32 @@ import ganesha from "../../assests/ganeshji.png";
 export function HeroSection() {
   const { ref, isInView } = useInView();
   const container = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
     },
-  },
-};
+  };
 
-const item = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: "easeOut" },
-  },
-};
+  const item = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
 
   return (
     <section
       ref={ref}
       className="min-h-screen relative flex items-start justify-center overflow-hidden md:pt-24"
       style={{
-        backgroundImage: `url(${bgimage})`,
+        backgroundImage: `url(${bgimage2})`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: " top center",
+        backgroundRepeat: "no-repeat",
       }}
     >
       {/* 🌸 PREMIUM PETALS */}
@@ -93,14 +95,12 @@ const item = {
         }}
         className="hidden md:block absolute inset-0 w-full h-full"
       >
-        {/* VIDEO */}
-        <video
-          autoPlay
-          muted
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src={video} type="video/mp4" />
-        </video>
+        {/* ✅ BACKGROUND IMAGE (REPLACED VIDEO) */}
+        <div
+          className="absolute inset-0 w-full h-full bg-cover bg-bottom bg-no-repeat"
+          style={{ backgroundImage: `url(${bgimage2})` }}
+        />
+
         {/* ✨ GLOW BALLS */}
         <div className="absolute inset-0 z-10 pointer-events-none">
           {[...Array(8)].map((_, i) => {
@@ -137,19 +137,19 @@ const item = {
         {/* TEXT */}
         <motion.div
           variants={container}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ amount: 0.4 }}
           transition={{
             duration: 0.9,
             ease: "easeOut",
           }}
-          className="relative z-30 text-center pt-2"
+          className="relative z-30 text-center pt-4"
         >
           <img src={ganesha} className="mx-auto w-6" />
 
           <motion.h1
-           variants={item}
+            variants={item}
             className="text-lg text-black font-['Cormorant'] mb-5"
           >
             || Shree Ganeshaya Namah ||
@@ -163,7 +163,7 @@ const item = {
           </motion.h2>
 
           <motion.h3
-           variants={item}
+            variants={item}
             className="font-['Great_Vibes'] text-4xl text-black my-2"
           >
             &
@@ -171,46 +171,20 @@ const item = {
 
           <motion.h1
             variants={item}
-            className="font-['Great_Vibes'] text-7xl text-[#b3385a] drop-shadow-lg"
+            className="font-['Great_Vibes'] text-6xl text-[#b3385a] drop-shadow-lg"
           >
             Diksha
           </motion.h1>
-
-          {/* Divider */}
-          <motion.div variants={item} className="flex items-center justify-center gap-3 my-2 z-20">
-            <div className="h-[2px] w-24 bg-white" />
-            <span className="text-[#e8c873] text-2xl">✦</span>
-            <div className="h-[2px] w-24 bg-white" />
-          </motion.div>
-
-          {/* Date */}
-          <motion.p variants={item} className="font-['Playfair_Display'] text-2xl text-white tracking-wide z-20">
-            05<sup>th</sup> June 2026
-          </motion.p>
         </motion.div>
-
-        {/* 👤 GROOM IMAGE */}
-        <motion.img
-          src={groom}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 w-44 z-30 object-contain"
-          animate={{
-            scale: [1, 1.05, 1],
-            y: [0, -8, 0],
-          }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
       </motion.div>
 
       {/* phone device */}
-      <div className="md:hidden">
+      <div className="md:hidden mt-2">
         <motion.div
-           variants={container}
-  initial="hidden"
-  animate={isInView ? "visible" : "hidden"}
+          variants={container}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+          viewport={{ amount: 0.4 }}
           transition={{ duration: 1 }}
           className="relative  text-center px-6 w-full max-w-xl"
         >
@@ -225,52 +199,91 @@ const item = {
           />
 
           {/* SHREE TEXT */}
-          <motion.h1 variants={item} className="text-[10px] md:text-2xl text-black tracking-wide mb-2 font-['Cormorant']">
+          <motion.h1
+            variants={item}
+            className="text-[10px] md:text-2xl text-black tracking-wide mb-2 font-['Cormorant']"
+          >
             ||Shree Ganeshaya Namah||
           </motion.h1>
 
           {/* SUBTEXT */}
-          <motion.p variants={item} className="text-black/90 text-[12px] md:text-lg font-['Cormorant']">
+          <motion.p
+            variants={item}
+            className="text-black/90 text-[12px] md:text-lg font-['Cormorant']"
+          >
             With the blessings Of
           </motion.p>
 
-          <motion.p variants={item} className="text-black text-[13px] md:text-xl font-['Playfair_Display'] mb-1 ">
+          <motion.p
+            variants={item}
+            className="text-black text-[13px] md:text-xl font-['Playfair_Display'] mb-1 "
+          >
             Smt. Lalita Devi & Shri. Ravi Agarwal
           </motion.p>
-          <motion.p variants={item} className="text-black text-[13px] md:text-xl font-['Cormorant'] font-semibold mb-2">
+          <motion.p
+            variants={item}
+            className="text-black text-[13px] md:text-xl font-['Cormorant'] font-semibold mb-2"
+          >
             Mrs. Smita & Mr. Pawan Agarwal
           </motion.p>
-          <motion.p variants={item} className="text-[13px] md:text-2xl text-black tracking-wide mb-1 font-['Cormorant']">
+          <motion.p
+            variants={item}
+            className="text-[13px] md:text-2xl text-black tracking-wide mb-1 font-['Cormorant']"
+          >
             Cordialy invite you to attend the
           </motion.p>
-          <motion.p variants={item} className="-mt-2 text-[13px] md:text-2xl text-black tracking-wide font-['Cormorant'] mb-3">
+          <motion.p
+            variants={item}
+            className="-mt-2 text-[13px] md:text-2xl text-black tracking-wide font-['Cormorant'] mb-3"
+          >
             Wedding of their son
           </motion.p>
 
           {/* NAMES */}
           <div className="">
-            <motion.h2 variants={item} className="text-2xl md:text-7xl text-[#B3385A] drop-shadow-lg font-['Great_Vibes']">
+            <motion.h2
+              variants={item}
+              className="text-2xl md:text-7xl text-[#B3385A] drop-shadow-lg font-['Great_Vibes']"
+            >
               Kabir
             </motion.h2>
 
-            <motion.p variants={item} className="text-[15px] md:text-3xl text-black font-['Cormorant']">
+            <motion.p
+              variants={item}
+              className="text-[15px] md:text-3xl text-black font-['Cormorant']"
+            >
               WITH
             </motion.p>
 
-            <motion.h2 variants={item} className="text-2xl md:text-7xl text-[#B3385A] drop-shadow-lg font-['Great_Vibes']">
+            <motion.h2
+              variants={item}
+              className="text-2xl md:text-7xl text-[#B3385A] drop-shadow-lg font-['Great_Vibes']"
+            >
               Diksha
             </motion.h2>
           </div>
-          <motion.p variants={item} className=" text-[13px] md:text-2xl text-black tracking-wide font-semibold font-['Cormorant']">
+          <motion.p
+            variants={item}
+            className=" text-[13px] md:text-2xl text-black tracking-wide font-semibold font-['Cormorant']"
+          >
             Daughter of Smt. Shikha & Shri Tarun Agarwal
           </motion.p>
-          <motion.p variants={item} className=" text-[13px] md:text-2xl text-black tracking-wide font-semibold font-['Cormorant'] ">
+          <motion.p
+            variants={item}
+            className=" text-[13px] md:text-2xl text-black tracking-wide font-semibold font-['Cormorant'] "
+          >
             4th to 6th june
           </motion.p>
-          <motion.p variants={item} className=" text-[13px] md:text-2xl text-black tracking-wide font-semibold font-['Cormorant'] -mt-1">
+          <motion.p
+            variants={item}
+            className=" text-[13px] md:text-2xl text-black tracking-wide font-semibold font-['Cormorant'] -mt-1"
+          >
             at
           </motion.p>
-          <motion.p variants={item} className=" text-[13px] md:text-2xl text-black tracking-wide font-bold font-['Cormorant'] ">
+          <motion.p
+            variants={item}
+            className=" text-[13px] md:text-2xl text-black tracking-wide font-bold font-['Cormorant'] "
+          >
             Uttar Garden Lawn
           </motion.p>
         </motion.div>

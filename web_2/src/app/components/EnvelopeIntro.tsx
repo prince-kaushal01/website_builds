@@ -22,7 +22,6 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-[#a8bfa2] via-[#c8d5b9] to-[#a8bfa2]">
-      
       {/* Decorative corners */}
       <div className="absolute top-8 left-8 text-6xl opacity-20">🌸</div>
       <div className="absolute top-8 right-8 text-6xl opacity-20">🌸</div>
@@ -40,7 +39,6 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
         className="relative"
       >
         <div className="relative h-screen w-full flex items-center justify-center">
-
           {/* Envelope */}
           <motion.img
             src={card}
@@ -50,6 +48,7 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
                 ? {
                     scale: 1.05,
                     rotateX: 10,
+                    opacity: 0, // 👈 add this
                   }
                 : {}
             }
@@ -70,7 +69,7 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
                   }
                 : {}
             }
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8 }} // ✅ MATCHED WITH ENVELOPE
           >
             <img
               src={button}
@@ -82,11 +81,7 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
           {/* Invitation Text */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={
-              isOpening
-                ? { opacity: 0, y: 40 }
-                : { opacity: 1, y: 0 }
-            }
+            animate={isOpening ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="absolute top-[65%] left-1/2 -translate-x-1/2 text-center px-4"
           >
@@ -102,7 +97,6 @@ export function EnvelopeIntro({ onOpen }: EnvelopeIntroProps) {
           {/* Gold accents */}
           <div className="absolute top-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-[#c8a882] to-transparent opacity-30" />
           <div className="absolute bottom-4 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-[#c8a882] to-transparent opacity-30" />
-
         </div>
       </motion.div>
     </div>
