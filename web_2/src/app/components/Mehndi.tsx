@@ -132,7 +132,7 @@ export default function Mehndi() {
       </section>
       <section
         ref={mobileRef}
-        className="min-h-screen md:hidden flex justify-center px-6 relative overflow-hidden"
+        className="min-h-dvh md:hidden flex justify-center px-6 relative overflow-hidden"
         style={{
           backgroundImage: `url(${Mehndibg})`,
           backgroundSize: "cover",

@@ -68,7 +68,7 @@ export function HeroSection() {
   return (
     <section
       ref={ref}
-      className="min-h-screen relative overflow-hidden md:flex items-start justify-center md:pt-24"
+      className="min-h-dvh relative overflow-hidden md:flex items-start justify-center md:pt-24"
       style={{
         backgroundImage: `url(${bgimage2})`,
         backgroundSize: "cover",
@@ -195,7 +195,7 @@ export function HeroSection() {
 
       {/* phone device */}
       <div
-        className="md:hidden mt-2 relative min-h-screen bg-cover bg-center bg-no-repeat"
+        className="md:hidden mt-2 relative min-h-dvh bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${bgimage})` }}
       >
         <motion.div

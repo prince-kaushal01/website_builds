@@ -128,7 +128,7 @@ export function ScratchCard() {
   return (
     <section
       ref={ref}
-      className="min-h-screen py-12 px-6 md:px-16 flex flex-col items-center bg-[#FAF7EE]"
+      className="min-h-dvh py-12 px-6 md:px-16 flex flex-col items-center bg-[#FAF7EE]"
     >
       {/* MAIN CONTAINER */}
       <div className="max-w-6xl w-full flex flex-col md:flex-row items-center gap-10">

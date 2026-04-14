@@ -240,7 +240,7 @@ export default function Wedding() {
       {/* mobile View */}
       <section
         ref={mobileRef}
-        className="md:hidden  h-screen w-full relative overflow-hidden flex justify-center"
+        className="md:hidden min-h-dvh w-full relative overflow-hidden flex justify-center"
         style={{
           backgroundImage: `url(${wedding})`,
           backgroundSize: "cover",

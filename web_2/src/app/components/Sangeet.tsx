@@ -162,7 +162,7 @@ export default function Sangeet() {
 
       <section
         ref={mobileRef}
-        className="md:hidden h-screen w-full flex justify-center relative overflow-hidden"
+        className="md:hidden min-h-dvh w-full flex justify-center relative overflow-hidden"
         style={{
           backgroundImage: `url(${sangeet})`,
           backgroundSize: "cover",

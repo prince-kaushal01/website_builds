@@ -279,7 +279,7 @@ export default function Reception() {
       </section>
       <section
         ref={mobileRef}
-        className="md:hidden min-h-screen w-full relative overflow-hidden flex justify-center"
+        className="md:hidden min-h-dvh w-full relative overflow-hidden flex justify-center"
         style={{
           backgroundImage: `url(${reception})`,
           backgroundSize: "cover",
