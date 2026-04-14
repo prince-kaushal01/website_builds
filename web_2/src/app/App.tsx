@@ -1,122 +1,77 @@
-import { useState } from 'react';
-import { IntroAnimation } from './components/IntroAnimation';
-import { MusicPlayer } from './components/MusicPlayer';
-import { HeroSection } from './components/HeroSection';
-import { ScratchCard } from './components/ScratchCard';
-import { EventSection } from './components/EventSection';
-import { FamilySection } from './components/FamilySection';
-import { VenueSection } from './components/VenueSection';
-import { Footer } from './components/Footer';
-import mehndi from "./assets/mehndi.jpeg";
-import sangeet from "./assets/sangeet.jpeg";
-import wedding from "./assets/wedding.png";
-import reception from "./assets/reception.jpeg";
-import cocktail from "./assets/cocktail.jpeg";
+import { useState } from "react";
+import { MusicAutoPlay } from "./components/MusicPlayer";
+import { HeroSection } from "./components/HeroSection";
+import { ScratchCard } from "./components/ScratchCard";
+import { FamilySection } from "./components/FamilySection";
+import { VenueSection } from "./components/VenueSection";
+import { motion, AnimatePresence } from "motion/react";
+import { EnvelopeIntro } from "./components/EnvelopeIntro";
+import Mehndi from "./components/Mehndi";
+import Sangeet from "./components/Sangeet";
+import Wedding from "./components/Wedding";
+import Reception from "./components/Reception";
+import Cocktail from "./components/Cocktail";
 
 function App() {
-  const [showIntro, setShowIntro] = useState(true);
+  const [showEnvelope, setShowEnvelope] = useState(true);
+
+  const handleEnvelopeOpen = () => {
+    setShowEnvelope(false);
+  };
 
   return (
-    <div className="relative">
-      {showIntro && <IntroAnimation onComplete={() => setShowIntro(false)} />}
-      
-      {!showIntro && (
-        <>
-          <MusicPlayer />
-          
-          <main className="overflow-x-hidden">
-            <HeroSection />
-            
+    <div className="relative min-h-screen bg-[#fdfcf9] overflow-x-hidden">
+      <AnimatePresence mode="wait">
+  {showEnvelope ? (
+    <motion.div key="envelope">
+      <EnvelopeIntro onOpen={handleEnvelopeOpen} />
+    </motion.div>
+  ) : (
+    <motion.div
+      key="main-content"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+            {/* <MusicAutoPlay /> */}
+            <HeroSection /> 
             <ScratchCard />
-            
-            {/* Mehndi */}
-            <EventSection
-              title="Mehendi"
-              subtitle="A playful morning of mehendi and cultural festivities"
-              day="Tues"
-              date="Dec 22 2026"
-              time="4:00 PM onwards"
-              venue="Uttar Garden Lawn"
-              dressCode="Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya or Kutchi Mirrorwork"
-              backgroundImage={mehndi}
-              titleColor="#f97316"
-              subtitleColor="#775A00"
-              textColor="text-gray-800"
-              isDark={false}
-              variant="mehndi"
-            />
-            
-            {/* Sangeet */}
-            <EventSection
-              title="Sangeet"
-              subtitle="A playful night of sangeet and cultural festivities with a touch of Bollywood glamour"
-              day="Wed"
-              date="December 23, 2026"
-              time="7:00 PM onwards"
-              venue="Uttar Garden Lawn"
-              dressCode="Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya or Kutchi Mirrorwork"
-              backgroundImage={sangeet}
-              titleColor="white"
-              subtitleColor="white"
-              textColor="text-gray-800"
-              isDark={true}
-            />
-            
-            {/* Wedding */}
-            <EventSection
-              title="Wedding"
-              subtitle="A sacred union of love and tradition Where two hearts become one"
-              day="Thurs"
-              date="December 25, 2026"
-              time="10:00 AM"
-              venue="Main Mandap, The Grand Palace"
-              dressCode="Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya or Kutchi Mirrorwork"
-              backgroundImage={wedding}
-              titleColor="#f97316"
-              subtitleColor="#536D3B"
-              textColor="text-gray-800"
-              isDark={false}
-            />
-            
-            {/* Reception */}
-            <EventSection
-              title="Reception"
-              subtitle="An evening of elegance and celebration Celebrating love with joy"
-              day="Fri"
-              date="December 25, 2026"
-              time="7:00 PM onwards"
-              venue="Crystal Hall, The Grand Palace"
-              dressCode="Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya or Kutchi Mirrorwork"
-              backgroundImage={reception}
-              titleColor="white"
-              subtitleColor="white"
-              textColor="text-gray-800"
-              isDark={true}
-            />
-            
-            {/* Cocktail */}
-            <EventSection
-              title="Cocktail"
-              subtitle="A playful morning of mehendi and cultural festivities"
-              date="December 24, 2026"
-              time="8:00 PM onwards"
-              venue="Rooftop Lounge, The Grand Palace"
-              dressCode="Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya or Kutchi Mirrorwork"
-              backgroundImage={cocktail}
-              titleColor="#c084fc"
-              subtitleColor="white"
-              textColor="text-gray-800"
-              isDark={true}
-            />
-            
+            <Mehndi />
+            <Sangeet />
+            <Wedding/>
+            <Reception />
+            <Cocktail />
             <FamilySection />
-            
             <VenueSection />
-            
-            <Footer />
-          </main>
-        </>
-      )}
+            {/* Footer */}
+            <footer className="py-12 px-6 bg-gradient-to-br from-[#3e3935] to-[#2a2725] text-white">
+              <div className="max-w-6xl mx-auto text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <p className="font-['Great_Vibes'] text-4xl mb-4">
+                    Kabir & Diksha
+                  </p>
+                  <div className="flex items-center justify-center gap-4 mb-6">
+                    <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#c8a882]" />
+                    <span className="text-2xl">💐</span>
+                    <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#c8a882]" />
+                  </div>
+                  <p className="font-['Cormorant'] text-lg opacity-80 mb-2">
+                    June 05, 2026
+                  </p>
+                  <p className="font-['Cormorant'] text-sm opacity-60">
+                    #KabirDikshaForever
+                  </p>
+                </motion.div>
+              </div>
+            </footer>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

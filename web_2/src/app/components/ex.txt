@@ -1,0 +1,134 @@
+import { motion } from 'motion/react';
+import { useInView } from './hooks/useInView';
+
+export function FamilySection() {
+  const { ref, isInView } = useInView();
+
+  const families = [
+    {
+      side: "Groom's Family",
+      members: ["Mr. Pawn Agarwal", "Mrs. Samita Agarwal"],
+    },
+    {
+      side: "Bride's Family",
+      members: ["Shri Tarun Agarwal", "Smt. Shikha"],
+    },
+  ];
+  const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.08, // speed of word appearance
+    },
+  },
+};
+
+const word = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
+};
+
+  return (
+    <section
+      ref={ref}
+      className="py-20 px-6 md:px-16 bg-gradient-to-br from-pink-50 via-cream-50 to-amber-50"
+    >
+
+      {/* ================= INTRO BOX ================= */}
+      <motion.div
+  variants={container}
+  initial="hidden"
+  animate={isInView ? "show" : "hidden"}
+  className="w-full flex justify-center items-center bg-[#d8c2c5] py-4 md:py-10 px-6 rounded-2xl mb-16"
+>
+  <div className="text-center max-w-4xl">
+
+    <motion.h2
+      variants={item}
+      transition={{ duration: 0.6 }}
+      className="text-3xl md:text-5xl lg:text-6xl mb-6"
+      style={{
+        fontFamily: "Great Vibes",
+        color: "#b8962e",
+      }}
+    >
+      Awaiting Your Noble Presence
+    </motion.h2>
+
+    <motion.p
+      variants={item}
+      transition={{ duration: 0.6 }}
+      className="text-base md:text-xl lg:text-2xl leading-relaxed"
+      style={{
+        fontFamily: "Cormorant",
+        color: "#4b4b3f",
+      }}
+    >
+      Because meeting two soul requires twice the fun <br className="hidden md:block" />
+      and you!
+    </motion.p>
+
+  </div>
+</motion.div>
+
+      {/* ================= EXISTING CONTENT ================= */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.8 }}
+        className="max-w-6xl mx-auto"
+      >
+        <div className="text-center mb-16">
+          <p className='mb-6 uppercase' style={{ fontFamily: 'Cormorant, serif', fontWeight: 600 }}>
+            with love
+          </p>
+
+          <h2
+            className="text-4xl md:text-6xl mb-4"
+            style={{ fontFamily: 'Great Vibes, cursive', color: '#B29431' }}
+          >
+            The Families
+          </h2>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          {families.map((family, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: index === 0 ? -30 : 30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: index === 0 ? -30 : 30 }}
+              transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
+              className="bg-[#F5EFDE] rounded-2xl p-8 shadow-lg border border-pink-100"
+            >
+              <h3
+                className="text-3xl mb-6 text-center"
+                style={{
+                  fontFamily: 'Playfair Display, serif',
+                  fontWeight: 600,
+                  color: '#ec4899'
+                }}
+              >
+                {family.side}
+              </h3>
+
+              <div className="space-y-4">
+                <div className="pt-4 border-t border-pink-200 space-y-2">
+                  {family.members.map((member, idx) => (
+                    <p
+                      key={idx}
+                      className="text-lg text-gray-700 text-center"
+                      style={{ fontFamily: 'Cormorant, serif' }}
+                    >
+                      {member}
+                    </p>
+                  ))}
+                </div>
+              </div>
+
+            </motion.div>
+          ))}
+        </div>
+      </motion.div>
+    </section>
+  );
+}

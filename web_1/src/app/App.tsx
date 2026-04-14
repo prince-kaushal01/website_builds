@@ -5,7 +5,6 @@ import { HeroSection } from './components/HeroSection';
 import { CountdownSection } from './components/CountdownSection';
 import { VenueSection } from './components/VenueSection';
 import { TimelineSection } from './components/TimelineSection';
-import { InformationSection } from './components/InformationSection';
 import { FamilySection } from './components/FamilySection';
 import { MusicAutoPlay } from './components/MusicButton';
 
@@ -17,6 +16,7 @@ export default function App() {
   };
 
   return (
+    <>
     <div className="relative min-h-screen bg-[#fdfcf9] overflow-x-hidden">
       <AnimatePresence mode="wait">
         {showEnvelope ? (
@@ -79,5 +79,6 @@ export default function App() {
         )}
       </AnimatePresence>
     </div>
+    </>
   );
 }
