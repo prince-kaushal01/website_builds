@@ -3,7 +3,7 @@ import { useInView } from "./hooks/useInView";
 {
   /* Mobile */
 }
-import Mehndibg from "../assets/bg-m-mehndi.png";
+import Mehndibg from "../assets/bg-m-mehndi.PNG";
 import umbrella1 from "../assets/umbrella1.png";
 import umbrella2 from "../assets/umbrella2.png";
 import cart from "../assets/gadi.png";

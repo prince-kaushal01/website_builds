@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 
-import reception from "../assets/bg-m-reception.png";
+import reception from "../assets/bg-m-reception.PNG";
 import desktop_Bg from "../assets/bg-d-reception.png";
 
 // assets
