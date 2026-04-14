@@ -1,23 +1,23 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 
-import cocktailBg from "../../assests/bg-m-cocktail2.jpeg";
-import cocktailBg2 from "../../assests/bg-d-cocktail2.jpeg";
+import cocktailBg from "../assets/bg-m-cocktail2.jpeg";
+import cocktailBg2 from "../assets/bg-d-cocktail2.jpeg";
 
 // assets
-import silvertrail1 from "../../assests/silvertrail1.png";
-import silvertrail2 from "../../assests/silvertrail2.png";
-import purpledesign from "../../assests/purpledesign.png";
-import cocktailBalls from "../../assests/cocktail_balls.png";
+import silvertrail1 from "../assets/silvertrail1.png";
+import silvertrail2 from "../assets/silvertrail2.png";
+import purpledesign from "../assets/purpledesign.png";
+import cocktailBalls from "../assets/cocktail_balls.png";
 
-import bitmap1 from "../../assests/cocktail_bitmap.png";
-import bitmap2 from "../../assests/cocktail_bitmap2.png";
+import bitmap1 from "../assets/cocktail_bitmap.png";
+import bitmap2 from "../assets/cocktail_bitmap2.png";
 
-import mirror from "../../assests/mirror.png";
-import rose from "../../assests/cocktail_flower.png";
-import sideballs from "../../assests/cocktail_sideballs.png";
-import candles from "../../assests/candles.png";
-import wheat from "../../assests/cocktail_wheet.png";
+import mirror from "../assets/mirror.png";
+import rose from "../assets/cocktail_flower.png";
+import sideballs from "../assets/cocktail_sideballs.png";
+import candles from "../assets/candles.png";
+import wheat from "../assets/cocktail_wheet.png";
 
 export default function Cocktail() {
   const { ref: desktopRef, isInView: desktopInView } = useInView();

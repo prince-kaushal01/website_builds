@@ -1,19 +1,19 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 
-import wedding from "../../assests/bg-m-wedding2.jpeg";
-import desktopBg from "../../assests/bg-d-wedding2.jpeg";
+import wedding from "../assets/bg-m-wedding2.jpeg";
+import desktopBg from "../assets/bg-d-wedding2.jpeg";
 
 // assets
-import sidemala from "../../assests/sidemala2.png";
-import sidevase from "../../assests/sidevase.png";
-import flowervase1 from "../../assests/flowervase2.png";
-import flowervase2 from "../../assests/flowervase4.png";
-import mandap from "../../assests/aag.png";
-import pond from "../../assests/pond.png";
-import bride from "../../assests/bride.png";
-import groom from "../../assests/groom.png";
-import aag from "../../assests/aag.png";
+import sidemala from "../assets/sidemala2.png";
+import sidevase from "../assets/sidevase.png";
+import flowervase1 from "../assets/flowervase2.png";
+import flowervase2 from "../assets/flowervase4.png";
+import mandap from "../assets/aag.png";
+import pond from "../assets/pond.png";
+import bride from "../assets/bride.png";
+import groom from "../assets/groom.png";
+import aag from "../assets/aag.png";
 
 export default function Wedding() {
   const { ref: desktopRef, isInView: desktopInView } = useInView();

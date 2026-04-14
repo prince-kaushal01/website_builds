@@ -3,17 +3,17 @@ import { useInView } from "./hooks/useInView";
 {
   /* Mobile */
 }
-import Mehndibg from "../../assests/bg-m-mehndi.png";
-import umbrella1 from "../../assests/umbrella1.png";
-import umbrella2 from "../../assests/umbrella2.png";
-import cart from "../../assests/gadi.png";
-import drum from "../../assests/dhol.png";
+import Mehndibg from "../assets/bg-m-mehndi.png";
+import umbrella1 from "../assets/umbrella1.png";
+import umbrella2 from "../assets/umbrella2.png";
+import cart from "../assets/gadi.png";
+import drum from "../assets/dhol.png";
 {
   /* Desktop */
 }
-import desktopBg from "../../assests/bg-d-mehndi.png";
-import roses from "../../assests/rosepetals.png";
-import grass from "../../assests/greengrass.png";
+import desktopBg from "../assets/bg-d-mehndi.png";
+import roses from "../assets/rosepetals.png";
+import grass from "../assets/greengrass.png";
 
 export default function Mehndi() {
   const { ref: desktopRef, isInView: desktopInView } = useInView();

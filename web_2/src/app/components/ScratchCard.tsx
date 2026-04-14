@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
-import groom from "../assets/groom.png";
+import groom from "../assets/couple.png";
 
 export function ScratchCard() {
   const { ref, isInView } = useInView();

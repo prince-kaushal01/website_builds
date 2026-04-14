@@ -1,18 +1,18 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 
-import reception from "../../assests/bg-m-reception.png";
-import desktop_Bg from "../../assests/bg-d-reception.png";
+import reception from "../assets/bg-m-reception.png";
+import desktop_Bg from "../assets/bg-d-reception.png";
 
 // assets
-import table from "../../assests/table.png";
-import flowerPot from "../../assests/Candle_reception.png";
-import art from "../../assests/Reception_art.png";
-import disco1 from "../../assests/disco1.png";
-import candles from "../../assests/candle3.png";
-import candles2 from "../../assests/candles.png";
-import jhumar1 from "../../assests/reception_1.png";
-import jhumar2 from "../../assests/reception_2.png";
+import table from "../assets/table.png";
+import flowerPot from "../assets/Candle_reception.png";
+import art from "../assets/Reception_art.png";
+import disco1 from "../assets/disco1.png";
+import candles from "../assets/candle3.png";
+import candles2 from "../assets/candles.png";
+import jhumar1 from "../assets/reception_1.png";
+import jhumar2 from "../assets/reception_2.png";
 
 export default function Reception() {
   const { ref: desktopRef, isInView: desktopInView } = useInView();

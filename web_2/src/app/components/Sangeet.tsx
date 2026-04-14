@@ -1,14 +1,14 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 
-import sangeet from "../../assests/bg-m-sangeet2.jpeg";
+import sangeet from "../assets/bg-m-sangeet2.jpeg";
 
 // assets
-import lights from "../../assests/lightdesign.png";
-import disco1 from "../../assests/disco1.png";
-import lamp from "../../assests/lamp.png";
-import lamp2 from "../../assests/side_disco.png";
-import desktopBg from "../../assests/bg-d-sangeet2.jpeg";
+import lights from "../assets/lightdesign.png";
+import disco1 from "../assets/disco1.png";
+import lamp from "../assets/lamp.png";
+import lamp2 from "../assets/side_disco.png";
+import desktopBg from "../assets/bg-d-sangeet2.jpeg";
 
 export default function Sangeet() {
   const { ref: desktopRef, isInView: desktopInView } = useInView();

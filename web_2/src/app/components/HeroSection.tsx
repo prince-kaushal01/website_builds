@@ -1,16 +1,16 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
-import bgimage from "../assets/Main_section.png";
-import bgimage2 from "../../assests/bg-d-firstpage.png";
+import bgimage from "../assets/main_section.png";
+import bgimage2 from "../assets/bg-d-firstpage.png";
 
-import person1 from "../../assests/dancer1.png";
-import person2 from "../../assests/dancer2.png";
-import person3 from "../../assests/dancer3.png";
-import person4 from "../../assests/dancer4.png";
-import person6 from "../../assests/dancer6.png";
-import person7 from "../../assests/dancer7.png";
-import person8 from "../../assests/dancer8.png";
-import ganesha from "../../assests/ganeshji.png";
+import person1 from "../assets/dancer1.png";
+import person2 from "../assets/dancer2.png";
+import person3 from "../assets/dancer3.png";
+import person4 from "../assets/dancer4.png";
+import person6 from "../assets/dancer6.png";
+import person7 from "../assets/dancer7.png";
+import person8 from "../assets/dancer8.png";
+import ganesha from "../assets/ganeshji.png";
 
 export function HeroSection() {
   const { ref, isInView } = useInView();
