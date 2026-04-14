@@ -5,6 +5,7 @@ import bgimage2 from "../assets/bg-d-firstpage.png";
 
 import person1 from "../assets/dancer1.png";
 import person2 from "../assets/dancer2.png";
+
 import person3 from "../assets/dancer3.png";
 import person4 from "../assets/dancer4.png";
 import person6 from "../assets/dancer6.png";

@@ -178,9 +178,8 @@ export default function Reception() {
           animate={
             desktopInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -6, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -196,9 +195,8 @@ export default function Reception() {
           animate={
             desktopInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -6, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -214,9 +212,8 @@ export default function Reception() {
           animate={
             desktopInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -6, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -396,9 +393,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -414,9 +410,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -432,9 +427,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -450,9 +444,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }

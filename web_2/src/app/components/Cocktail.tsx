@@ -232,7 +232,7 @@ export default function Cocktail() {
           src={cocktailBalls}
           className="absolute top-16 left-0 w-full z-30"
           initial={{ y: -120, opacity: 0 }}
-          animate={mobileInView ? { y: 0, opacity: 1, y: [0, -10, 0] } : {}}
+          animate={mobileInView ? { y: [0, -10, 0], opacity: 1 } : {}}
           transition={{
             y: { duration: 4, repeat: Infinity },
             opacity: { duration: 1 },
@@ -324,7 +324,7 @@ export default function Cocktail() {
           src={candles}
           className="absolute bottom-0 right-20 w-20 z-40"
           initial={{ y: 120, opacity: 0 }}
-          animate={mobileInView ? { y: 0, opacity: 1, y: [0, -4, 0] } : {}}
+          animate={mobileInView ? { y: [0, -4, 0], opacity: 1 } : {}}
           transition={{
             y: { duration: 4, repeat: Infinity },
             opacity: { duration: 1, delay: 0.8 },
@@ -336,7 +336,7 @@ export default function Cocktail() {
           src={wheat}
           className="absolute bottom-2 right-0 w-64 z-30"
           initial={{ y: 120, opacity: 0 }}
-          animate={mobileInView ? { y: 0, opacity: 1, y: [0, -5, 0] } : {}}
+          animate={mobileInView ? { y: [0, -5, 0], opacity: 1 } : {}}
           transition={{
             y: { duration: 4.5, repeat: Infinity },
             opacity: { duration: 1, delay: 0.9 },
