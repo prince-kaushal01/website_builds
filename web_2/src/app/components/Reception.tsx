@@ -6,7 +6,7 @@ import desktop_Bg from "../assets/bg-d-reception.png";
 
 // assets
 import table from "../assets/table.png";
-import flowerPot from "../assets/Candle_reception.png";
+import flowerPot from "../assets/candle_reception.png";
 import art from "../assets/Reception_art.png";
 import disco1 from "../assets/disco1.png";
 import candles from "../assets/candle3.png";
