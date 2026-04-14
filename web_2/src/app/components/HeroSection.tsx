@@ -1,15 +1,12 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
-import bgimage from "../assets/main_section.png";
+import bgimage from "../assets/Main_section.png";
 import bgimage2 from "../../assests/bg-d-firstpage.png";
-import video from "../assets/marriage_view.mp4";
-import groom from "../assets/Groom_walk.png";
 
 import person1 from "../../assests/dancer1.png";
 import person2 from "../../assests/dancer2.png";
 import person3 from "../../assests/dancer3.png";
 import person4 from "../../assests/dancer4.png";
-import person5 from "../../assests/dancer5.png";
 import person6 from "../../assests/dancer6.png";
 import person7 from "../../assests/dancer7.png";
 import person8 from "../../assests/dancer8.png";
@@ -38,7 +35,7 @@ export function HeroSection() {
   return (
     <section
       ref={ref}
-      className="min-h-screen relative flex items-start justify-center overflow-hidden md:pt-24"
+      className="min-h-screen relative overflow-hidden md:flex items-start justify-center md:pt-24"
       style={{
         backgroundImage: `url(${bgimage2})`,
         backgroundSize: "cover",
@@ -157,7 +154,7 @@ export function HeroSection() {
 
           <motion.h2
             variants={item}
-            className="font-['Great_Vibes'] text-6xl text-[#b3385a] drop-shadow-lg"
+            className="font-['Great_Vibes'] text-5xl text-[#b3385a] drop-shadow-lg"
           >
             Kabir
           </motion.h2>
@@ -171,7 +168,7 @@ export function HeroSection() {
 
           <motion.h1
             variants={item}
-            className="font-['Great_Vibes'] text-6xl text-[#b3385a] drop-shadow-lg"
+            className="font-['Great_Vibes'] text-5xl text-[#b3385a] drop-shadow-lg"
           >
             Diksha
           </motion.h1>
@@ -179,7 +176,10 @@ export function HeroSection() {
       </motion.div>
 
       {/* phone device */}
-      <div className="md:hidden mt-2">
+      <div
+        className="md:hidden mt-2 relative min-h-screen bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${bgimage})` }}
+      >
         <motion.div
           variants={container}
           initial="hidden"
@@ -293,7 +293,7 @@ export function HeroSection() {
           {/* LEFT */}
           <motion.img
             src={person7}
-            className="absolute bottom-32 left-[15%] w-20 md:w-32"
+            className="absolute bottom-38 left-8 w-20 md:w-32"
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ duration: 4, repeat: Infinity }}
           />
@@ -316,13 +316,6 @@ export function HeroSection() {
             transition={{ duration: 4, repeat: Infinity }}
           />
           {/* RIGHT */}
-          <motion.img
-            src={person5}
-            className="absolute bottom-8 right-[55%] w-20 md:w-32 z-20"
-            animate={{ scale: [1, 1.06, 1] }}
-            transition={{ duration: 5.5, repeat: Infinity }}
-          />
-
           <motion.img
             src={person4}
             className="absolute bottom-2 right-[37%] w-20 md:w-32 z-20"

@@ -22,23 +22,23 @@ function App() {
   return (
     <div className="relative min-h-screen bg-[#fdfcf9] overflow-x-hidden">
       <AnimatePresence mode="wait">
-  {showEnvelope ? (
-    <motion.div key="envelope">
-      <EnvelopeIntro onOpen={handleEnvelopeOpen} />
-    </motion.div>
-  ) : (
-    <motion.div
-      key="main-content"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+        {showEnvelope ? (
+          <motion.div key="envelope">
+            <EnvelopeIntro onOpen={handleEnvelopeOpen} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="main-content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+          >
             <MusicAutoPlay />
-            <HeroSection /> 
+            <HeroSection />
             <ScratchCard />
             <Mehndi />
             <Sangeet />
-            <Wedding/>
+            <Wedding />
             <Reception />
             <Cocktail />
             <FamilySection />

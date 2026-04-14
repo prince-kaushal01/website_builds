@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 
 import reception from "../../assests/bg-m-reception.png";
-import desktopBg from "../../assests/bg-d-reception.png";
+import desktop_Bg from "../../assests/bg-d-reception.png";
 
 // assets
 import table from "../../assests/table.png";
@@ -24,7 +24,7 @@ export default function Reception() {
         ref={desktopRef}
         className="hidden md:flex h-screen w-full relative overflow-hidden justify-center"
         style={{
-          backgroundImage: `url(${desktopBg})`,
+          backgroundImage: `url(${desktop_Bg})`,
           backgroundSize: "cover",
           backgroundPosition: "bottom center",
         }}

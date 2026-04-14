@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import music from "../assets/weddingsong.mp3"
+import music from "../assets/weddingsong.mp3";
 
 export function MusicAutoPlay() {
   const audioRef = useRef<HTMLAudioElement | null>(null);
