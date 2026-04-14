@@ -128,7 +128,7 @@ export function ScratchCard() {
   return (
     <section
       ref={ref}
-      className="h-screen py-12 px-6 md:px-16 flex flex-col items-center bg-[#FAF7EE]"
+      className="min-h-screen py-12 px-6 md:px-16 flex flex-col items-center bg-[#FAF7EE]"
     >
       {/* MAIN CONTAINER */}
       <div className="max-w-6xl w-full flex flex-col md:flex-row items-center gap-10">
@@ -212,7 +212,7 @@ export function ScratchCard() {
               </motion.div>
             ))}
           </div>
-          <div className="hidden md:flex md:items-center md:justify-center md:flex-col">
+          <div className="hidden md:flex md:items-center md:justify-center md:flex-col md:mb-6">
             <p className="text-[#B79B40] font-['Cormorant'] md:mb-2 md:text-xl">
               Save the date
             </p>

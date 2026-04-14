@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 import bgimage from "../assets/main_section.png";
@@ -15,6 +16,37 @@ import ganesha from "../assets/ganeshji.png";
 
 export function HeroSection() {
   const { ref, isInView } = useInView();
+
+  // Pre-compute random values once — recalculating 30+8 randoms every render
+  // causes unnecessary work and causes animations to reset on re-renders.
+  const petals = useMemo(
+    () =>
+      [...Array(30)].map((_, i) => {
+        const startX = Math.random() * 100;
+        const drift1 = startX + (Math.random() * 20 - 10);
+        const drift2 = startX + (Math.random() * 30 - 15);
+        return {
+          id: i,
+          startX,
+          drift1,
+          drift2,
+          duration: 7 + Math.random() * 5,
+          delay: Math.random() * 5,
+        };
+      }),
+    [],
+  );
+
+  const glowBalls = useMemo(
+    () =>
+      [...Array(8)].map((_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+      })),
+    [],
+  );
+
   const container = {
     hidden: {},
     visible: {
@@ -46,36 +78,30 @@ export function HeroSection() {
     >
       {/* 🌸 PREMIUM PETALS */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-50">
-        {[...Array(30)].map((_, i) => {
-          const startX = Math.random() * 100;
-          const drift1 = startX + (Math.random() * 20 - 10);
-          const drift2 = startX + (Math.random() * 30 - 15);
-
-          return (
-            <motion.div
-              key={i}
-              className="absolute text-pink-300 text-xl md:text-2xl"
-              style={{
-                left: `${startX}%`,
-                top: "-10%",
-              }}
-              animate={{
-                y: ["0vh", "120vh"],
-                x: [`0%`, `${drift1 - startX}%`, `${drift2 - startX}%`, `0%`],
-                rotate: [0, 120, 240, 360],
-                opacity: [0, 1, 1, 0],
-              }}
-              transition={{
-                duration: 7 + Math.random() * 5,
-                repeat: Infinity,
-                delay: Math.random() * 5,
-                ease: "easeInOut",
-              }}
-            >
-              🌸
-            </motion.div>
-          );
-        })}
+        {petals.map(({ id, startX, drift1, drift2, duration, delay }) => (
+          <motion.div
+            key={id}
+            className="absolute text-pink-300 text-xl md:text-2xl"
+            style={{
+              left: `${startX}%`,
+              top: "-10%",
+            }}
+            animate={{
+              y: ["0vh", "120vh"],
+              x: [`0%`, `${drift1 - startX}%`, `${drift2 - startX}%`, `0%`],
+              rotate: [0, 120, 240, 360],
+              opacity: [0, 1, 1, 0],
+            }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              delay,
+              ease: "easeInOut",
+            }}
+          >
+            🌸
+          </motion.div>
+        ))}
       </div>
 
       {/* 🖥️ DESKTOP VIDEO HERO */}
@@ -101,35 +127,30 @@ export function HeroSection() {
 
         {/* ✨ GLOW BALLS */}
         <div className="absolute inset-0 z-10 pointer-events-none">
-          {[...Array(8)].map((_, i) => {
-            const x = Math.random() * 100;
-            const y = Math.random() * 100;
-
-            return (
-              <motion.div
-                key={i}
-                className="absolute rounded-full bg-[#FEFCFA] blur-lg z-50"
-                style={{
-                  left: `${x}%`,
-                  top: `${y}%`,
-                  width: "50px",
-                  height: "50px",
-                }}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{
-                  opacity: [0, 0.6, 0],
-                  scale: [0.5, 1.2, 0.8],
-                }}
-                transition={{
-                  duration: 1.2,
-                  delay: i * 0.5,
-                  repeat: Infinity,
-                  repeatDelay: 2,
-                  ease: "easeInOut",
-                }}
-              />
-            );
-          })}
+          {glowBalls.map(({ id, x, y }) => (
+            <motion.div
+              key={id}
+              className="absolute rounded-full bg-[#FEFCFA] blur-lg z-50"
+              style={{
+                left: `${x}%`,
+                top: `${y}%`,
+                width: "50px",
+                height: "50px",
+              }}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{
+                opacity: [0, 0.6, 0],
+                scale: [0.5, 1.2, 0.8],
+              }}
+              transition={{
+                duration: 1.2,
+                delay: id * 0.5,
+                repeat: Infinity,
+                repeatDelay: 2,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
         </div>
 
         {/* TEXT */}
@@ -137,11 +158,7 @@ export function HeroSection() {
           variants={container}
           initial="hidden"
           whileInView="visible"
-          viewport={{ amount: 0.4 }}
-          transition={{
-            duration: 0.9,
-            ease: "easeOut",
-          }}
+          viewport={{ once: true, amount: 0.4 }}
           className="relative z-30 text-center pt-4"
         >
           <img src={ganesha} className="mx-auto w-6" />
