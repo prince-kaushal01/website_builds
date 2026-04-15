@@ -229,7 +229,7 @@ export default function Reception() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-5xl mb-4 pt-32 "
+            className="text-4xl mb-2 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "white" }}
           >
             Reception
@@ -240,7 +240,7 @@ export default function Reception() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="text-base mb-6"
+            className="text-sm mb-3"
             style={{ fontFamily: "Cormorant", color: "white" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -251,26 +251,26 @@ export default function Reception() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[white] font-['Cormorant']"
+            className="space-y-0.5 text-[white] font-['Cormorant']"
           >
-            <p className="text-lg">FRI</p>
-            <p className="text-lg">
+            <p className="text-base">FRI</p>
+            <p className="text-base">
               June{" "}
-              <span className="text-[white] text-2xl font-['Great Vibes']">
+              <span className="text-[white] text-xl font-['Great Vibes']">
                 6
               </span>{" "}
               2026
             </p>
-            <p className="text-lg">7:30 PM onwards</p>
-            <p className="text-lg mb-3">Uttar Garden Lawn</p>
+            <p className="text-base">7:30 PM onwards</p>
+            <p className="text-base mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-lg text-[white] font-['Cormorant']">Dress code</p>
+          <p className="text-base text-[white] font-['Cormorant']">Dress code</p>
           <motion.p
             animate={
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-sm px-4 text-[white] font-['Cormorant']"
+            className="text-xs px-4 text-[white] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork
@@ -461,7 +461,7 @@ export default function Reception() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-5xl mb-4 pt-32 "
+            className="text-4xl mb-2 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "white" }}
           >
             Reception
@@ -472,7 +472,7 @@ export default function Reception() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="text-base mb-6"
+            className="text-sm mb-3"
             style={{ fontFamily: "Cormorant", color: "white" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -483,26 +483,26 @@ export default function Reception() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[white] font-['Cormorant']"
+            className="space-y-0.5 text-[white] font-['Cormorant']"
           >
-            <p className="text-lg">FRI</p>
-            <p className="text-lg">
+            <p className="text-base">FRI</p>
+            <p className="text-base">
               June{" "}
-              <span className="text-[white] text-2xl font-['Great Vibes']">
+              <span className="text-[white] text-xl font-['Great Vibes']">
                 6
               </span>{" "}
               2026
             </p>
-            <p className="text-lg">7:30 PM onwards</p>
-            <p className="text-lg mb-3">Uttar Garden Lawn</p>
+            <p className="text-base">7:30 PM onwards</p>
+            <p className="text-base mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-lg text-[white] font-['Cormorant']">Dress code</p>
+          <p className="text-base text-[white] font-['Cormorant']">Dress code</p>
           <motion.p
             animate={
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-sm px-4 text-[white] font-['Cormorant']"
+            className="text-xs px-4 text-[white] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork

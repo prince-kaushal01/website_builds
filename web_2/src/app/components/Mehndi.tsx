@@ -80,7 +80,7 @@ export default function Mehndi() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-6xl mb-4 pt-32 "
+            className="text-5xl mb-2 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "#f97316" }}
           >
             Mehendi
@@ -91,7 +91,7 @@ export default function Mehndi() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="font-semibold mb-6 text-xl"
+            className="font-semibold mb-3 text-base"
             style={{ fontFamily: "Cormorant", color: "#775A00" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -102,20 +102,20 @@ export default function Mehndi() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[#775A00] font-['Cormorant']"
+            className="space-y-0.5 text-[#775A00] font-['Cormorant']"
           >
-            <p className="text-xl font-semibold">WED</p>
-            <p className="text-xl font-semibold">
+            <p className="text-lg font-semibold">WED</p>
+            <p className="text-lg font-semibold">
               June{" "}
-              <span className="text-[#f97316] text-2xl font-['Great Vibes']">
+              <span className="text-[#f97316] text-xl font-['Great Vibes']">
                 4
               </span>{" "}
               2026
             </p>
-            <p className="text-xl font-semibold">03:30 PM onwards</p>
-            <p className="text-xl font-semibold mb-3">Uttar Garden Lawn</p>
+            <p className="text-lg font-semibold">03:30 PM onwards</p>
+            <p className="text-lg font-semibold mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-xl font-semibold text-[#775A00] font-['Cormorant']">
+          <p className="text-lg font-semibold text-[#775A00] font-['Cormorant']">
             Dress code
           </p>
           <motion.p
@@ -123,7 +123,7 @@ export default function Mehndi() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-[15px] font-semibold px-4 text-[#775A00] font-['Cormorant']"
+            className="text-xs font-semibold px-4 text-[#775A00] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork
@@ -192,7 +192,7 @@ export default function Mehndi() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-5xl mb-4 pt-32 "
+            className="text-4xl mb-2 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "#f97316" }}
           >
             Mehendi
@@ -203,7 +203,7 @@ export default function Mehndi() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="text-base mb-6"
+            className="text-sm mb-3"
             style={{ fontFamily: "Cormorant", color: "#775A00" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -214,20 +214,20 @@ export default function Mehndi() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[#775A00] font-['Cormorant']"
+            className="space-y-0.5 text-[#775A00] font-['Cormorant']"
           >
-            <p className="text-lg">WED</p>
-            <p className="text-lg">
+            <p className="text-base">WED</p>
+            <p className="text-base">
               June{" "}
-              <span className="text-[#f97316] text-2xl font-['Great Vibes']">
+              <span className="text-[#f97316] text-xl font-['Great Vibes']">
                 4
               </span>{" "}
               2026
             </p>
-            <p className="text-lg">03:30 PM onwards</p>
-            <p className="text-lg mb-3">Uttar Garden Lawn</p>
+            <p className="text-base">03:30 PM onwards</p>
+            <p className="text-base mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-lg text-[#775A00] font-['Cormorant']">
+          <p className="text-base text-[#775A00] font-['Cormorant']">
             Dress code
           </p>
           <motion.p
@@ -235,7 +235,7 @@ export default function Mehndi() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-sm px-4 text-[#775A00] font-['Cormorant']"
+            className="text-xs px-4 text-[#775A00] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork
