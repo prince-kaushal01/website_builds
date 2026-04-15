@@ -223,7 +223,7 @@ export default function Reception() {
           }}
         />
         {/* ================= TEXT ================= */}
-        <div className="text-center max-w-xs pt-20">
+        <div className="text-center max-w-xs pt-[200px] lg:pt-20">
           <motion.h2
             animate={
               desktopInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }

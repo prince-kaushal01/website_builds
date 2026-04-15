@@ -131,7 +131,7 @@ export default function Cocktail() {
         />
 
         {/* ===== TEXT ===== */}
-        <div className="text-center max-w-xs pt-20">
+        <div className="text-center max-w-xs pt-[120px] lg:pt-20">
           <motion.h2
             animate={
               desktopInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
@@ -242,7 +242,7 @@ export default function Cocktail() {
         {/* ================= LEFT BITMAP ================= */}
         <motion.img
           src={bitmap2}
-          className="absolute -left-2 top-1/2 w-14 z-10"
+          className="absolute -left-2 top-3/5 w-14 z-10"
           initial={{ x: -120, opacity: 0 }}
           animate={mobileInView ? { x: 0, opacity: 1, y: [0, -6, 0] } : {}}
           transition={{
@@ -254,7 +254,7 @@ export default function Cocktail() {
         {/* ================= LOWER LEFT BITMAP ================= */}
         <motion.img
           src={bitmap1}
-          className="absolute left-8 bottom-36 w-12 z-10"
+          className="absolute left-8 bottom-26 w-12 z-10"
           initial={{ x: -120, opacity: 0 }}
           animate={mobileInView ? { x: 0, opacity: 1, y: [0, -6, 0] } : {}}
           transition={{
@@ -266,7 +266,7 @@ export default function Cocktail() {
         {/* ================= MIRROR ================= */}
         <motion.img
           src={mirror}
-          className="absolute bottom-4 right-1 w-[38vw] max-w-[208px] z-20"
+          className="absolute bottom-4 right-1 w-[35vw] max-w-[208px] z-20"
           initial={{ y: 120, opacity: 0 }}
           animate={
             mobileInView ? { y: 0, opacity: 1, scale: [1, 1.05, 1] } : {}
@@ -280,7 +280,7 @@ export default function Cocktail() {
         {/* ================= ROSE ABOVE MIRROR ================= */}
         <motion.img
           src={rose}
-          className="absolute bottom-35 -right-10 w-[32vw] max-w-[176px] z-30"
+          className="absolute bottom-30 -right-10 w-[32vw] max-w-[176px] z-30"
           initial={{ y: 120, opacity: 0 }}
           animate={
             mobileInView ? { y: 0, opacity: 1, scale: [1, 1.05, 1] } : {}
@@ -294,7 +294,7 @@ export default function Cocktail() {
         {/* ================= ROSE LEFT OF MIRROR ================= */}
         <motion.img
           src={rose}
-          className="absolute bottom-14 right-25 w-[30vw] max-w-[160px] z-10"
+          className="absolute bottom-14 right-22 w-[30vw] max-w-[160px] z-10"
           initial={{ x: -120, opacity: 0 }}
           animate={
             mobileInView ? { x: 0, opacity: 1, scale: [1, 1.05, 1] } : {}

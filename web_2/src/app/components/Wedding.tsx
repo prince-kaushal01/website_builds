@@ -72,7 +72,7 @@ export default function Wedding() {
         {/* ================= RIGHT BOTTOM VASE ================= */}
         <motion.img
           src={sidevase}
-          className="absolute -bottom-10 -right-20 w-[540px]"
+          className="absolute -bottom-10 left-15 w-[540px]"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -91,7 +91,7 @@ export default function Wedding() {
         {/* ================= LEFT FLOWER VASE 1 ================= */}
         <motion.img
           src={flowervase1}
-          className="absolute -bottom-20 left-64 w-24"
+          className="absolute -bottom-20 left-3 w-18 lg:w-24"
           initial={{ x: -150, opacity: 0 }}
           animate={
             desktopInView
@@ -111,7 +111,7 @@ export default function Wedding() {
         {/* ================= LEFT FLOWER VASE 2 ================= */}
         <motion.img
           src={flowervase2}
-          className="absolute bottom-0 left-80 -rotate-2 w-40"
+          className="absolute bottom-0 left-15 -rotate-2 w-30 lg:w-40"
           initial={{ x: -150, opacity: 0 }}
           animate={
             desktopInView
@@ -130,7 +130,7 @@ export default function Wedding() {
         {/* ================= POND CENTER ================= */}
         <motion.img
           src={aag}
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-64 -rotate-2"
+          className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-50 lg:w-64 -rotate-2"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -147,7 +147,7 @@ export default function Wedding() {
         />
         <motion.img
           src={groom}
-          className="absolute -bottom-8 left-[570px] -translate-x-1/2 w-16"
+          className="absolute -bottom-8 left-[570px] -translate-x-1/2 w-16 lg:w-16"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -164,7 +164,7 @@ export default function Wedding() {
         />
         <motion.img
           src={bride}
-          className="absolute -bottom-8 left-[640px] -translate-x-1/2 w-32"
+          className="absolute -bottom-8 left-[640px] -translate-x-1/2 w-32 lg:w-32"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
