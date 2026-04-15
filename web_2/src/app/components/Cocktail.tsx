@@ -266,7 +266,7 @@ export default function Cocktail() {
         {/* ================= MIRROR ================= */}
         <motion.img
           src={mirror}
-          className="absolute bottom-4 right-4 w-52 z-20"
+          className="absolute bottom-4 right-1 w-[38vw] max-w-[208px] z-20"
           initial={{ y: 120, opacity: 0 }}
           animate={
             mobileInView ? { y: 0, opacity: 1, scale: [1, 1.05, 1] } : {}
@@ -280,7 +280,7 @@ export default function Cocktail() {
         {/* ================= ROSE ABOVE MIRROR ================= */}
         <motion.img
           src={rose}
-          className="absolute bottom-48 -right-10 w-44 z-30"
+          className="absolute bottom-35 -right-10 w-[32vw] max-w-[176px] z-30"
           initial={{ y: 120, opacity: 0 }}
           animate={
             mobileInView ? { y: 0, opacity: 1, scale: [1, 1.05, 1] } : {}
@@ -294,7 +294,7 @@ export default function Cocktail() {
         {/* ================= ROSE LEFT OF MIRROR ================= */}
         <motion.img
           src={rose}
-          className="absolute bottom-14 right-28 w-40 z-10"
+          className="absolute bottom-14 right-25 w-[30vw] max-w-[160px] z-10"
           initial={{ x: -120, opacity: 0 }}
           animate={
             mobileInView ? { x: 0, opacity: 1, scale: [1, 1.05, 1] } : {}

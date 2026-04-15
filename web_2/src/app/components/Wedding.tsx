@@ -34,7 +34,7 @@ export default function Wedding() {
         {/* ================= TOP RIGHT MALA ================= */}
         <motion.img
           src={sidemala}
-          className="absolute -top-10 right-10 w-96"
+          className="absolute -top-10 right-10 w-52 lg:w-96"
           initial={{ x: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -52,7 +52,7 @@ export default function Wedding() {
         />
         <motion.img
           src={sidemala}
-          className="absolute -top-10 -left-58 w-96"
+          className="absolute -top-10 -left-58 w-52 lg:w-96"
           initial={{ x: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -187,7 +187,7 @@ export default function Wedding() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-6xl mb-4 pt-18 "
+            className="text-6xl mb-4 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "#B13401" }}
           >
             Wedding
@@ -390,7 +390,7 @@ export default function Wedding() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-5xl mb-4 pt-32 "
+            className="text-5xl mb-4 pt-25 "
             style={{ fontFamily: "Great Vibes", color: "#B13401" }}
           >
             Wedding
