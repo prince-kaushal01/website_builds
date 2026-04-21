@@ -2,11 +2,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { HomePage } from './pages/HomePage';
-import { IndianWeddingsPage } from './pages/IndianWeddingsPage';
+import { ServicesPage } from './pages/ServicesPage';
 import { InternationalPage } from './pages/InternationalPage';
 import { BlogPage } from './pages/BlogPage';
 import { BlogDetailPage } from './pages/BlogDetailPage';
 import { ContactPage } from './pages/ContactPage';
+import { AboutPage } from './pages/AboutPage';
 
 export default function App() {
   return (
@@ -16,11 +17,12 @@ export default function App() {
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/indian" element={<IndianWeddingsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
             <Route path="/international" element={<InternationalPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:id" element={<BlogDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/about" element={<AboutPage />} />
           </Routes>
         </main>
         <Footer />
