@@ -1,187 +1,717 @@
-import { useState } from 'react';
-import { motion } from 'motion/react';
-import { Star, MapPin } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { motion, useInView, useScroll, useTransform } from 'motion/react';
+import { Link } from 'react-router-dom';
+import { MessageCircle, Play, Star, ArrowRight, Globe, Clock, Zap, ChevronRight } from 'lucide-react';
 import { ContactModal } from '../components/ContactModal';
 
+/* ── constants ─────────────────────────────────────────── */
+const WA = 'https://wa.me/919876543210';
+const ease = [0.22, 1, 0.36, 1] as const;
+
+/* ── shared animation variants ─────────────────────────── */
+const fadeUp = {
+  hidden:  { opacity: 0, y: 48 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.82, ease } },
+};
+const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.12 } } };
+
+function Reveal({ children, className, once = true }: {
+  children: React.ReactNode; className?: string; once?: boolean;
+}) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once, margin: '-72px' });
+  return (
+    <motion.div ref={ref} variants={stagger} initial="hidden" animate={inView ? 'visible' : 'hidden'} className={className}>
+      {children}
+    </motion.div>
+  );
+}
+
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.p variants={fadeUp} className="uppercase text-xs tracking-[0.3em] mb-4" style={{ color: 'var(--accent-gold)' }}>
+      {children}
+    </motion.p>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   01  HERO
+═══════════════════════════════════════════════════════════ */
+function HeroSection({ onBook }: { onBook: () => void }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const imgY  = useTransform(scrollYProgress, [0, 1], ['0%', '28%']);
+  const fade  = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '14%']);
+
+  const tags = ['Wedding Films', 'Brand Ads', 'Global Editing'];
+
+  return (
+    <section ref={ref} className="relative h-screen overflow-hidden flex items-center justify-center">
+      {/* parallax video/image */}
+      <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
+        <video
+          autoPlay muted loop playsInline
+          className="w-full h-full object-cover"
+          poster="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+        >
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-fireworks-in-the-night-sky-1953-large.mp4" type="video/mp4" />
+        </video>
+      </motion.div>
+
+      {/* cinematic gradient */}
+      <div className="absolute inset-0 z-10" style={{
+        background: 'linear-gradient(to bottom, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.2) 40%, rgba(5,5,5,0.88) 100%)'
+      }} />
+
+      {/* content */}
+      <motion.div style={{ y: textY, opacity: fade }} className="relative z-20 text-center px-6 max-w-[900px]">
+        {/* pill tags */}
+        <motion.div
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.25 }}
+          className="flex flex-wrap items-center justify-center gap-3 mb-8"
+        >
+          {tags.map((t, i) => (
+            <span key={t} className="flex items-center gap-3">
+              <span
+                className="px-4 py-1.5 rounded-full text-xs uppercase tracking-[0.18em]"
+                style={{ background: 'rgba(200,169,106,0.15)', border: '1px solid rgba(200,169,106,0.35)', color: 'var(--accent-gold)' }}
+              >
+                {t}
+              </span>
+              {i < tags.length - 1 && <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />}
+            </span>
+          ))}
+        </motion.div>
+
+        {/* headline */}
+        <motion.h1
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 0.4, ease }}
+          className="text-white mb-7"
+          style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(44px, 7.5vw, 100px)', lineHeight: 0.95, letterSpacing: '-0.025em' }}
+        >
+          We Make Moments
+          <br />
+          <span style={{ color: 'var(--accent-gold)' }}>Timeless.</span>
+        </motion.h1>
+
+        {/* sub */}
+        <motion.p
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.65, ease }}
+          className="text-white/50 mb-10 mx-auto"
+          style={{ fontSize: 'clamp(15px, 1.4vw, 18px)', lineHeight: 1.85, maxWidth: '500px' }}
+        >
+          Premium wedding films, brand commercials &amp; global editing — crafted for couples and businesses
+          that demand the extraordinary.
+        </motion.p>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.85, ease }}
+          className="flex flex-wrap items-center justify-center gap-3"
+        >
+          <button
+            onClick={onBook}
+            className="px-8 py-3.5 rounded-full text-sm font-medium cursor-pointer transition-all duration-300 hover:scale-105"
+            style={{ background: 'var(--accent-gold)', color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
+          >
+            Book Now
+          </button>
+          <Link
+            to="/portfolio"
+            className="px-8 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+            style={{ background: 'rgba(255,255,255,0.08)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
+          >
+            View Portfolio
+          </Link>
+          <a
+            href={WA}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+            style={{ background: 'rgba(37,211,102,0.12)', color: '#25D366', border: '1px solid rgba(37,211,102,0.3)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
+          >
+            <MessageCircle size={16} />
+            WhatsApp
+          </a>
+        </motion.div>
+      </motion.div>
+
+      {/* scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.4 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+      >
+        <motion.div
+          animate={{ y: [0, 9, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+          style={{ width: '1px', height: '44px', background: 'linear-gradient(to bottom, rgba(200,169,106,0.9), transparent)' }}
+        />
+      </motion.div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   02  WEDDING SHOWCASE
+═══════════════════════════════════════════════════════════ */
+const weddingGrid = [
+  { img: 'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900', label: 'The Ceremony', tall: true },
+  { img: 'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', label: 'Indian Traditions' },
+  { img: 'https://images.unsplash.com/photo-1533091090875-1ff4acc497dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', label: 'Ring Detail' },
+  { img: 'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', label: 'Couple Portrait' },
+];
+
+function WeddingShowcase() {
+  return (
+    <section className="py-28 px-6 md:px-12" style={{ backgroundColor: '#0a0a0a' }}>
+      <div className="max-w-[1300px] mx-auto">
+        <Reveal className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4">
+          <div>
+            <SectionLabel>Wedding Films</SectionLabel>
+            <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(30px, 4vw, 52px)', lineHeight: 1.1 }}>
+              Emotional. Cinematic.
+              <br />Unforgettable.
+            </motion.h2>
+          </div>
+          <motion.div variants={fadeUp}>
+            <Link to="/portfolio" className="flex items-center gap-2 text-sm group" style={{ color: 'var(--accent-gold)' }}>
+              View All Weddings
+              <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </motion.div>
+        </Reveal>
+
+        {/* bento grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-2 gap-3" style={{ gridAutoRows: '260px' }}>
+          {/* featured video left */}
+          <Reveal className="col-span-2 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
+            <motion.div variants={fadeUp} className="w-full h-full">
+              <video
+                autoPlay muted loop playsInline
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                poster="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
+              >
+                <source src="https://assets.mixkit.co/videos/preview/mixkit-couple-dancing-at-their-wedding-42-large.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.75) 0%, transparent 55%)' }} />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100" style={{ background: 'rgba(200,169,106,0.85)' }}>
+                  <Play size={24} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft: '3px' }} />
+                </div>
+              </div>
+              <div className="absolute bottom-5 left-5">
+                <p className="text-white/40 text-xs tracking-widest uppercase mb-1">Showreel 2024</p>
+                <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '22px' }}>Priya &amp; Aryan</p>
+              </div>
+            </motion.div>
+          </Reveal>
+
+          {/* 4 smaller images right */}
+          {weddingGrid.map((w) => (
+            <Reveal key={w.label} className={`relative rounded-2xl overflow-hidden group cursor-pointer ${w.tall ? 'row-span-2' : ''}`}>
+              <motion.div variants={fadeUp} className="w-full h-full">
+                <img src={w.img} alt={w.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-107" />
+                <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.6) 0%, transparent 55%)' }} />
+                <p className="absolute bottom-3 left-4 text-white text-xs tracking-wide" style={{ fontFamily: 'var(--font-heading)' }}>{w.label}</p>
+              </motion.div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   03  BUSINESS ADS SHOWCASE
+═══════════════════════════════════════════════════════════ */
+const adCards = [
+  { title: 'Dental Clinic',   sub: 'Brand Campaign',  dur: '0:32', img: 'https://images.unsplash.com/photo-1588776814546-1ffbf319e5e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Healthcare' },
+  { title: 'Luxury Salon',    sub: 'Instagram Reels',  dur: '0:28', img: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Beauty' },
+  { title: 'Jewellery Brand', sub: 'Lookbook Film',    dur: '0:40', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Retail' },
+  { title: 'Corporate Firm',  sub: 'Brand Identity',   dur: '0:35', img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Corporate' },
+];
+
+function AdsShowcase({ onBook }: { onBook: () => void }) {
+  return (
+    <section className="py-28 px-6 md:px-12" style={{ backgroundColor: 'var(--deep-green)' }}>
+      <div className="max-w-[1300px] mx-auto">
+        <Reveal className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div>
+            <SectionLabel>Business Ads &amp; Commercials</SectionLabel>
+            <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(30px, 4vw, 52px)', lineHeight: 1.1 }}>
+              Stop the Scroll.
+              <br />Start the Conversation.
+            </motion.h2>
+          </div>
+          <motion.p variants={fadeUp} className="max-w-[320px]" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '15px', lineHeight: 1.8 }}>
+            30–40 second cinematic reels for dentists, salons, brands, and corporates — built to convert.
+          </motion.p>
+        </Reveal>
+
+        <Reveal className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {adCards.map((ad) => (
+            <motion.div
+              key={ad.title}
+              variants={fadeUp}
+              className="group relative rounded-2xl overflow-hidden cursor-pointer"
+              style={{ aspectRatio: '9/14' }}
+              whileHover={{ y: -6 }}
+              transition={{ duration: 0.35, ease }}
+            >
+              <img src={ad.img} alt={ad.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.1) 60%, transparent 100%)' }} />
+
+              {/* tag top */}
+              <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.18em]"
+                style={{ background: 'rgba(5,5,5,0.55)', backdropFilter: 'blur(8px)', color: 'var(--accent-gold)', border: '1px solid rgba(200,169,106,0.25)' }}>
+                {ad.tag}
+              </div>
+
+              {/* duration top-right */}
+              <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[10px]"
+                style={{ background: 'rgba(5,5,5,0.6)', backdropFilter: 'blur(6px)', color: 'rgba(255,255,255,0.6)' }}>
+                {ad.dur}
+              </div>
+
+              {/* play button centre */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <motion.div
+                  className="w-14 h-14 rounded-full flex items-center justify-center"
+                  style={{ background: 'rgba(200,169,106,0.0)', border: '1.5px solid rgba(200,169,106,0.4)' }}
+                  whileHover={{ background: 'rgba(200,169,106,0.9)', border: '1.5px solid transparent' }}
+                  transition={{ duration: 0.25 }}
+                >
+                  <Play size={20} color="rgba(200,169,106,0.9)" style={{ marginLeft: '3px' }} className="group-hover:[color:#0a0a0a]" />
+                </motion.div>
+              </div>
+
+              {/* info bottom */}
+              <div className="absolute bottom-5 left-5 right-5">
+                <p className="text-white/40 text-[10px] uppercase tracking-widest mb-1">{ad.sub}</p>
+                <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', lineHeight: 1.2 }}>{ad.title}</p>
+              </div>
+            </motion.div>
+          ))}
+        </Reveal>
+
+        <Reveal className="mt-10 flex justify-center">
+          <motion.button
+            variants={fadeUp}
+            onClick={onBook}
+            className="flex items-center gap-2 px-8 py-3.5 rounded-full text-sm cursor-pointer transition-all"
+            style={{ background: 'var(--accent-gold)', color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
+            whileHover={{ scale: 1.05 }}
+          >
+            Get Your Brand Film
+            <ChevronRight size={16} />
+          </motion.button>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   04  RESORT & REAL ESTATE
+═══════════════════════════════════════════════════════════ */
+function ResortRealEstate() {
+  return (
+    <section style={{ backgroundColor: '#0d0d0d' }} className="py-28 px-6 md:px-12">
+      <div className="max-w-[1300px] mx-auto">
+        <Reveal className="grid md:grid-cols-[1fr_1.6fr] gap-16 items-center">
+          <div className="flex flex-col gap-6">
+            <SectionLabel>Resort &amp; Real Estate</SectionLabel>
+            <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 3.5vw, 48px)', lineHeight: 1.15 }}>
+              Properties &amp; Spaces That Sell Themselves
+            </motion.h2>
+            <motion.p variants={fadeUp} style={{ color: 'rgba(255,255,255,0.45)', fontSize: '15px', lineHeight: 1.9 }}>
+              Cinematic walkthroughs, aerial drone footage, and lifestyle photography that showcase every property at its finest — from luxury resorts to premium real estate.
+            </motion.p>
+            <motion.ul variants={stagger} className="flex flex-col gap-3 mt-2">
+              {['Luxury resort videos', 'Interior & exterior photography', 'Lifestyle shots', 'Drone walkthroughs', 'Property tour films'].map(item => (
+                <motion.li key={item} variants={fadeUp} className="flex items-center gap-3" style={{ color: 'rgba(255,255,255,0.55)', fontSize: '14px' }}>
+                  <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'var(--accent-gold)', flexShrink: 0 }} />
+                  {item}
+                </motion.li>
+              ))}
+            </motion.ul>
+            <motion.div variants={fadeUp}>
+              <Link to="/portfolio" className="inline-flex items-center gap-2 text-sm group mt-2" style={{ color: 'var(--accent-gold)' }}>
+                See Property Work <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* image mosaic */}
+          <motion.div variants={fadeUp} className="grid grid-cols-2 gap-3">
+            <div className="col-span-2 rounded-2xl overflow-hidden" style={{ height: '280px' }}>
+              <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900" alt="Resort pool" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            </div>
+            <div className="rounded-2xl overflow-hidden" style={{ height: '200px' }}>
+              <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700" alt="Interior" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            </div>
+            <div className="rounded-2xl overflow-hidden" style={{ height: '200px' }}>
+              <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700" alt="Property" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+            </div>
+          </motion.div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   05  FOOD PHOTOGRAPHY
+═══════════════════════════════════════════════════════════ */
+const foodImages = [
+  { img: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900', label: 'Fine Dining', wide: true },
+  { img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', label: 'Fresh Ingredients' },
+  { img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', label: 'Artisan Creations' },
+];
+
+function FoodSection() {
+  return (
+    <section className="py-28 px-6 md:px-12" style={{ backgroundColor: '#080808' }}>
+      <div className="max-w-[1300px] mx-auto">
+        <Reveal className="text-center mb-14">
+          <SectionLabel>Food Photography &amp; Reels</SectionLabel>
+          <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(30px, 4vw, 52px)', lineHeight: 1.1 }}>
+            Food That Looks as Good
+            <br />as It Tastes.
+          </motion.h2>
+          <motion.p variants={fadeUp} className="mx-auto mt-4" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '15px', lineHeight: 1.85, maxWidth: '420px' }}>
+            Premium food content for restaurants, cafés, cloud kitchens, and luxury resorts.
+          </motion.p>
+        </Reveal>
+
+        {/* image grid */}
+        <Reveal className="grid md:grid-cols-3 gap-4 mb-6">
+          {foodImages.map((f) => (
+            <motion.div
+              key={f.label}
+              variants={fadeUp}
+              className={`relative rounded-2xl overflow-hidden group ${f.wide ? 'md:col-span-2' : ''}`}
+              style={{ height: '380px' }}
+            >
+              <img src={f.img} alt={f.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.7) 0%, transparent 55%)' }} />
+              <p className="absolute bottom-5 left-5 text-white text-xs tracking-[0.2em] uppercase" style={{ color: 'var(--accent-gold)' }}>{f.label}</p>
+            </motion.div>
+          ))}
+        </Reveal>
+
+        {/* reel previews */}
+        <Reveal className="grid md:grid-cols-2 gap-4">
+          {[
+            { title: 'Zaffran Fine Dining', sub: '0:38 reel', img: 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900' },
+            { title: 'The Artisan Café',    sub: '0:30 reel', img: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900' },
+          ].map((r) => (
+            <motion.div key={r.title} variants={fadeUp} className="relative rounded-2xl overflow-hidden group cursor-pointer" style={{ height: '240px' }}>
+              <img src={r.img} alt={r.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0" style={{ background: 'rgba(5,5,5,0.55)' }} />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: 'rgba(200,169,106,0.9)' }}>
+                  <Play size={20} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft: '3px' }} />
+                </div>
+              </div>
+              <div className="absolute bottom-5 left-5">
+                <p className="text-white/40 text-[10px] uppercase tracking-widest mb-1">{r.sub}</p>
+                <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '18px' }}>{r.title}</p>
+              </div>
+            </motion.div>
+          ))}
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   06  DRONE CINEMATICS
+═══════════════════════════════════════════════════════════ */
+const locations = ['Goa Coastline', 'Udaipur Palace', 'Mumbai Skyline', 'Santorini Cliffs', 'Jaipur Heritage', 'Maldives Atoll'];
+
+function DroneSection() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], ['-8%', '8%']);
+
+  return (
+    <section ref={ref} className="relative overflow-hidden" style={{ height: '92vh' }}>
+      <motion.div className="absolute inset-0 scale-110" style={{ y }}>
+        <img
+          src="https://images.unsplash.com/photo-1473968512647-3e447244af8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt="Aerial drone cinematics"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
+      <div className="absolute inset-0 z-10" style={{ background: 'linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.2) 40%, rgba(5,5,5,0.8) 100%)' }} />
+
+      <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-6">
+        <Reveal>
+          <SectionLabel>Drone Cinematics</SectionLabel>
+          <motion.h2 variants={fadeUp} className="text-white mb-4" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(34px, 5.5vw, 72px)', lineHeight: 1.0 }}>
+            A God's-Eye View of
+            <br />Every Story.
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-white/45 mx-auto mb-10" style={{ fontSize: '15px', maxWidth: '420px', lineHeight: 1.85 }}>
+            Aerial coverage for weddings, resorts, real estate, and brand films — capturing scale that cameras on the ground simply can't.
+          </motion.p>
+        </Reveal>
+
+        {/* locations ticker */}
+        <div className="w-full overflow-hidden mt-4">
+          <motion.div
+            animate={{ x: ['0%', '-50%'] }}
+            transition={{ repeat: Infinity, duration: 18, ease: 'linear' }}
+            className="flex gap-8 whitespace-nowrap"
+          >
+            {[...locations, ...locations].map((loc, i) => (
+              <span key={i} className="flex items-center gap-8">
+                <span style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(18px, 2vw, 26px)', color: 'rgba(255,255,255,0.18)', fontStyle: 'italic' }}>{loc}</span>
+                <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: 'rgba(200,169,106,0.4)', display: 'inline-block' }} />
+              </span>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   07  GLOBAL EDITING SERVICES
+═══════════════════════════════════════════════════════════ */
+const editStats = [
+  { icon: Globe,  value: '500+', label: 'Projects Delivered'  },
+  { icon: Clock,  value: '48hr', label: 'Turnaround Time'     },
+  { icon: Zap,    value: 'US / AU', label: 'Primary Markets'  },
+];
+const editServices = ['Wedding Film Editing', 'Real Estate Editing', 'Ad & Brand Editing', 'Color Grading', 'Sound Design & Mix'];
+
+function EditingSection() {
+  return (
+    <section className="py-28 px-6 md:px-12" style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #111a17 100%)' }}>
+      <div className="max-w-[1300px] mx-auto grid md:grid-cols-2 gap-20 items-center">
+
+        {/* before / after split */}
+        <Reveal>
+          <motion.div variants={fadeUp} className="relative rounded-3xl overflow-hidden" style={{ aspectRatio: '4/3' }}>
+            {/* before half */}
+            <div className="absolute inset-0 flex">
+              <div className="w-1/2 overflow-hidden relative" style={{ filter: 'grayscale(1) brightness(0.6) contrast(1.1)' }}>
+                <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900" alt="Before edit" className="w-full h-full object-cover" style={{ width: '200%' }} />
+              </div>
+              {/* after half */}
+              <div className="w-1/2 overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900" alt="After edit" className="h-full object-cover" style={{ width: '200%', marginLeft: '-100%' }} />
+              </div>
+            </div>
+
+            {/* divider */}
+            <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-[2px]" style={{ background: 'var(--accent-gold)' }} />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-9 h-9 rounded-full flex items-center justify-center z-10" style={{ background: 'var(--accent-gold)' }}>
+              <span className="text-[#0a0a0a] text-xs font-bold">↔</span>
+            </div>
+
+            {/* labels */}
+            <div className="absolute bottom-4 left-4 px-3 py-1 rounded-full text-[10px] uppercase tracking-widest" style={{ background: 'rgba(5,5,5,0.7)', color: 'rgba(255,255,255,0.45)' }}>Before</div>
+            <div className="absolute bottom-4 right-4 px-3 py-1 rounded-full text-[10px] uppercase tracking-widest" style={{ background: 'rgba(200,169,106,0.85)', color: '#0a0a0a' }}>After</div>
+          </motion.div>
+        </Reveal>
+
+        {/* text */}
+        <Reveal className="flex flex-col gap-6">
+          <SectionLabel>Global Editing Services</SectionLabel>
+          <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 3.5vw, 48px)', lineHeight: 1.15 }}>
+            World-Class Post-Production.
+            <br />Delivered Remotely.
+          </motion.h2>
+          <motion.p variants={fadeUp} style={{ color: 'rgba(255,255,255,0.45)', fontSize: '15px', lineHeight: 1.9 }}>
+            Trusted by studios in the US and Australia. We deliver cinema-grade edits — colour grading, sound design, and cuts — with the fastest turnaround in the industry.
+          </motion.p>
+
+          {/* stats */}
+          <motion.div variants={stagger} className="grid grid-cols-3 gap-4 my-2">
+            {editStats.map(({ icon: Icon, value, label }) => (
+              <motion.div key={label} variants={fadeUp} className="flex flex-col gap-1 p-4 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                <Icon size={16} style={{ color: 'var(--accent-gold)' }} />
+                <p className="text-white font-medium" style={{ fontFamily: 'var(--font-heading)', fontSize: '22px' }}>{value}</p>
+                <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px', lineHeight: 1.5 }}>{label}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* services list */}
+          <motion.ul variants={stagger} className="flex flex-col gap-2.5">
+            {editServices.map(s => (
+              <motion.li key={s} variants={fadeUp} className="flex items-center gap-3" style={{ color: 'rgba(255,255,255,0.5)', fontSize: '14px' }}>
+                <span style={{ width: '20px', height: '1px', background: 'var(--accent-gold)', flexShrink: 0 }} />
+                {s}
+              </motion.li>
+            ))}
+          </motion.ul>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   08  TESTIMONIALS
+═══════════════════════════════════════════════════════════ */
+const reviews = [
+  { name: 'Priya & Aryan Sharma',  project: 'Mumbai Wedding',         text: 'Absolutely breathtaking work. They captured emotions we didn\'t even know were on camera. The final film made our parents cry.',    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200' },
+  { name: 'Dr. Meera Kapoor',       project: 'Dental Clinic Campaign',  text: 'Our Instagram ad brought in 3× more leads than anything we\'d run before. The quality was on par with international studios.', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200' },
+  { name: 'James & Sarah Mitchell', project: 'Santorini Destination',   text: 'We flew them all the way to Greece and every penny was worth it. The drone shots were cinematic gold. 10/10 recommend.',        avatar: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=200' },
+];
+const logos = ['The Leela', 'Taj Hotels', 'Oberoi Group', 'Lodha', 'ITC Hotels', 'Zaffran', 'GlowUp', 'Aurelia'];
+
+function TestimonialsSection() {
+  return (
+    <section className="py-28 px-6 md:px-12" style={{ backgroundColor: '#0a0a0a' }}>
+      <div className="max-w-[1300px] mx-auto">
+        <Reveal className="text-center mb-14">
+          <SectionLabel>Client Love</SectionLabel>
+          <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(28px, 3.5vw, 48px)' }}>
+            What Our Clients Say
+          </motion.h2>
+        </Reveal>
+
+        <Reveal className="grid md:grid-cols-3 gap-5 mb-20">
+          {reviews.map((r) => (
+            <motion.div
+              key={r.name}
+              variants={fadeUp}
+              className="flex flex-col gap-5 p-7 rounded-2xl"
+              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+              whileHover={{ y: -4, borderColor: 'rgba(200,169,106,0.25)' }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* stars */}
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => <Star key={i} size={14} fill="var(--accent-gold)" style={{ color: 'var(--accent-gold)' }} />)}
+              </div>
+
+              <p className="flex-1" style={{ color: 'rgba(255,255,255,0.58)', fontSize: '15px', lineHeight: 1.85, fontStyle: 'italic' }}>
+                "{r.text}"
+              </p>
+
+              <div className="flex items-center gap-3 pt-2" style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }}>
+                <img src={r.avatar} alt={r.name} className="w-10 h-10 rounded-full object-cover" />
+                <div>
+                  <p className="text-white text-sm" style={{ fontFamily: 'var(--font-heading)' }}>{r.name}</p>
+                  <p style={{ color: 'var(--accent-gold)', fontSize: '11px', letterSpacing: '0.08em' }}>{r.project}</p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </Reveal>
+
+        {/* brand logos ticker */}
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '40px' }}>
+          <p className="text-center text-xs uppercase tracking-[0.25em] mb-8" style={{ color: 'rgba(255,255,255,0.2)' }}>Trusted By</p>
+          <div className="overflow-hidden">
+            <motion.div
+              animate={{ x: ['0%', '-50%'] }}
+              transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
+              className="flex gap-14 whitespace-nowrap items-center"
+            >
+              {[...logos, ...logos].map((l, i) => (
+                <span key={i} style={{ fontFamily: 'var(--font-heading)', fontSize: '20px', color: 'rgba(255,255,255,0.1)', letterSpacing: '0.05em' }}>{l}</span>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   09  FINAL CTA
+═══════════════════════════════════════════════════════════ */
+function CTASection({ onBook }: { onBook: () => void }) {
+  return (
+    <section className="relative overflow-hidden py-36 px-6 text-center" style={{ backgroundColor: 'var(--dark)' }}>
+      {/* bg texture ring */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-[700px] h-[700px] rounded-full" style={{ border: '1px solid rgba(200,169,106,0.07)' }} />
+        <div className="absolute w-[500px] h-[500px] rounded-full" style={{ border: '1px solid rgba(200,169,106,0.05)' }} />
+      </div>
+
+      <Reveal className="relative z-10 max-w-[700px] mx-auto flex flex-col items-center gap-6">
+        <SectionLabel>Ready to Begin?</SectionLabel>
+        <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(34px, 5vw, 66px)', lineHeight: 1.05, letterSpacing: '-0.02em' }}>
+          Let's Build Something
+          <br />
+          <span style={{ color: 'var(--accent-gold)' }}>Extraordinary.</span>
+        </motion.h2>
+        <motion.p variants={fadeUp} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '16px', lineHeight: 1.85, maxWidth: '460px' }}>
+          Whether you're planning a wedding, launching a campaign, or need world-class editing — we're ready.
+        </motion.p>
+        <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 mt-4">
+          <button
+            onClick={onBook}
+            className="px-8 py-4 rounded-full text-sm font-medium cursor-pointer transition-all hover:scale-105"
+            style={{ background: 'var(--accent-gold)', color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}
+          >
+            Book Your Shoot
+          </button>
+          <button
+            onClick={onBook}
+            className="px-8 py-4 rounded-full text-sm font-medium cursor-pointer transition-all hover:scale-105"
+            style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}
+          >
+            Get a Quote
+          </button>
+          <a
+            href={WA}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 px-7 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
+            style={{ background: 'rgba(37,211,102,0.1)', color: '#25D366', border: '1px solid rgba(37,211,102,0.25)', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}
+          >
+            <MessageCircle size={16} />
+            WhatsApp Us
+          </a>
+        </motion.div>
+      </Reveal>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PAGE EXPORT
+═══════════════════════════════════════════════════════════ */
 export function HomePage() {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const openContact = () => setIsContactOpen(true);
 
   return (
     <>
-      <div className="min-h-screen">
-        {/* Hero Section */}
-        <section className="relative h-screen flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/30 z-10" />
-          <img
-            src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
-            alt="Wedding couple"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="relative z-20 text-center text-white max-w-[800px] px-6"
-          >
-            <h1
-              className="text-5xl md:text-6xl mb-4"
-              style={{ fontFamily: 'var(--font-heading)', fontSize: '56px', lineHeight: '1.2' }}
-            >
-              Capturing Love Stories
-            </h1>
-            <p className="text-lg md:text-xl mb-6 text-white/90" style={{ fontSize: '18px' }}>
-              Timeless wedding photography that preserves your most precious moments
-            </p>
-            <button
-              onClick={() => setIsContactOpen(true)}
-              className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-full cursor-pointer transition-colors"
-              style={{ fontFamily: 'var(--font-heading)' }}
-            >
-              Book Your Date
-            </button>
-          </motion.div>
-        </section>
-
-        {/* About Section */}
-        <section
-          className="py-24 px-6 md:px-10"
-          style={{ backgroundColor: 'var(--light)' }}
-        >
-          <div className="max-w-[1280px] mx-auto">
-            <div className="grid md:grid-cols-2 gap-10">
-              <div className="relative aspect-[4/5]">
-                <video
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  className="w-full h-full object-cover rounded-2xl"
-                  poster="https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800"
-                >
-                  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <div className="flex flex-col justify-center">
-                <img
-                  src="https://images.unsplash.com/photo-1533091090875-1ff4acc497dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600"
-                  alt="Wedding rings"
-                  className="w-full h-64 object-cover rounded-2xl mb-6"
-                />
-                <h2
-                  className="mb-4"
-                  style={{ fontFamily: 'var(--font-heading)', fontSize: '36px', lineHeight: '1.3' }}
-                >
-                  About Eternal Moments
-                </h2>
-                <p className="text-[var(--gray-text)] mb-3" style={{ fontSize: '16px', lineHeight: '1.7' }}>
-                  With over 10 years of experience capturing weddings across the globe, we specialize in
-                  creating timeless imagery that tells your unique love story.
-                </p>
-                <p className="text-[var(--gray-text)]" style={{ fontSize: '16px', lineHeight: '1.7' }}>
-                  Our approach blends documentary-style coverage with artistic portraiture, ensuring every
-                  moment is beautifully preserved.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Reviews Section */}
-        <section
-          className="py-24 px-6 md:px-10"
-          style={{ backgroundColor: 'var(--deep-green)' }}
-        >
-          <div className="max-w-[1280px] mx-auto">
-            <div className="grid md:grid-cols-3 gap-8 items-center">
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl text-white">
-                <div className="flex gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} fill="var(--accent-gold)" className="text-[var(--accent-gold)]" />
-                  ))}
-                </div>
-                <p className="mb-4 italic">"Absolutely stunning work! They captured every emotion perfectly."</p>
-                <p className="text-sm text-white/80">- Priya & Raj</p>
-              </div>
-
-              <div className="flex justify-center">
-                <img
-                  src="https://images.unsplash.com/flagged/photo-1552981941-424aac2b4311?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400"
-                  alt="Happy couple"
-                  className="w-full max-w-[400px] rounded-2xl"
-                />
-              </div>
-
-              <div className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl text-white">
-                <div className="flex gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={20} fill="var(--accent-gold)" className="text-[var(--accent-gold)]" />
-                  ))}
-                </div>
-                <p className="mb-4 italic">"Professional, creative, and made us feel so comfortable."</p>
-                <p className="text-sm text-white/80">- Sarah & Michael</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Home Footer - Contact */}
-        <section className="relative">
-          <div className="relative h-[50vh]">
-            <div className="absolute inset-0 bg-black/40 z-10 flex items-center justify-center">
-              <h2
-                className="text-white text-center px-6"
-                style={{ fontFamily: 'var(--font-heading)', fontSize: '40px' }}
-              >
-                Let's Create Magic Together
-              </h2>
-            </div>
-            <img
-              src="https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
-              alt="Beach wedding"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="bg-white py-16 px-6 md:px-10">
-            <div className="max-w-[1280px] mx-auto grid md:grid-cols-2 gap-10">
-              <div>
-                <h3 className="mb-4" style={{ fontFamily: 'var(--font-heading)', fontSize: '28px' }}>
-                  Visit Our Studio
-                </h3>
-                <div className="flex items-start gap-3 mb-4">
-                  <MapPin size={20} className="text-[var(--accent-gold)] mt-1 flex-shrink-0" />
-                  <p className="text-[var(--gray-text)]">
-                    123 Photography Lane
-                    <br />
-                    Mumbai, Maharashtra 400001
-                    <br />
-                    India
-                  </p>
-                </div>
-                <button
-                  onClick={() => setIsContactOpen(true)}
-                  className="bg-[var(--accent-gold)] text-white px-6 py-3 rounded-full hover:bg-[#B39859] transition-colors mt-4"
-                >
-                  Get in Touch
-                </button>
-              </div>
-
-              <div className="h-[250px] rounded-2xl overflow-hidden">
-                <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.1!2d72.8777!3d19.0760!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDA0JzMzLjYiTiA3MsKwNTInMzkuNyJF!5e0!3m2!1sen!2sin!4v1234567890"
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  allowFullScreen
-                  loading="lazy"
-                  title="Studio location"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-
+      <HeroSection onBook={openContact} />
+      <WeddingShowcase />
+      <AdsShowcase onBook={openContact} />
+      <ResortRealEstate />
+      <FoodSection />
+      <DroneSection />
+      <EditingSection />
+      <TestimonialsSection />
+      <CTASection onBook={openContact} />
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
     </>
   );

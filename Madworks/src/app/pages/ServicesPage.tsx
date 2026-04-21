@@ -1,5 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 /* ─── animation presets ─── */
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -31,8 +33,9 @@ const services = [
       'From the first look to the final farewell, we craft complete wedding narratives — spanning multiple days, rituals, and emotions.',
     items: ['Cinematic Films', 'Traditional Coverage', 'Pre-Wedding Shoots', 'Destination Weddings', 'Drone Coverage', 'Wedding Albums'],
     bg: 'https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
-    video: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    video: 'https://assets.mixkit.co/videos/preview/mixkit-couple-dancing-at-their-wedding-42-large.mp4',
     accent: '#C8A96A',
+    link: '/wedding',
   },
   {
     id: 'resort',
@@ -45,6 +48,7 @@ const services = [
     bg: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
     video: null,
     accent: '#A8C5B5',
+    link: '/resort',
   },
   {
     id: 'commercial',
@@ -57,6 +61,7 @@ const services = [
     bg: 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
     video: null,
     accent: '#D4956A',
+    link: '/ads',
   },
   {
     id: 'realestate',
@@ -69,6 +74,7 @@ const services = [
     bg: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
     video: null,
     accent: '#8AABBA',
+    link: '/realestate',
   },
   {
     id: 'editing',
@@ -81,32 +87,76 @@ const services = [
     bg: 'https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
     video: null,
     accent: '#B5A8C8',
+    link: '/editing',
   },
+];
+
+/* ─── Hero slideshow data ─── */
+const heroSlides = [
+  { type: 'image' as const, src: 'https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
+  { type: 'image' as const, src: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
+  { type: 'video' as const, src: 'https://assets.mixkit.co/videos/preview/mixkit-fireworks-in-the-night-sky-1953-large.mp4', poster: 'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
+  { type: 'image' as const, src: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
+  { type: 'image' as const, src: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
+  { type: 'image' as const, src: 'https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
+  { type: 'image' as const, src: 'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
 ];
 
 /* ─── Hero ─── */
 function ServicesHero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
   const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setCurrent(p => (p + 1) % heroSlides.length), 3800);
+    return () => clearInterval(t);
+  }, []);
+
   return (
     <section ref={ref} className="relative h-screen overflow-hidden flex items-center justify-center">
-      {/* parallax bg */}
-      <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
-        <video
-          autoPlay muted loop playsInline
-          className="w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600"
-        >
-          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-        </video>
-      </motion.div>
+      {/* crossfade slideshow */}
+      <div className="absolute inset-0">
+        <AnimatePresence mode="sync">
+          {heroSlides.map((slide, i) =>
+            i === current ? (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1.6, ease: 'easeInOut' }}
+                className="absolute inset-0"
+              >
+                {slide.type === 'video' ? (
+                  <video autoPlay muted loop playsInline className="w-full h-full object-cover" poster={slide.poster}>
+                    <source src={slide.src} type="video/mp4" />
+                  </video>
+                ) : (
+                  <img src={slide.src} alt="" className="w-full h-full object-cover scale-105" />
+                )}
+              </motion.div>
+            ) : null
+          )}
+        </AnimatePresence>
+      </div>
 
       {/* gradient */}
       <div className="absolute inset-0 z-10" style={{ background: 'linear-gradient(to bottom, rgba(10,10,10,0.6) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.85) 100%)' }} />
+
+      {/* slide dots */}
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+        {heroSlides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrent(i)}
+            className="rounded-full transition-all duration-500 cursor-pointer"
+            style={{ width: i === current ? '24px' : '6px', height: '6px', background: i === current ? 'var(--accent-gold)' : 'rgba(255,255,255,0.3)' }}
+          />
+        ))}
+      </div>
 
       {/* text */}
       <motion.div
@@ -295,6 +345,20 @@ function ServiceBlock({ svc, index }: { svc: (typeof services)[0]; index: number
               </motion.li>
             ))}
           </motion.ul>
+
+          {/* dedicated page link */}
+          {svc.link && (
+            <motion.div variants={fadeUp} className="mt-8">
+              <Link
+                to={svc.link}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-medium transition-all hover:scale-105 group"
+                style={{ background: `${svc.accent}18`, border: `1px solid ${svc.accent}40`, color: svc.accent, fontFamily: 'var(--font-body)', letterSpacing: '0.04em' }}
+              >
+                Explore This Service
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+          )}
 
         </Reveal>
       </div>
