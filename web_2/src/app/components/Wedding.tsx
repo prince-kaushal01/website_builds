@@ -34,7 +34,7 @@ export default function Wedding() {
         {/* ================= TOP RIGHT MALA ================= */}
         <motion.img
           src={sidemala}
-          className="absolute -top-10 right-10 w-96"
+          className="absolute -top-10 right-10 w-52 lg:w-96"
           initial={{ x: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -52,7 +52,7 @@ export default function Wedding() {
         />
         <motion.img
           src={sidemala}
-          className="absolute -top-10 -left-58 w-96"
+          className="absolute -top-10 -left-58 w-52 lg:w-96"
           initial={{ x: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -72,7 +72,7 @@ export default function Wedding() {
         {/* ================= RIGHT BOTTOM VASE ================= */}
         <motion.img
           src={sidevase}
-          className="absolute -bottom-10 -right-20 w-[540px]"
+          className="absolute -bottom-10 left-15 w-[540px]"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -91,7 +91,7 @@ export default function Wedding() {
         {/* ================= LEFT FLOWER VASE 1 ================= */}
         <motion.img
           src={flowervase1}
-          className="absolute -bottom-20 left-64 w-24"
+          className="absolute -bottom-20 left-3 w-18 lg:w-24"
           initial={{ x: -150, opacity: 0 }}
           animate={
             desktopInView
@@ -111,7 +111,7 @@ export default function Wedding() {
         {/* ================= LEFT FLOWER VASE 2 ================= */}
         <motion.img
           src={flowervase2}
-          className="absolute bottom-0 left-80 -rotate-2 w-40"
+          className="absolute bottom-0 left-15 -rotate-2 w-30 lg:w-40"
           initial={{ x: -150, opacity: 0 }}
           animate={
             desktopInView
@@ -130,7 +130,7 @@ export default function Wedding() {
         {/* ================= POND CENTER ================= */}
         <motion.img
           src={aag}
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-64 -rotate-2"
+          className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-50 lg:w-64 -rotate-2"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -147,7 +147,7 @@ export default function Wedding() {
         />
         <motion.img
           src={groom}
-          className="absolute -bottom-8 left-[570px] -translate-x-1/2 w-16"
+          className="absolute -bottom-8 left-[570px] -translate-x-1/2 w-16 lg:w-16"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -164,7 +164,7 @@ export default function Wedding() {
         />
         <motion.img
           src={bride}
-          className="absolute -bottom-8 left-[640px] -translate-x-1/2 w-32"
+          className="absolute -bottom-8 left-[640px] -translate-x-1/2 w-32 lg:w-32"
           initial={{ y: 150, opacity: 0 }}
           animate={
             desktopInView
@@ -187,7 +187,7 @@ export default function Wedding() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-6xl mb-4 pt-18 "
+            className="text-5xl mb-2 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "#B13401" }}
           >
             Wedding
@@ -198,7 +198,7 @@ export default function Wedding() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="text-lg font-semibold mb-6"
+            className="text-base font-semibold mb-3"
             style={{ fontFamily: "Cormorant", color: "#775A00" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -209,20 +209,20 @@ export default function Wedding() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[#775A00] font-['Cormorant']"
+            className="space-y-0.5 text-[#775A00] font-['Cormorant']"
           >
-            <p className="text-xl font-semibold">FRI</p>
-            <p className="text-xl font-semibold">
+            <p className="text-lg font-semibold">FRI</p>
+            <p className="text-lg font-semibold">
               June{" "}
-              <span className="text-[#B13401] text-3xl font-semibold font-['Great Vibes']">
+              <span className="text-[#B13401] text-2xl font-semibold font-['Great Vibes']">
                 5
               </span>{" "}
               2026
             </p>
-            <p className="text-lg">01:00 PM onwards</p>
-            <p className="text-lg mb-3">Uttar Garden Lawn</p>
+            <p className="text-base">01:00 PM onwards</p>
+            <p className="text-base mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-xl font-semibold text-[#775A00] font-['Cormorant']">
+          <p className="text-lg font-semibold text-[#775A00] font-['Cormorant']">
             Dress code
           </p>
           <motion.p
@@ -230,7 +230,7 @@ export default function Wedding() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-sm font-semibold px-4 text-[#775A00] font-['Cormorant']"
+            className="text-xs font-semibold px-4 text-[#775A00] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork
@@ -240,7 +240,7 @@ export default function Wedding() {
       {/* mobile View */}
       <section
         ref={mobileRef}
-        className="md:hidden  h-screen w-full relative overflow-hidden flex justify-center"
+        className="md:hidden min-h-dvh w-full relative overflow-hidden flex justify-center"
         style={{
           backgroundImage: `url(${wedding})`,
           backgroundSize: "cover",
@@ -390,7 +390,7 @@ export default function Wedding() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-5xl mb-4 pt-32 "
+            className="text-4xl mb-2 pt-25 "
             style={{ fontFamily: "Great Vibes", color: "#B13401" }}
           >
             Wedding
@@ -401,7 +401,7 @@ export default function Wedding() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="text-base mb-6"
+            className="text-sm mb-3"
             style={{ fontFamily: "Cormorant", color: "#775A00" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -412,20 +412,20 @@ export default function Wedding() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[#775A00] font-['Cormorant']"
+            className="space-y-0.5 text-[#775A00] font-['Cormorant']"
           >
-            <p className="text-lg">FRI</p>
-            <p className="text-lg">
+            <p className="text-base">FRI</p>
+            <p className="text-base">
               June{" "}
-              <span className="text-[#B13401] text-2xl font-['Great Vibes']">
+              <span className="text-[#B13401] text-xl font-['Great Vibes']">
                 5
               </span>{" "}
               2026
             </p>
-            <p className="text-lg">01:00 PM onwards</p>
-            <p className="text-lg mb-3">Uttar Garden Lawn</p>
+            <p className="text-base">01:00 PM onwards</p>
+            <p className="text-base mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-lg text-[#775A00] font-['Cormorant']">
+          <p className="text-base text-[#775A00] font-['Cormorant']">
             Dress code
           </p>
           <motion.p
@@ -433,7 +433,7 @@ export default function Wedding() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-sm px-4 text-[#775A00] font-['Cormorant']"
+            className="text-xs px-4 text-[#775A00] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork

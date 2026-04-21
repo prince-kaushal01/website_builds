@@ -1,12 +1,12 @@
 import { motion } from "motion/react";
 import { useInView } from "./hooks/useInView";
 
-import reception from "../assets/bg-m-reception.png";
+import reception from "../assets/bg-m-reception.PNG";
 import desktop_Bg from "../assets/bg-d-reception.png";
 
 // assets
 import table from "../assets/table.png";
-import flowerPot from "../assets/Candle_reception.png";
+import flowerPot from "../assets/candle_reception.png";
 import art from "../assets/Reception_art.png";
 import disco1 from "../assets/disco1.png";
 import candles from "../assets/candle3.png";
@@ -178,9 +178,8 @@ export default function Reception() {
           animate={
             desktopInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -6, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -196,9 +195,8 @@ export default function Reception() {
           animate={
             desktopInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -6, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -214,9 +212,8 @@ export default function Reception() {
           animate={
             desktopInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -6, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -226,13 +223,13 @@ export default function Reception() {
           }}
         />
         {/* ================= TEXT ================= */}
-        <div className="text-center max-w-xs pt-20">
+        <div className="text-center max-w-xs pt-[200px] lg:pt-20">
           <motion.h2
             animate={
               desktopInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-5xl mb-4 pt-32 "
+            className="text-4xl mb-2 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "white" }}
           >
             Reception
@@ -243,7 +240,7 @@ export default function Reception() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="text-base mb-6"
+            className="text-sm mb-3"
             style={{ fontFamily: "Cormorant", color: "white" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -254,26 +251,26 @@ export default function Reception() {
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[white] font-['Cormorant']"
+            className="space-y-0.5 text-[white] font-['Cormorant']"
           >
-            <p className="text-lg">FRI</p>
-            <p className="text-lg">
+            <p className="text-base">FRI</p>
+            <p className="text-base">
               June{" "}
-              <span className="text-[white] text-2xl font-['Great Vibes']">
+              <span className="text-[white] text-xl font-['Great Vibes']">
                 6
               </span>{" "}
               2026
             </p>
-            <p className="text-lg">7:30 PM onwards</p>
-            <p className="text-lg mb-3">Uttar Garden Lawn</p>
+            <p className="text-base">7:30 PM onwards</p>
+            <p className="text-base mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-lg text-[white] font-['Cormorant']">Dress code</p>
+          <p className="text-base text-[white] font-['Cormorant']">Dress code</p>
           <motion.p
             animate={
               desktopInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-sm px-4 text-[white] font-['Cormorant']"
+            className="text-xs px-4 text-[white] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork
@@ -282,7 +279,7 @@ export default function Reception() {
       </section>
       <section
         ref={mobileRef}
-        className="md:hidden min-h-screen w-full relative overflow-hidden flex justify-center"
+        className="md:hidden min-h-dvh w-full relative overflow-hidden flex justify-center"
         style={{
           backgroundImage: `url(${reception})`,
           backgroundSize: "cover",
@@ -396,9 +393,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -414,9 +410,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -432,9 +427,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -450,9 +444,8 @@ export default function Reception() {
           animate={
             mobileInView
               ? {
-                  y: 0,
-                  opacity: 1,
                   y: [0, -4, 0],
+                  opacity: 1,
                 }
               : {}
           }
@@ -468,7 +461,7 @@ export default function Reception() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -50, opacity: 0 }
             }
             transition={{ duration: 0.8 }}
-            className="text-5xl mb-4 pt-32 "
+            className="text-4xl mb-2 pt-32 "
             style={{ fontFamily: "Great Vibes", color: "white" }}
           >
             Reception
@@ -479,7 +472,7 @@ export default function Reception() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.2 }}
-            className="text-base mb-6"
+            className="text-sm mb-3"
             style={{ fontFamily: "Cormorant", color: "white" }}
           >
             A playful morning of mehendi and cultural festivities
@@ -490,26 +483,26 @@ export default function Reception() {
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.3 }}
-            className="space-y-1 text-[white] font-['Cormorant']"
+            className="space-y-0.5 text-[white] font-['Cormorant']"
           >
-            <p className="text-lg">FRI</p>
-            <p className="text-lg">
+            <p className="text-base">FRI</p>
+            <p className="text-base">
               June{" "}
-              <span className="text-[white] text-2xl font-['Great Vibes']">
+              <span className="text-[white] text-xl font-['Great Vibes']">
                 6
               </span>{" "}
               2026
             </p>
-            <p className="text-lg">7:30 PM onwards</p>
-            <p className="text-lg mb-3">Uttar Garden Lawn</p>
+            <p className="text-base">7:30 PM onwards</p>
+            <p className="text-base mb-2">Uttar Garden Lawn</p>
           </motion.div>
-          <p className="text-lg text-[white] font-['Cormorant']">Dress code</p>
+          <p className="text-base text-[white] font-['Cormorant']">Dress code</p>
           <motion.p
             animate={
               mobileInView ? { y: 0, opacity: 1 } : { y: -40, opacity: 0 }
             }
             transition={{ delay: 0.4 }}
-            className="text-sm px-4 text-[white] font-['Cormorant']"
+            className="text-xs px-4 text-[white] font-['Cormorant']"
           >
             Embracing the charm of Gujarati heritage Bandhani, Patola, Leheriya
             or Kutchi Mirrorwork

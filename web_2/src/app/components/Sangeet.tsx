@@ -162,7 +162,7 @@ export default function Sangeet() {
 
       <section
         ref={mobileRef}
-        className="md:hidden h-screen w-full flex justify-center relative overflow-hidden"
+        className="md:hidden min-h-dvh w-full flex justify-center relative overflow-hidden"
         style={{
           backgroundImage: `url(${sangeet})`,
           backgroundSize: "cover",
@@ -209,20 +209,20 @@ export default function Sangeet() {
         {/* ================= LAMPS ================= */}
         <motion.img
           src={lamp}
-          className="absolute right-4 top-1/2 w-20"
+          className="absolute right-2 top-120 w-12 sm:w-22"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         />
         <motion.img
           src={lamp}
-          className="absolute right-28 bottom-40 w-16"
+          className="absolute right-20 bottom-40 w-10 sm:w-18"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         />
 
         <motion.img
           src={lamp2}
-          className="absolute -left-12 bottom-40 w-60"
+          className="absolute -left-8 bottom-40 w-36 sm:w-48"
           animate={{ scale: [1, 1.08, 1] }}
           transition={{ duration: 2.5, repeat: Infinity }}
         />
