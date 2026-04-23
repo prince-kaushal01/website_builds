@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Globe, Clock, Zap, ArrowRight, UploadCloud, Film, Palette, Volume2, Scissors, MessageCircle } from 'lucide-react';
@@ -42,7 +42,7 @@ function Hero() {
   return (
     <section ref={ref} className="relative h-screen overflow-hidden flex items-center justify-center">
       <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
-        <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+        <img src="../assets/editing.jpg"
           alt="Editing suite" className="w-full h-full object-cover" />
       </motion.div>
       <div className="absolute inset-0 z-10" style={{ background:'linear-gradient(to bottom,rgba(5,5,5,0.75) 0%,rgba(5,5,5,0.45) 45%,rgba(5,5,5,0.92) 100%)' }} />
@@ -137,7 +137,7 @@ const services = [
     title:'Color Grading',
     desc:'Hollywood-grade colour grading using DaVinci Resolve. Whether it\'s a warm film look, a cold corporate grade, or a bold commercial tone — we deliver it with precision.',
     items:['DaVinci Resolve grading','LUT creation','RAW processing','Skin tone perfection'],
-    img:'https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    img:'../assets/colour.jpg',
   },
   {
     icon: Volume2,
@@ -150,11 +150,28 @@ const services = [
 
 function ServicesSection() {
   return (
-    <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'#0a0a0a' }}>
-      <div className="max-w-[1280px] mx-auto">
+    <section className="py-28 px-6 md:px-12 relative overflow-hidden" style={{ backgroundColor:'#0a0a0a' }}>
+      {/* background — dark editing suite image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src="https://images.unsplash.com/photo-1598928506311-c55ded91a20c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.12, filter: 'saturate(0.4) brightness(0.7)' }}
+        />
+        {/* overlay that darkens top/bottom more than centre */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(to bottom, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.45) 30%, rgba(10,10,10,0.45) 70%, rgba(10,10,10,0.85) 100%)'
+        }} />
+        {/* subtle purple-lavender tint from editing page accent */}
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse 70% 50% at 50% 50%, rgba(181,168,200,0.06) 0%, transparent 70%)'
+        }} />
+      </div>
+      <div className="max-w-[1280px] mx-auto relative z-10">
         <Reveal className="text-center mb-16">
           <Label>What We Edit</Label>
-          <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,4vw,52px)', lineHeight:1.1 }}>
+          <motion.h2 variants={fadeUp} style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,4vw,52px)', lineHeight:1.1, color:'var(--mode-text)' }}>
             Every Frame.
             <br />Every Format.
           </motion.h2>
@@ -166,21 +183,21 @@ function ServicesSection() {
             return (
               <Reveal key={svc.title}
                 className={`grid md:grid-cols-2 gap-0 rounded-3xl overflow-hidden ${isReversed ? 'md:[&>*:first-child]:order-2' : ''}`}
-                style={{ border:'1px solid rgba(255,255,255,0.06)' }}>
+                style={{ border:'1px solid var(--mode-card-border)' }}>
 
                 {/* text */}
                 <motion.div variants={fadeUp}
                   className="flex flex-col justify-center gap-5 p-10 md:p-14"
-                  style={{ background:'rgba(255,255,255,0.02)' }}>
+                  style={{ background:'var(--mode-card)' }}>
                   <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background:'rgba(181,168,200,0.1)' }}>
                     <svc.icon size={20} style={{ color:'#B5A8C8' }} />
                   </div>
-                  <h3 className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(22px,2.5vw,32px)', lineHeight:1.15 }}>{svc.title}</h3>
+                  <h3 style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(22px,2.5vw,32px)', lineHeight:1.15, color:'var(--mode-text)' }}>{svc.title}</h3>
                   <div style={{ width:'32px', height:'1px', background:'#B5A8C8', opacity:0.4 }} />
-                  <p style={{ color:'rgba(255,255,255,0.45)', fontSize:'15px', lineHeight:1.9 }}>{svc.desc}</p>
+                  <p style={{ color:'var(--mode-text-2)', fontSize:'15px', lineHeight:1.9 }}>{svc.desc}</p>
                   <ul className="flex flex-col gap-2 mt-1">
                     {svc.items.map(it => (
-                      <li key={it} className="flex items-center gap-3" style={{ color:'rgba(255,255,255,0.45)', fontSize:'13px' }}>
+                      <li key={it} className="flex items-center gap-3" style={{ color:'var(--mode-text-2)', fontSize:'13px' }}>
                         <span style={{ width:'18px', height:'1px', background:'#B5A8C8', opacity:0.5, flexShrink:0 }} />{it}
                       </li>
                     ))}
@@ -203,45 +220,93 @@ function ServicesSection() {
 
 /* ── BEFORE / AFTER SHOWCASE ── */
 function BeforeAfter() {
+  const [sliderPos, setSliderPos] = useState(50);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const dragging = useRef(false);
+
+  const updatePos = (clientX: number) => {
+    if (!sliderRef.current) return;
+    const rect = sliderRef.current.getBoundingClientRect();
+    setSliderPos(Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100)));
+  };
+
   return (
-    <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'#080808' }}>
+    <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'var(--mode-surface)' }}>
       <div className="max-w-[1280px] mx-auto">
         <Reveal className="text-center mb-14">
           <Label>The Difference We Make</Label>
-          <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.8vw,50px)', lineHeight:1.1 }}>
+          <motion.h2 variants={fadeUp} style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.8vw,50px)', lineHeight:1.1, color:'var(--mode-text)' }}>
             Before Our Hands Touch It.
             <br />After.
           </motion.h2>
+          <motion.p variants={fadeUp} className="mt-4 mx-auto" style={{ color:'var(--mode-text-2)', fontSize:'14px', maxWidth:'340px' }}>
+            Drag the handle left or right to compare.
+          </motion.p>
         </Reveal>
 
-        <Reveal className="grid md:grid-cols-2 gap-5">
-          {/* Before */}
-          <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ aspectRatio:'16/10' }}>
-            <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-              alt="Before edit" className="w-full h-full object-cover" style={{ filter:'grayscale(1) brightness(0.55) contrast(1.1)' }} />
-            <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.3)' }} />
-            <div className="absolute top-5 left-5 px-4 py-1.5 rounded-full" style={{ background:'rgba(5,5,5,0.7)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.12)' }}>
-              <p className="text-white/50 text-xs uppercase tracking-widest">Before — Raw Footage</p>
-            </div>
-            <div className="absolute bottom-5 left-5 right-5">
-              <p style={{ color:'rgba(255,255,255,0.25)', fontSize:'12px', lineHeight:1.6 }}>Flat, ungraded. No music. No cuts. Just files from the camera.</p>
-            </div>
-          </motion.div>
+        <Reveal>
+          <motion.div variants={fadeUp}>
+            <div
+              ref={sliderRef}
+              className="relative rounded-3xl overflow-hidden cursor-ew-resize select-none mx-auto"
+              style={{ maxWidth:'900px' }}
+              onMouseDown={(e) => { dragging.current = true; updatePos(e.clientX); }}
+              onMouseMove={(e) => { if (dragging.current) updatePos(e.clientX); }}
+              onMouseUp={() => { dragging.current = false; }}
+              onMouseLeave={() => { dragging.current = false; }}
+              onTouchStart={(e) => updatePos(e.touches[0].clientX)}
+              onTouchMove={(e) => { e.preventDefault(); updatePos(e.touches[0].clientX); }}
+            >
+              {/* after — normal flow, defines container height */}
+              <img
+                src="../assets/colour.jpg"
+                alt="After edit"
+                className="w-full block object-cover pointer-events-none"
+                style={{ aspectRatio: '16/9' }}
+                draggable={false}
+              />
 
-          {/* After */}
-          <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ aspectRatio:'16/10' }}>
-            <img src="https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-              alt="After edit" className="w-full h-full object-cover" />
-            <div className="absolute inset-0" style={{ background:'linear-gradient(135deg,rgba(181,168,200,0.12) 0%,transparent 60%)' }} />
-            <div className="absolute top-5 left-5 px-4 py-1.5 rounded-full" style={{ background:'rgba(181,168,200,0.85)' }}>
-              <p className="text-[#0a0a0a] text-xs uppercase tracking-widest font-medium">After — Madworks Edit</p>
-            </div>
-            <div className="absolute bottom-5 left-5 right-5">
-              <p style={{ color:'rgba(255,255,255,0.55)', fontSize:'12px', lineHeight:1.6 }}>Graded. Scored. Cut to emotion. Delivered in 48 hours.</p>
-            </div>
+              {/* before — clipped overlay */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ clipPath:`inset(0 ${100 - sliderPos}% 0 0)` }}
+              >
+                <img
+                  src="../assets/colour.jpg"
+                  alt="Before edit"
+                  className="w-full h-full object-cover"
+                  style={{ filter:'grayscale(1) brightness(0.55) contrast(1.1)' }}
+                  draggable={false}
+                />
+              </div>
 
-            {/* gold divider accent */}
-            <div className="absolute right-0 inset-y-0 w-[2px]" style={{ background:'linear-gradient(to bottom,transparent,#B5A8C8,transparent)' }} />
+              {/* divider line */}
+              <div
+                className="absolute inset-y-0 w-[2px] pointer-events-none"
+                style={{ left:`${sliderPos}%`, transform:'translateX(-50%)', background:'#B5A8C8' }}
+              />
+
+              {/* drag handle */}
+              <div
+                className="absolute top-1/2 w-10 h-10 rounded-full flex items-center justify-center z-10 pointer-events-none shadow-lg"
+                style={{ left:`${sliderPos}%`, transform:'translate(-50%, -50%)', background:'#B5A8C8' }}
+              >
+                <span className="text-[#0a0a0a] text-xs font-bold select-none">↔</span>
+              </div>
+
+              {/* labels */}
+              <div className="absolute top-5 left-5 px-4 py-1.5 rounded-full pointer-events-none" style={{ background:'rgba(5,5,5,0.7)', backdropFilter:'blur(8px)', border:'1px solid rgba(255,255,255,0.12)' }}>
+                <p className="text-white/50 text-xs uppercase tracking-widest">Before — Raw</p>
+              </div>
+              <div className="absolute top-5 right-5 px-4 py-1.5 rounded-full pointer-events-none" style={{ background:'rgba(181,168,200,0.85)' }}>
+                <p className="text-[#0a0a0a] text-xs uppercase tracking-widest font-medium">After — Madworks</p>
+              </div>
+
+              {/* bottom caption */}
+              <div className="absolute bottom-5 left-5 pointer-events-none">
+                <p style={{ color:'rgba(255,255,255,0.35)', fontSize:'11px', lineHeight:1.6 }}>Graded. Scored. Cut to emotion. 48hr delivery.</p>
+              </div>
+            </div>
           </motion.div>
         </Reveal>
       </div>
@@ -297,11 +362,28 @@ const workflow = [
 
 function WorkflowSection() {
   return (
-    <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'#0d0d0d' }}>
-      <div className="max-w-[1100px] mx-auto">
+    <section className="py-28 px-6 md:px-12 relative overflow-hidden" style={{ backgroundColor:'#0a0a0a' }}>
+      {/* background — dark film production image */}
+      <div className="absolute inset-0 pointer-events-none">
+        <img
+          src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          alt=""
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.18, filter: 'saturate(0.35) brightness(0.65)' }}
+        />
+        {/* keep cards readable — fade top/bottom edges */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(to bottom, rgba(10,10,10,0.75) 0%, rgba(10,10,10,0.35) 25%, rgba(10,10,10,0.35) 75%, rgba(10,10,10,0.75) 100%)'
+        }} />
+        {/* lavender accent glow matching editing page colour */}
+        <div className="absolute inset-0" style={{
+          background: 'radial-gradient(ellipse 65% 55% at 50% 50%, rgba(181,168,200,0.08) 0%, transparent 70%)'
+        }} />
+      </div>
+      <div className="max-w-[1100px] mx-auto relative z-10">
         <Reveal className="text-center mb-16">
           <Label>How It Works</Label>
-          <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.5vw,48px)' }}>
+          <motion.h2 variants={fadeUp} style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.5vw,48px)', color:'var(--mode-text)' }}>
             Simple. Fast. Exceptional.
           </motion.h2>
         </Reveal>
@@ -309,7 +391,7 @@ function WorkflowSection() {
           {workflow.map((w, i) => (
             <motion.div key={w.step} variants={fadeUp}
               className="relative flex flex-col gap-5 p-7 rounded-2xl"
-              style={{ background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)' }}
+              style={{ background:'var(--mode-card)', border:'1px solid var(--mode-card-border)' }}
               whileHover={{ borderColor:'rgba(181,168,200,0.3)', y:-4 }} transition={{ duration:0.3 }}>
               {/* connector line */}
               {i < workflow.length-1 && (
@@ -321,8 +403,8 @@ function WorkflowSection() {
                 </div>
                 <span style={{ fontFamily:'var(--font-heading)', fontSize:'13px', color:'rgba(181,168,200,0.4)', fontStyle:'italic' }}>{w.step}</span>
               </div>
-              <h3 className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'20px' }}>{w.title}</h3>
-              <p style={{ color:'rgba(255,255,255,0.4)', fontSize:'13px', lineHeight:1.8 }}>{w.desc}</p>
+              <h3 style={{ fontFamily:'var(--font-heading)', fontSize:'20px', color:'var(--mode-text)' }}>{w.title}</h3>
+              <p style={{ color:'var(--mode-text-2)', fontSize:'13px', lineHeight:1.8 }}>{w.desc}</p>
             </motion.div>
           ))}
         </Reveal>
@@ -338,12 +420,12 @@ const trust = [
 ];
 function TrustStrip() {
   return (
-    <div className="overflow-hidden py-8" style={{ backgroundColor:'#080808', borderTop:'1px solid rgba(255,255,255,0.05)', borderBottom:'1px solid rgba(255,255,255,0.05)' }}>
+    <div className="overflow-hidden py-8" style={{ backgroundColor:'var(--mode-surface)', borderTop:'1px solid var(--mode-border)', borderBottom:'1px solid var(--mode-border)' }}>
       <motion.div animate={{ x:['0%','-50%'] }} transition={{ repeat:Infinity, duration:22, ease:'linear' }}
         className="flex gap-10 whitespace-nowrap">
         {[...trust,...trust].map((t,i) => (
           <span key={i} className="flex items-center gap-10">
-            <span style={{ fontFamily:'var(--font-heading)', fontSize:'22px', color:'rgba(255,255,255,0.07)', fontStyle:'italic' }}>{t}</span>
+            <span style={{ fontFamily:'var(--font-heading)', fontSize:'22px', color:'var(--mode-logo-num)', fontStyle:'italic' }}>{t}</span>
             <span style={{ width:'5px', height:'5px', borderRadius:'50%', background:'rgba(181,168,200,0.25)', display:'inline-block', flexShrink:0 }} />
           </span>
         ))}

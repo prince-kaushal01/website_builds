@@ -7,7 +7,7 @@ import logo from "../assets/logo.PNG"
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
   const location = useLocation();
 
   // Scroll effect
@@ -26,7 +26,7 @@ export function Navbar() {
 
   // Load theme
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     setTheme(savedTheme);
     document.documentElement.classList.toggle('dark', savedTheme === 'dark');
   }, []);
@@ -69,12 +69,12 @@ export function Navbar() {
           </div>
 
           {/* Center Nav Links */}
-          <div className="hidden md:flex flex-1 justify-center items-center gap-8">
+          <div className="hidden md:flex flex-1 justify-center items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`transition-colors ${
+                className={`whitespace-nowrap text-sm transition-colors ${
                   location.pathname === link.path
                     ? 'text-[var(--accent-gold)]'
                     : 'text-[var(--dark)] dark:text-white hover:text-[var(--accent-gold)]'

@@ -1,5 +1,10 @@
 @custom-variant dark (&:is(.dark *));
 
+/* Smooth theme transitions */
+html {
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
 :root {
   --font-size: 16px;
 
@@ -8,6 +13,18 @@
   --deep-green: #1A2E2A;
   --accent-gold: #C8A96A;
   --light: #F8F6F2;
+
+  /* ── Mode-aware variables (light mode defaults) ── */
+  --mode-surface:       #FFFFFF;
+  --mode-surface-alt:   #F8F6F2;
+  --mode-surface-deep:  #F0EDE6;
+  --mode-text:          #0F0F0F;
+  --mode-text-2:        #6B6B6B;
+  --mode-text-3:        rgba(0,0,0,0.38);
+  --mode-border:        rgba(0,0,0,0.07);
+  --mode-card:          #FFFFFF;
+  --mode-card-border:   rgba(0,0,0,0.09);
+  --mode-logo-num:      rgba(0,0,0,0.06);
   --gray-text: #6B6B6B;
 
   /* Font Families */
@@ -60,6 +77,18 @@
 }
 
 .dark {
+  /* ── Mode-aware variables (dark mode overrides) ── */
+  --mode-surface:       #0a0a0a;
+  --mode-surface-alt:   #0d0d0d;
+  --mode-surface-deep:  #111111;
+  --mode-text:          #FFFFFF;
+  --mode-text-2:        rgba(255,255,255,0.50);
+  --mode-text-3:        rgba(255,255,255,0.35);
+  --mode-border:        rgba(255,255,255,0.07);
+  --mode-card:          rgba(255,255,255,0.04);
+  --mode-card-border:   rgba(255,255,255,0.08);
+  --mode-logo-num:      rgba(255,255,255,0.04);
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.145 0 0);
@@ -202,11 +231,11 @@
     line-height: 1.5;
   }
 
-  /* Blog Prose Styles */
+  /* Prose Styles */
   .prose h3 {
     font-family: var(--font-heading);
     font-size: 22px;
-    color: var(--dark);
+    color: var(--mode-text);
     margin-top: 32px;
     margin-bottom: 12px;
   }

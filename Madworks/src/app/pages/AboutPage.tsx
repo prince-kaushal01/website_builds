@@ -63,9 +63,9 @@ function TeamHero() {
       {/* parallax image */}
       <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
         <img
-          src="https://images.unsplash.com/photo-1543269664-56d93c1b41a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          src="../assets/team.JPG"
           alt="Madworks team"
-          className="w-full h-full object-cover"
+          className="w-full h-full fixed"
         />
       </motion.div>
 
@@ -83,7 +83,7 @@ function TeamHero() {
         initial={{ opacity: 0, y: -16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.3 }}
-        className="absolute top-10 left-1/2 -translate-x-1/2 z-20 uppercase text-xs tracking-[0.35em] text-white/60"
+        className="absolute top-15 left-1/2 -translate-x-1/2 z-20 uppercase text-xs tracking-[0.35em] text-white/60"
       >
         Madworks Studio
       </motion.p>

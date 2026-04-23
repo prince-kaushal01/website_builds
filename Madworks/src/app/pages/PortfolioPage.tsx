@@ -352,17 +352,17 @@ function CategoryHeadline({ cat }: { cat: typeof categories[0] }) {
       animate={{ opacity:1, y:0 }}
       transition={{ duration:0.6, ease }}
       className="col-span-full flex items-end justify-between pb-2"
-      style={{ borderBottom:'1px solid rgba(255,255,255,0.07)' }}
+      style={{ borderBottom:'1px solid var(--mode-border)' }}
     >
       <div>
         <p className="uppercase text-[10px] tracking-[0.28em] mb-2" style={{ color:'var(--accent-gold)' }}>
           {cat.id === 'all' ? 'Complete Portfolio' : 'Category'}
         </p>
-        <h2 className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(26px,3vw,42px)', lineHeight:1.1 }}>
+        <h2 style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(26px,3vw,42px)', lineHeight:1.1, color:'var(--mode-text)' }}>
           {cat.label}
         </h2>
       </div>
-      <span style={{ fontFamily:'var(--font-heading)', fontSize:'72px', lineHeight:1, color:'rgba(255,255,255,0.04)', fontStyle:'italic' }}>
+      <span style={{ fontFamily:'var(--font-heading)', fontSize:'52px', lineHeight:1, color:'var(--mode-logo-num)', fontStyle:'italic' }}>
         {String(cat.count).padStart(2,'0')}
       </span>
     </motion.div>
@@ -394,39 +394,38 @@ export function PortfolioPage() {
       <CategoryFilter active={active} onChange={handleCategoryChange} />
 
       {/* grid section */}
-      <section className="px-4 md:px-8 py-12 pb-20">
-        <div
-          className="max-w-[1400px] mx-auto"
-          style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gridAutoRows:'280px', gap:'6px' }}
-        >
-          {/* headline row */}
-          <div className="col-span-3 pt-6  px-2">
+      <section className="px-4 md:px-8 pt-4 pb-20" style={{ backgroundColor: 'var(--mode-surface)' }}>
+        <div className="max-w-[1400px] mx-auto">
+          {/* headline — outside the photo grid so it doesn't consume a 280px grid row */}
+          <div className="px-2 mb-3">
             <CategoryHeadline cat={activeCat} />
           </div>
 
-          <AnimatePresence mode="popLayout">
-            {filtered.map((item, i) => (
-              <PortfolioCard
-                key={item.id}
-                item={item}
-                index={i}
-                onClick={() => openLightbox(i)}
-              />
-            ))}
-          </AnimatePresence>
-        </div>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gridAutoRows:'280px', gap:'6px' }}>
+            <AnimatePresence mode="popLayout">
+              {filtered.map((item, i) => (
+                <PortfolioCard
+                  key={item.id}
+                  item={item}
+                  index={i}
+                  onClick={() => openLightbox(i)}
+                />
+              ))}
+            </AnimatePresence>
+          </div>
 
-        {/* empty state */}
-        {filtered.length === 0 && (
-          <motion.div
-            initial={{ opacity:0 }} animate={{ opacity:1 }}
-            className="text-center py-32"
-          >
-            <p style={{ color:'rgba(255,255,255,0.2)', fontFamily:'var(--font-heading)', fontSize:'24px' }}>
-              No items in this category yet.
-            </p>
-          </motion.div>
-        )}
+          {/* empty state */}
+          {filtered.length === 0 && (
+            <motion.div
+              initial={{ opacity:0 }} animate={{ opacity:1 }}
+              className="text-center py-32"
+            >
+              <p style={{ color:'rgba(255,255,255,0.2)', fontFamily:'var(--font-heading)', fontSize:'24px' }}>
+                No items in this category yet.
+              </p>
+            </motion.div>
+          )}
+        </div>
       </section>
 
       {/* Lightbox */}

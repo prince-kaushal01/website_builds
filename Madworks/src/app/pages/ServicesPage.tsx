@@ -58,7 +58,7 @@ const services = [
     description:
       'High-impact visuals built for the feed and beyond. We produce ads that convert — without sacrificing craft.',
     items: ['Instagram Ads', 'Brand Videos', 'Corporate Shoots', 'Food Reels', 'Drone Branding'],
-    bg: 'https://images.unsplash.com/photo-1551816230-ef5deaed4a26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
+    bg: '../assets/product.jpg',
     video: null,
     accent: '#D4956A',
     link: '/ads',
@@ -84,7 +84,7 @@ const services = [
     description:
       'World-class post-production — colour, sound, and cut — delivered remotely for studios and creators worldwide.',
     items: ['Wedding Editing', 'Real Estate Editing', 'Ad Editing', 'Color Grading', 'Sound Design'],
-    bg: 'https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
+    bg: '../assets/editing.jpg',
     video: null,
     accent: '#B5A8C8',
     link: '/editing',
@@ -95,7 +95,7 @@ const services = [
 const heroSlides = [
   { type: 'image' as const, src: 'https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
   { type: 'image' as const, src: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
-  { type: 'video' as const, src: 'https://assets.mixkit.co/videos/preview/mixkit-fireworks-in-the-night-sky-1953-large.mp4', poster: 'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
+  { type: 'video' as const, src: 'https://assets.mixkit.co/videos/preview/mixkit-couple-dancing-at-their-wedding-42-large.mp4', poster: 'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
   { type: 'image' as const, src: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
   { type: 'image' as const, src: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
   { type: 'image' as const, src: 'https://images.unsplash.com/photo-1536240478700-b869ad10e128?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
@@ -262,13 +262,16 @@ function ServiceBlock({ svc, index }: { svc: (typeof services)[0]; index: number
         <img src={svc.bg} alt={svc.title} className="w-full h-full object-cover" />
       </motion.div>
 
-      {/* gradient overlay — shifts direction per row */}
+      {/* base dim — keeps image visible everywhere but not blinding */}
+      <div className="absolute inset-0 z-10" style={{ background: 'rgba(5,5,5,0.28)' }} />
+
+      {/* directional panel — dark only on content side, fully transparent on image side */}
       <div
         className="absolute inset-0 z-10"
         style={{
           background: isReversed
-            ? 'linear-gradient(to left, rgba(10,10,10,0.96) 42%, rgba(10,10,10,0.55) 70%, rgba(10,10,10,0.1) 100%)'
-            : 'linear-gradient(to right, rgba(10,10,10,0.96) 42%, rgba(10,10,10,0.55) 70%, rgba(10,10,10,0.1) 100%)',
+            ? 'linear-gradient(to left, rgba(5,5,5,0.82) 0%, rgba(5,5,5,0.72) 22%, rgba(5,5,5,0.12) 50%, rgba(5,5,5,0.0) 65%)'
+            : 'linear-gradient(to right, rgba(5,5,5,0.82) 0%, rgba(5,5,5,0.72) 22%, rgba(5,5,5,0.12) 50%, rgba(5,5,5,0.0) 65%)',
         }}
       />
 
@@ -407,7 +410,7 @@ function Marquee() {
   const words = ['Wedding Films', 'Cinematic Reels', 'Drone Aerials', 'Brand Stories', 'Resort Visuals', 'Color Grading', 'Sound Design'];
   const doubled = [...words, ...words];
   return (
-    <div className="overflow-hidden py-10" style={{ backgroundColor: '#0a0a0a', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
+    <div className="overflow-hidden py-10" style={{ backgroundColor: '#e3c9c9', borderTop: '1px solid rgba(255,255,255,0.06)' }}>
       <motion.div
         animate={{ x: ['0%', '-50%'] }}
         transition={{ repeat: Infinity, duration: 22, ease: 'linear' }}
@@ -415,7 +418,7 @@ function Marquee() {
       >
         {doubled.map((w, i) => (
           <span key={i} className="flex items-center gap-12">
-            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', color: 'rgba(255,255,255,0.08)', fontStyle: 'italic' }}>
+            <span style={{ fontFamily: 'var(--font-heading)', fontSize: '32px', color: 'rgba(247, 238, 238, 0.91)', fontStyle: 'italic' }}>
               {w}
             </span>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-gold)', opacity: 0.5, display: 'inline-block', flexShrink: 0 }} />
