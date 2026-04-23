@@ -5,8 +5,8 @@ import { ScrollToTop } from './components/ScrollToTop';
 import { HomePage } from './pages/HomePage';
 import { ServicesPage } from './pages/ServicesPage';
 import { PortfolioPage } from './pages/PortfolioPage';
-import { BlogPage } from './pages/BlogPage';
-import { BlogDetailPage } from './pages/BlogDetailPage';
+import { CaseStudiesPage } from './pages/CaseStudiesPage';
+import { CaseStudyDetailPage } from './pages/CaseStudyDetailPage';
 import { ContactPage } from './pages/ContactPage';
 import { AboutPage } from './pages/AboutPage';
 import { WeddingPage } from './pages/WeddingPage';
@@ -26,8 +26,8 @@ export default function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/portfolio" element={<PortfolioPage />} />
-            <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:id" element={<BlogDetailPage />} />
+            <Route path="/case-studies" element={<CaseStudiesPage />} />
+            <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/wedding" element={<WeddingPage />} />

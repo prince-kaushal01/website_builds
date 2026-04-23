@@ -44,7 +44,7 @@ export function Navbar() {
     { name: 'Services', path: '/services' },
     { name: 'Portfolio', path: '/portfolio' },
     { name: 'About', path: '/about' },
-    { name: 'Blog', path: '/blog' },
+    { name: 'Case Studies', path: '/case-studies' },
     { name: 'Contact', path: '/contact' },
   ];
 

@@ -5,7 +5,7 @@ import { MessageCircle, Play, Star, ArrowRight, Globe, Clock, Zap, ChevronRight 
 import { ContactModal } from '../components/ContactModal';
 
 /* ── constants ─────────────────────────────────────────── */
-const WA = 'https://wa.me/919876543210';
+const WA = 'https://wa.me/919769721010?text=Hi%20Madworks%2C%20I%27d%20like%20to%20inquire%20about%20your%20video%20production%20services.%20Please%20share%20more%20details%20on%20how%20we%20can%20collaborate!';
 const ease = [0.22, 1, 0.36, 1] as const;
 
 /* ── shared animation variants ─────────────────────────── */
@@ -72,13 +72,13 @@ function HeroSection({ onBook }: { onBook: () => void }) {
           initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.25 }}
-          className="flex flex-wrap items-center justify-center gap-3 mb-8"
+          className="flex flex-wrap items-center justify-center gap-3 mt-8 mb-8"
         >
           {tags.map((t, i) => (
             <span key={t} className="flex items-center gap-3">
               <span
                 className="px-4 py-1.5 rounded-full text-xs uppercase tracking-[0.18em]"
-                style={{ background: 'rgba(200,169,106,0.15)', border: '1px solid rgba(200,169,106,0.35)', color: 'var(--accent-gold)' }}
+                style={{ background: 'rgba(21, 21, 19, 0.15)', border: '1px solid rgba(236, 163, 16, 0.35)', color: 'var(--accent-gold)' }}
               >
                 {t}
               </span>
@@ -92,7 +92,7 @@ function HeroSection({ onBook }: { onBook: () => void }) {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.1, delay: 0.4, ease }}
-          className="text-white mb-7"
+          className="text-white mb-7 mt-45"
           style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(44px, 7.5vw, 100px)', lineHeight: 0.95, letterSpacing: '-0.025em' }}
         >
           We Make Moments
@@ -106,7 +106,7 @@ function HeroSection({ onBook }: { onBook: () => void }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.65, ease }}
           className="text-white/50 mb-10 mx-auto"
-          style={{ fontSize: 'clamp(15px, 1.4vw, 18px)', lineHeight: 1.85, maxWidth: '500px' }}
+          style={{ fontSize: 'clamp(10px, 1.4vw, 15px)', lineHeight: 1.85, maxWidth: '500px' }}
         >
           Premium wedding films, brand commercials &amp; global editing — crafted for couples and businesses
           that demand the extraordinary.
@@ -138,7 +138,7 @@ function HeroSection({ onBook }: { onBook: () => void }) {
             target="_blank"
             rel="noreferrer"
             className="flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
-            style={{ background: 'rgba(37,211,102,0.12)', color: '#25D366', border: '1px solid rgba(37,211,102,0.3)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
+            style={{ background: 'rgba(37,211,102,0.12)', color: '#20733f', border: '1px solid rgba(37,211,102,0.3)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
           >
             <MessageCircle size={16} />
             WhatsApp
@@ -238,10 +238,34 @@ function WeddingShowcase() {
    03  BUSINESS ADS SHOWCASE
 ═══════════════════════════════════════════════════════════ */
 const adCards = [
-  { title: 'Dental Clinic',   sub: 'Brand Campaign',  dur: '0:32', img: 'https://images.unsplash.com/photo-1588776814546-1ffbf319e5e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Healthcare' },
-  { title: 'Luxury Salon',    sub: 'Instagram Reels',  dur: '0:28', img: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Beauty' },
-  { title: 'Jewellery Brand', sub: 'Lookbook Film',    dur: '0:40', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Retail' },
-  { title: 'Corporate Firm',  sub: 'Brand Identity',   dur: '0:35', img: 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', tag: 'Corporate' },
+  {
+    title: 'Dental Clinic',
+    sub: 'Brand Campaign',
+    dur: '0:12',
+    video: 'https://assets.mixkit.co/videos/preview/mixkit-dentist-checking-patients-teeth-32736-large.mp4',
+    tag: 'Healthcare'
+  },
+  {
+    title: 'Luxury Salon',
+    sub: 'Instagram Reels',
+    dur: '0:10',
+    video: 'https://assets.mixkit.co/videos/preview/mixkit-woman-getting-her-hair-done-3980-large.mp4',
+    tag: 'Beauty'
+  },
+  {
+    title: 'Jewellery Brand',
+    sub: 'Lookbook Film',
+    dur: '0:14',
+    video: 'https://assets.mixkit.co/videos/preview/mixkit-woman-wearing-jewelry-3982-large.mp4',
+    tag: 'Retail'
+  },
+  {
+    title: 'Corporate Firm',
+    sub: 'Brand Identity',
+    dur: '0:11',
+    video: 'https://assets.mixkit.co/videos/preview/mixkit-business-team-working-together-4261-large.mp4',
+    tag: 'Corporate'
+  },
 ];
 
 function AdsShowcase({ onBook }: { onBook: () => void }) {

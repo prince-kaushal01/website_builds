@@ -96,16 +96,8 @@ function Hero() {
       </motion.div>
       <div className="absolute inset-0 z-10" style={{ background:'linear-gradient(to bottom, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.25) 45%, rgba(5,5,5,0.9) 100%)' }} />
 
-      <motion.div style={{ opacity: fade }} className="relative z-20 text-center px-6 max-w-[860px]">
-        <motion.p
-          initial={{ opacity:0, letterSpacing:'0.6em' }}
-          animate={{ opacity:1, letterSpacing:'0.32em' }}
-          transition={{ duration:1.6, delay:0.2 }}
-          className="uppercase text-xs mb-6 tracking-[0.32em]"
-          style={{ color:'var(--accent-gold)' }}
-        >
-          Selected Works
-        </motion.p>
+      <motion.div style={{ opacity: fade }} className="relative z-20 mt-55
+       text-center px-6 max-w-[860px]">
         <motion.h1
           initial={{ opacity:0, y:60 }}
           animate={{ opacity:1, y:0 }}
@@ -402,13 +394,13 @@ export function PortfolioPage() {
       <CategoryFilter active={active} onChange={handleCategoryChange} />
 
       {/* grid section */}
-      <section className="px-4 md:px-8 py-12 pb-28">
+      <section className="px-4 md:px-8 py-12 pb-20">
         <div
           className="max-w-[1400px] mx-auto"
           style={{ display:'grid', gridTemplateColumns:'repeat(3, 1fr)', gridAutoRows:'280px', gap:'6px' }}
         >
           {/* headline row */}
-          <div className="col-span-3 pt-6 pb-8 px-2">
+          <div className="col-span-3 pt-6  px-2">
             <CategoryHeadline cat={activeCat} />
           </div>
 
