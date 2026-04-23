@@ -49,12 +49,12 @@ export function ContactPage() {
         <div className="absolute inset-0 hidden md:block" style={{ background: 'linear-gradient(to right, transparent 60%, #0a0a0a 100%)' }} />
 
         {/* content over image */}
-        <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-14 pb-14">
+        <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-14 pb-14 mt-10 md:mt-4">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="uppercase text-xs tracking-[0.3em] mb-4"
+            className="uppercase text-xs tracking-[0.3em] mb-4 hidden md:block"
             style={{ color: 'var(--accent-gold)' }}
           >
             Let's Create Together

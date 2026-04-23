@@ -1,26 +1,8 @@
-{/* 🌊 Fountain (Top → Center) */}
-      <motion.img
-        src={fountain}
-        className="absolute left-1/2 -translate-x-1/2 top-10"
-        initial={{ y: -200, opacity: 0 }}
-        animate={isInView ? { y: 0, opacity: 1 } : { y: -200, opacity: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
-      />
-
-      {/* 🌺 Left Flower */}
-      <motion.img
-        src={flowerLeft}
-        className="absolute bottom-0 left-0 w-32"
-        initial={{ x: -150, opacity: 0 }}
-        animate={isInView ? { x: 0, opacity: 1 } : { x: -150, opacity: 0 }}
-        transition={{ duration: 1, delay: 0.6 }}
-      />
-
-      {/* 🌺 Right Flower */}
-      <motion.img
-        src={flowerRight}
-        className="absolute bottom-0 right-0 w-32"
-        initial={{ x: 150, opacity: 0 }}
-        animate={isInView ? { x: 0, opacity: 1 } : { x: 150, opacity: 0 }}
-        transition={{ duration: 1, delay: 0.9 }}
+<div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(${bgImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
       />

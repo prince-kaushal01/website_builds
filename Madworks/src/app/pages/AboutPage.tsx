@@ -59,13 +59,13 @@ function TeamHero() {
   const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
 
   return (
-    <section ref={ref} className="relative h-[92vh] overflow-hidden" style={{ backgroundColor: 'var(--dark)' }}>
+    <section ref={ref} className="relative h-screen overflow-hidden" style={{ backgroundColor: 'var(--dark)' }}>
       {/* parallax image */}
       <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
         <img
           src="../assets/team.JPG"
           alt="Madworks team"
-          className="w-full h-full fixed"
+          className="w-full h-full fixed bg-cover object-cover object-top"
         />
       </motion.div>
 
@@ -77,16 +77,6 @@ function TeamHero() {
             'linear-gradient(to bottom, rgba(15,15,15,0.55) 0%, rgba(15,15,15,0.15) 45%, rgba(15,15,15,0.85) 100%)',
         }}
       />
-
-      {/* top label */}
-      <motion.p
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="absolute top-15 left-1/2 -translate-x-1/2 z-20 uppercase text-xs tracking-[0.35em] text-white/60"
-      >
-        Madworks Studio
-      </motion.p>
 
       {/* bottom copy */}
       <div className="absolute bottom-0 left-0 right-0 z-20 px-8 md:px-16 pb-16 flex flex-col md:flex-row md:items-end md:justify-between gap-8">

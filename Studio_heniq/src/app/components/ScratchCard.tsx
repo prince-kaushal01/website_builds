@@ -24,12 +24,15 @@ export function ScratchCard() {
   const [isScratching, setIsScratching] = useState(false);
   const [scratchPercentage, setScratchPercentage] = useState(0);
   const [isRevealed, setIsRevealed] = useState(false);
+  const [canvasGone, setCanvasGone] = useState(false);
   const strokeCountRef = useRef(0);
+  const lastPosRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    // willReadFrequently: true tells the browser to optimise this canvas for getImageData calls
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
     canvas.width = 320;
@@ -82,46 +85,63 @@ export function ScratchCard() {
     }
   }, [scratchPercentage, isRevealed]);
 
+  const getScaledPos = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>,
+    canvas: HTMLCanvasElement
+  ) => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+  };
+
   const scratch = (
     e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
   ) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
     if (!ctx) return;
 
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    const scaleY = canvas.height / rect.height;
-    let clientX: number, clientY: number;
-
-    if ("touches" in e) {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
-    }
-
-    const x = (clientX - rect.left) * scaleX;
-    const y = (clientY - rect.top) * scaleY;
+    const { x, y } = getScaledPos(e, canvas);
 
     ctx.globalCompositeOperation = "destination-out";
+    ctx.lineWidth = 55;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
     ctx.beginPath();
-    ctx.arc(x, y, 30, 0, Math.PI * 2);
-    ctx.fill();
 
-    // Only count pixels every 8 strokes to avoid lag from getImageData on every move
+    if (lastPosRef.current) {
+      // Draw a smooth continuous line from last point to current
+      ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
+      ctx.lineTo(x, y);
+    } else {
+      // First touch — draw a circle so a tap also erases
+      ctx.arc(x, y, 27, 0, Math.PI * 2);
+    }
+    ctx.stroke();
+    lastPosRef.current = { x, y };
+
+    // Throttle expensive pixel count: every 10th stroke, sample 1-in-4 pixels
     strokeCountRef.current += 1;
-    if (strokeCountRef.current % 8 !== 0) return;
+    if (strokeCountRef.current % 10 !== 0) return;
 
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
     let transparent = 0;
-    for (let i = 3; i < pixels.length; i += 4) {
+    let total = 0;
+    for (let i = 3; i < pixels.length; i += 16) { // sample every 4th pixel
       if (pixels[i] === 0) transparent++;
+      total++;
     }
-    setScratchPercentage((transparent / (canvas.width * canvas.height)) * 100);
+    setScratchPercentage((transparent / total) * 100);
+  };
+
+  const stopScratching = () => {
+    setIsScratching(false);
+    lastPosRef.current = null; // reset so next stroke starts fresh
   };
 
   return (
@@ -253,18 +273,21 @@ export function ScratchCard() {
               </p>
             </div>
 
-            {/* Scratch canvas — overlays the card until revealed */}
-            {!isRevealed && (
-              <canvas
+            {/* Scratch canvas — fades out smoothly once 50% is scratched */}
+            {!canvasGone && (
+              <motion.canvas
                 ref={canvasRef}
                 className="absolute left-0 top-0 cursor-crosshair rounded-2xl"
                 style={{ width: "100%", height: "100%" }}
+                animate={isRevealed ? { opacity: 0 } : { opacity: 1 }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                onAnimationComplete={() => { if (isRevealed) setCanvasGone(true); }}
                 onMouseDown={() => setIsScratching(true)}
-                onMouseUp={() => setIsScratching(false)}
+                onMouseUp={stopScratching}
                 onMouseMove={(e) => isScratching && scratch(e)}
-                onMouseLeave={() => setIsScratching(false)}
+                onMouseLeave={stopScratching}
                 onTouchStart={() => setIsScratching(true)}
-                onTouchEnd={() => setIsScratching(false)}
+                onTouchEnd={stopScratching}
                 onTouchMove={(e) => { e.preventDefault(); isScratching && scratch(e); }}
               />
             )}

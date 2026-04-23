@@ -64,7 +64,7 @@ export function Navbar() {
             <Link
               to="/"
             >
-              <img src={logo} className='h-52'/>
+              <img src={logo} className='md:h-52 w-44 -ml-7 md:ml-0'/>
             </Link>
           </div>
 
