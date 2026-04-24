@@ -58,7 +58,7 @@ const services = [
     description:
       'High-impact visuals built for the feed and beyond. We produce ads that convert — without sacrificing craft.',
     items: ['Instagram Ads', 'Brand Videos', 'Corporate Shoots', 'Food Reels', 'Drone Branding'],
-    bg: '../assets/product.jpg',
+    bg: '../images/product.jpg',
     video: null,
     accent: '#D4956A',
     link: '/ads',
@@ -84,7 +84,7 @@ const services = [
     description:
       'World-class post-production — colour, sound, and cut — delivered remotely for studios and creators worldwide.',
     items: ['Wedding Editing', 'Real Estate Editing', 'Ad Editing', 'Color Grading', 'Sound Design'],
-    bg: '../assets/editing.jpg',
+    bg: '../images/editing.jpg',
     video: null,
     accent: '#B5A8C8',
     link: '/editing',

@@ -42,7 +42,7 @@ function Hero() {
   return (
     <section ref={ref} className="relative h-screen overflow-hidden flex items-center justify-center">
       <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
-        <img src="../assets/editing.jpg"
+        <img src="../images/editing.jpg"
           alt="Editing suite" className="w-full h-full object-cover" />
       </motion.div>
       <div className="absolute inset-0 z-10" style={{ background:'linear-gradient(to bottom,rgba(5,5,5,0.75) 0%,rgba(5,5,5,0.45) 45%,rgba(5,5,5,0.92) 100%)' }} />
@@ -137,7 +137,7 @@ const services = [
     title:'Color Grading',
     desc:'Hollywood-grade colour grading using DaVinci Resolve. Whether it\'s a warm film look, a cold corporate grade, or a bold commercial tone — we deliver it with precision.',
     items:['DaVinci Resolve grading','LUT creation','RAW processing','Skin tone perfection'],
-    img:'../assets/colour.jpg',
+    img:'../images/colour.jpg',
   },
   {
     icon: Volume2,
@@ -259,7 +259,7 @@ function BeforeAfter() {
             >
               {/* after — normal flow, defines container height */}
               <img
-                src="../assets/colour.jpg"
+                src="../images/colour.jpg"
                 alt="After edit"
                 className="w-full block object-cover pointer-events-none"
                 style={{ aspectRatio: '16/9' }}
@@ -272,7 +272,7 @@ function BeforeAfter() {
                 style={{ clipPath:`inset(0 ${100 - sliderPos}% 0 0)` }}
               >
                 <img
-                  src="../assets/colour.jpg"
+                  src="../images/colour.jpg"
                   alt="Before edit"
                   className="w-full h-full object-cover"
                   style={{ filter:'grayscale(1) brightness(0.55) contrast(1.1)' }}

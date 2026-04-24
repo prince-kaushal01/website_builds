@@ -61,7 +61,7 @@ const items: Item[] = [
   { id:'d1', category:'drone',      title:'Coastline Retreat','sub':'Goa Aerial',     img:'https://images.unsplash.com/photo-1473968512647-3e447244af8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200', size:'feature' },
   { id:'d2', category:'drone',      title:'City at Dusk',     sub:'Mumbai Skyline',   img:'https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200', size:'wide'    },
   // Editing Work
-  { id:'e1', category:'editing',    title:'Color Mastery',    sub:'Cinematic Grade',  img:'../assets/colour.jpg', size:'feature' },
+  { id:'e1', category:'editing',    title:'Color Mastery',    sub:'Cinematic Grade',  img:'../images/colour.jpg', size:'feature' },
   { id:'e2', category:'editing',    title:'Sound & Cut',      sub:'Wedding Film',     img:'https://images.unsplash.com/photo-1551650975-87deedd944c3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',  size:'wide'    },
 ];
 

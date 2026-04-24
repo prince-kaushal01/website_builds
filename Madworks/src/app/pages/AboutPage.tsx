@@ -63,7 +63,7 @@ function TeamHero() {
       {/* parallax image */}
       <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
         <img
-          src="../assets/team.JPG"
+          src="../images/team.JPG"
           alt="Madworks team"
           className="w-full h-full fixed bg-cover object-cover object-top"
         />

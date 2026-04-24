@@ -171,16 +171,11 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
       />
 
       {/* ── Tomb — entry from left, exit down ── */}
-      <motion.img
-        src={tomb}
-        className="absolute z-10"
-        style={{ bottom: 295, left: 0, height: "300px" }}
-        initial={{ x: "-120%", opacity: 0, y: 0 }}
-        animate={show
-          ? { x: "0%", opacity: 1, y: 0 }
-          : gateOpen ? { y: 200, opacity: 0 } : { x: "-120%", opacity: 0, y: 0 }}
-        transition={show ? entry(1.2) : exitT}
-      />
+      <img
+  src={tomb}
+  className="absolute z-10"
+  style={{ bottom: 295, left: 0, height: "300px" }}
+/>
 
       {/* ── Sign — entry from left, exit down ── */}
       <motion.img
@@ -198,7 +193,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
       <div className="relative z-10 flex h-full flex-col items-center justify-start text-center px-6 pt-10">
 
         <motion.h2
-          style={{ fontFamily: "'Great Vibes', cursive", fontSize: "3.5rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.5rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={isInView ? { duration: 0.8, delay: 0.3, ease: "easeOut" } : exitT}
@@ -207,7 +202,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         </motion.h2>
 
         <motion.h3
-          style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.8rem", color: "#3D0C11", lineHeight: 1 }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.8rem", color: "#3D0C11", lineHeight: 1 }}
           initial={{ opacity: 0, scale: 0.6 }}
           animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
           transition={isInView ? { duration: 0.7, delay: 0.5, ease: "easeOut" } : exitT}
@@ -216,7 +211,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         </motion.h3>
 
         <motion.h1
-          style={{ fontFamily: "'Great Vibes', cursive", fontSize: "3.5rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.5rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={isInView ? { duration: 0.8, delay: 0.7, ease: "easeOut" } : exitT}

@@ -590,7 +590,7 @@ function EditingSection() {
             >
               {/* after — normal flow, defines container height */}
               <img
-                src="../assets/after.jpg"
+                src="../images/after.jpg"
                 alt="After edit"
                 className="w-full block object-cover pointer-events-none"
                 style={{ aspectRatio: '4/3' }}
@@ -603,7 +603,7 @@ function EditingSection() {
                 style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
               >
                 <img
-                  src="../assets/after.jpg"
+                  src="../images/after.jpg"
                   alt="Before edit"
                   className="w-full h-full object-cover"
                   style={{ filter: 'grayscale(1) brightness(0.6) contrast(1.1)' }}
