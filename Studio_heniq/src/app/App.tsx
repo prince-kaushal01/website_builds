@@ -6,6 +6,7 @@ import { MehndiPage } from "./components/MehndiPage";
 import { SangeetPage } from "./components/SangeetPage";
 import { WeddingPage } from "./components/WeddingPage";
 import { FinalPage } from "./components/FinalPage";
+import { Footer } from "./components/Footer";
 
 export default function App() {
   const [showGate, setShowGate] = useState(true);
@@ -20,6 +21,7 @@ export default function App() {
         <SangeetPage />
         <WeddingPage />
         <FinalPage />
+        <Footer />
       </div>
 
       {showGate && (

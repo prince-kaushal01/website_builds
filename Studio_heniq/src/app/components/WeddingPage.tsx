@@ -1,5 +1,5 @@
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import { motion, useInView, useAnimation, useScroll, useTransform } from "motion/react";
+import { useRef, useEffect } from "react";
 
 import bgImage from "../../asset/5_page.jpeg";
 import topFlower from "../../asset/5_top_flower.png";
@@ -8,7 +8,7 @@ import rightFlower from "../../asset/5_right_flower.png";
 import leftBouquet from "../../asset/5_left_bouquet.png";
 import rightBouquet from "../../asset/5_right_bouquet.png";
 import chairs from "../../asset/5_chairs.png";
-import colour from "../../asset/5_colour.png";
+import groomWalk from "../../asset/Groom_walk.png";
 
 const textLines = [
   {
@@ -18,9 +18,8 @@ const textLines = [
       fontFamily: "'Cormorant Garamond', serif",
       fontSize: "0.75rem",
       letterSpacing: "0.3em",
-      color: "black",
+      color: "#1a0a00",
       fontWeight: 600,
-      textShadow: "0 0 12px rgba(180,40,40,0.5)",
     },
     className: "uppercase mb-3",
   },
@@ -28,26 +27,24 @@ const textLines = [
     id: "title",
     content: "Wedding Ceremony",
     style: {
-      fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif",
-      fontSize: "2rem",
-      color: "#B3385A",
-      fontWeight: 700,
+      fontFamily: "'Great Vibes', cursive",
+      fontSize: "4rem",
+      color: "#3D0C11",
+      fontWeight: 400,
       lineHeight: 1.1,
-      textShadow: "0 2px 20px rgba(180,30,30,0.4), 0 0 40px rgba(220,80,40,0.2)",
+      textShadow: "0 2px 16px rgba(61,12,17,0.2)",
     },
     className: "mb-4",
   },
-  
   {
     id: "date",
     content: "22nd December, 2026",
     style: {
       fontFamily: "'Cormorant Garamond', Georgia, serif",
       fontSize: "1.3rem",
-      color: "black",
-      fontWeight: 500,
+      color: "#2d1200",
+      fontWeight: 600,
       letterSpacing: "0.05em",
-      textShadow: "0 1px 8px rgba(180,40,40,0.4)",
     },
     className: "mb-1",
   },
@@ -57,7 +54,7 @@ const textLines = [
     style: {
       fontFamily: "'Cormorant Garamond', Georgia, serif",
       fontSize: "1rem",
-      color: "black",
+      color: "#3b1a05",
       letterSpacing: "0.2em",
     },
     className: "mb-1",
@@ -68,43 +65,76 @@ const textLines = [
     style: {
       fontFamily: "'Cormorant Garamond', Georgia, serif",
       fontSize: "1rem",
-      color: "black",
+      color: "#3b1a05",
     },
     className: "mb-1",
-  },
-  {
-    id: "address",
-    content: "123 Royal Avenue, Andheri West, Mumbai",
-    style: {
-      fontFamily: "'Cormorant Garamond', Georgia, serif",
-      fontSize: "0.9rem",
-      color: "black",
-      letterSpacing: "0.03em",
-    },
-    className: "mb-6",
-  },
-  {
-    id: "tagline",
-    content: "Two hearts, one soul, united in love",
-    style: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: "1.15rem",
-      color: "black",
-      fontStyle: "italic",
-      textShadow: "0 0 10px rgba(200,60,60,0.4)",
-    },
-    className: "",
   },
 ];
 
 export function WeddingPage() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { margin: "-15%", once: false });
+  const textRef = useRef<HTMLDivElement>(null);
+
+  const isInView = useInView(textRef, { margin: "-5%", once: false });
+  const groomCtrl = useAnimation();
+
+  // Scroll progress drives all decorative elements
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"],
+  });
+
+  // TOP FLOWER — drops from above
+  const topFlowerY = useTransform(scrollYProgress, [0.1, 0.38], [-90, 0]);
+  const topFlowerOpacity = useTransform(scrollYProgress, [0, 0.23], [0, 1]);
+  const topFlowerScale = useTransform(scrollYProgress, [0, 0.28], [0.82, 1]);
+
+  // SIDE FLOWERS — slide in from edges
+  const leftFlowerX = useTransform(scrollYProgress, [0.28, 0.48], [-110, 0]);
+  const rightFlowerX = useTransform(scrollYProgress, [0.28, 0.48], [110, 0]);
+  const sideFlowerOpacity = useTransform(scrollYProgress, [0.05, 0.28], [0, 1]);
+
+  // BOUQUETS — slide in from edges with slight lag
+  const leftBouquetX = useTransform(scrollYProgress, [0.38, 0.48], [-130, 0]);
+  const rightBouquetX = useTransform(scrollYProgress, [0.38, 0.48], [130, 0]);
+  const bouquetOpacity = useTransform(scrollYProgress, [0.1, 0.33], [0, 1]);
+
+  // CHAIRS — rise from below
+  const chairsY = useTransform(scrollYProgress, [0.15, 0.43], [110, 0]);
+  const chairsOpacity = useTransform(scrollYProgress, [0.15, 0.38], [0, 1]);
+
+  // GROOM — uses useAnimation for the 2-step entry + breathing loop
+  const groomIsInView = useInView(containerRef, { margin: "-10%", once: false });
+
+  useEffect(() => {
+    if (groomIsInView) {
+      groomCtrl.start({
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        transition: { duration: 1.1, ease: [0.22, 1, 0.36, 1] },
+      }).then(() => {
+        groomCtrl.start({
+          scale: [1, 1.055, 1],
+          y: [0, -6, 0],
+          transition: {
+            duration: 3.2,
+            repeat: Infinity,
+            ease: "easeInOut",
+            repeatType: "loop",
+          },
+        });
+      });
+    } else {
+      groomCtrl.stop();
+      groomCtrl.set({ y: 180, opacity: 0, scale: 1 });
+    }
+  }, [groomIsInView, groomCtrl]);
 
   return (
     <div ref={containerRef} className="relative min-h-screen overflow-hidden">
 
-      {/* ===== BACKGROUND ===== */}
+      {/* BACKGROUND */}
       <div
         className="absolute inset-0"
         style={{
@@ -114,71 +144,61 @@ export function WeddingPage() {
         }}
       />
 
-      {/* ===== COLOUR SPLASH (full width, top) ===== */}
-      {/* <motion.img
-        src={colour}
-        className="absolute top-0 left-0 w-full z-10 pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 0.55 } : { opacity: 0 }}
-        transition={{ duration: 1.4, delay: 0.1 }}
-      /> */}
-
-      ===== TOP FLOWER =====
+      {/* TOP FLOWER — scroll-driven drop from above */}
       <motion.img
         src={topFlower}
         className="absolute top-84 -translate-x-1/2 left-48 w-86 z-20 pointer-events-none"
-        initial={{ opacity: 0, y: -80, scale: 0.85 }}
-        animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: -80, scale: 0.85 }}
-        transition={{ duration: 1.1, delay: 0.2, ease: "easeOut" }}
+        style={{ y: topFlowerY, opacity: topFlowerOpacity, scale: topFlowerScale }}
       />
 
-      {/* ===== LEFT FLOWER ===== */}
+      {/* LEFT FLOWER — scroll-driven slide from left */}
       <motion.img
         src={leftFlower}
         className="absolute bottom-56 -left-6 w-32 z-20 pointer-events-none"
-        initial={{ opacity: 0, x: -100 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -100 }}
-        transition={{ duration: 1.1, delay: 0.35, ease: "easeOut" }}
+        style={{ x: leftFlowerX, opacity: sideFlowerOpacity }}
       />
 
-      {/* ===== RIGHT FLOWER ===== */}
+      {/* RIGHT FLOWER — scroll-driven slide from right */}
       <motion.img
         src={rightFlower}
         className="absolute bottom-56 right-0 w-34 z-20 pointer-events-none"
-        initial={{ opacity: 0, x: 100 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 100 }}
-        transition={{ duration: 1.1, delay: 0.35, ease: "easeOut" }}
+        style={{ x: rightFlowerX, opacity: sideFlowerOpacity }}
       />
 
-      {/* ===== LEFT BOUQUET ===== */}
+      {/* LEFT BOUQUET — scroll-driven slide from left */}
       <motion.img
         src={leftBouquet}
         className="absolute bottom-20 -left-4 w-28 z-20 pointer-events-none"
-        initial={{ opacity: 0, x: -120 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -120 }}
-        transition={{ duration: 1.2, delay: 0.55, ease: "easeOut" }}
+        style={{ x: leftBouquetX, opacity: bouquetOpacity }}
       />
 
-      {/* ===== RIGHT BOUQUET ===== */}
+      {/* RIGHT BOUQUET — scroll-driven slide from right */}
       <motion.img
         src={rightBouquet}
         className="absolute bottom-20 -right-2 w-30 z-20 pointer-events-none"
-        initial={{ opacity: 0, x: 120 }}
-        animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 120 }}
-        transition={{ duration: 1.2, delay: 0.55, ease: "easeOut" }}
+        style={{ x: rightBouquetX, opacity: bouquetOpacity }}
       />
 
-      {/* ===== CHAIRS (bottom) ===== */}
+      {/* CHAIRS — scroll-driven rise from below */}
       <motion.img
         src={chairs}
         className="absolute bottom-52 left-1/2 -translate-x-1/2 w-40 z-10 pointer-events-none"
-        initial={{ opacity: 0, y: 100 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 100 }}
-        transition={{ duration: 1.2, delay: 0.75, ease: "easeOut" }}
+        style={{ y: chairsY, opacity: chairsOpacity }}
       />
 
-      {/* ===== TEXT — top aligned, one by one ===== */}
-      <div className="relative z-30 flex min-h-screen flex-col items-center justify-start text-center px-6 pt-2">
+      {/* GROOM — entry slide-up then breathing loop */}
+      <motion.img
+        src={groomWalk}
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-46 z-20 pointer-events-none"
+        initial={{ y: 180, opacity: 0, scale: 1 }}
+        animate={groomCtrl}
+      />
+
+      {/* TEXT — fires when text block enters view */}
+      <div
+        ref={textRef}
+        className="relative z-30 flex min-h-screen flex-col items-center justify-start text-center px-6 pt-10"
+      >
         {textLines.map((line, i) => (
           <motion.div
             key={line.id}
@@ -186,13 +206,13 @@ export function WeddingPage() {
             style={line.style}
             initial={{ opacity: 0, y: -28 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -28 }}
-            transition={{ duration: 0.6, delay: 0.9 + i * 0.18, ease: "easeOut" }}
+            transition={{ duration: 0.6, delay: 0.3 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
           >
             {line.id === "divider" ? (
               <div className="flex items-center gap-4">
-                <div className="h-px w-14 bg-red-300/60" />
-                <div className="w-2 h-2 rotate-45 border border-red-300/80" />
-                <div className="h-px w-14 bg-red-300/60" />
+                <div className="h-px w-14 bg-red-900/50" />
+                <div className="w-2 h-2 rotate-45 border border-red-900/60" />
+                <div className="h-px w-14 bg-red-900/50" />
               </div>
             ) : (
               line.content

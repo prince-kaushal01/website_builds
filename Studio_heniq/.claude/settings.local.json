@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "WebSearch",
+      "WebFetch(domain:clipart-library.com)",
+      "WebFetch(domain:giphy.com)",
+      "WebFetch(domain:www.animatedimages.org)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:www.fg-a.com)",
+      "WebFetch(domain:github.com)"
+    ]
+  }
+}
