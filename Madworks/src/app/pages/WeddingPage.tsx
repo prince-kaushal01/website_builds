@@ -155,7 +155,7 @@ function ServicePillars() {
 const smallFilms = [
   { title:'Meera & Raj',   loc:'Jaipur Heritage',  img:'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'3:18', video:'../assets/wedding3.mp4' },
   { title:'Sarah & James', loc:'Santorini, Greece', img:'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'5:02', video:'../assets/wedding2.mp4' },
-  { title:'Kavya & Rohan', loc:'Goa Beach',         img:'https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'4:47', video:'../assets/wedding4.mp4' },
+  { title:'Kavya & Rohan', loc:'Goa Beach',         img:'https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700',  dur:'4:47', video:'../assets/wedding4.mp4' },
 ];
 
 function WeddingFilmCard({ f }: { f: typeof smallFilms[0] }) {
