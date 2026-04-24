@@ -201,7 +201,7 @@ function WeddingShowcase() {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 poster="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
               >
-                <source src="../assets/wedding_dance.mp4" type="video/mp4" />
+                <source src="/videos/wedding_dance.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.75) 0%, transparent 55%)' }} />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -240,28 +240,28 @@ const adCards = [
     title: 'Dental Clinic',
     sub: 'Brand Campaign',
     dur: '0:12',
-    video: '../assets/dental.mp4',
+    video: '/videos/dental.mp4',
     tag: 'Healthcare'
   },
   {
     title: 'Luxury Salon',
     sub: 'Instagram Reels',
     dur: '0:10',
-    video: '../assets/salon.mp4',
+    video: '/videos/salon.mp4',
     tag: 'Beauty'
   },
   {
     title: 'Jewellery Brand',
     sub: 'Lookbook Film',
     dur: '0:14',
-    video: '../assets/jwellery.mp4',
+    video: '/videos/jwellery.mp4',
     tag: 'Retail'
   },
   {
     title: 'Corporate Firm',
     sub: 'Brand Identity',
     dur: '0:11',
-    video: '../assets/corporate.mp4',
+    video: '/videos/corporate.mp4',
     tag: 'Corporate'
   },
 ];
@@ -483,13 +483,13 @@ function FoodSection() {
             title="Zaffran Fine Dining"
             sub="0:38 reel"
             img="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-            video="../assets/finedining.mp4"
+            video="/videos/finedining.mp4"
           />
           <FoodVideoCard
             title="The Artisan Café"
             sub="0:30 reel"
             img="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-            video="../assets/coffee.mp4"
+            video="/videos/coffee.mp4"
           />
         </Reveal>
       </div>

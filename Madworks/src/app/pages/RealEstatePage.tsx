@@ -184,22 +184,22 @@ const propertyListings = [
   {
     img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     title: 'Lodha Altus', sub: 'Mumbai · Penthouse', wide: true,
-    video: '../assets/building1.mp4',
+    video: '/videos/building1.mp4',
   },
   {
     img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
     title: 'Bandra Villa', sub: 'Mumbai · 4BHK', wide: false,
-    video: '../assets/building2.mp4',
+    video: '/videos/building2.mp4',
   },
   {
     img: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
     title: 'Pune Skyline', sub: 'Pune · 3BHK', wide: false,
-    video: '../assets/building3.mp4',
+    video: '/videos/building3.mp4',
   },
   {
     img: 'https://images.unsplash.com/photo-1448630360428-65456885c650?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
     title: 'Aerial Reveal', sub: 'Drone · Goa', wide: false,
-    video: '../assets/building4.mp4',
+    video: '/videos/building4.mp4',
   },
 ];
 

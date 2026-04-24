@@ -124,7 +124,7 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Dish hero shots','Kitchen process','Chef profiles','Menu campaign films'],
     big: false,
-    video: '../assets/fine.mp4',
+    video: '/videos/fine.mp4',
   },
   {
     title:'Corporate & Brand',
@@ -133,7 +133,7 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Brand identity films','Company culture','Product launches','Event coverage'],
     big: false,
-    video: '../assets/corporate.mp4',
+    video: '/videos/corporate.mp4',
   },
   {
     title:'Fashion & Jewellery',
@@ -142,7 +142,7 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Lookbook shoots','Product reels','Campaign films','Social cutdowns'],
     big: false,
-    video: '../assets/fashion.mp4',
+    video: '/videos/fashion.mp4',
   },
 ];
 
@@ -336,10 +336,10 @@ function ProcessSection() {
 
 /* ── REEL SHOWCASE ── */
 const reels = [
-  { title:'GlowUp Skincare',  sub:'Instagram Campaign', img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'../assets/skincare.mp4' },
-  { title:'Aurelia Jewels',   sub:'Lookbook Film',      img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:45', video:'../assets/jwellery2.mp4' },
-  { title:'Mango Beverages',  sub:'Brand Reel',         img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'../assets/beverage.mp4' },
-  { title:'SmilePlus Dental', sub:'Patient Journey',    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:40', video:'../assets/dental.mp4' },
+  { title:'GlowUp Skincare',  sub:'Instagram Campaign', img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/skincare.mp4' },
+  { title:'Aurelia Jewels',   sub:'Lookbook Film',      img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:45', video:'/videos/jwellery2.mp4' },
+  { title:'Mango Beverages',  sub:'Brand Reel',         img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'/videos/beverage.mp4' },
+  { title:'SmilePlus Dental', sub:'Patient Journey',    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:40', video:'/videos/dental.mp4' },
 ];
 
 function ReelVideoCard({ r }: { r: typeof reels[0] }) {
