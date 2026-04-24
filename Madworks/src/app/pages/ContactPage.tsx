@@ -21,14 +21,34 @@ export function ContactPage() {
     name: '', email: '', phone: '', service: '', date: '', message: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [sendError, setSendError] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setSendError(false);
+    try {
+      const res = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json().catch(() => ({ success: false }));
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setSendError(true);
+      }
+    } catch {
+      setSendError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -242,12 +262,19 @@ export function ContactPage() {
 
                 <button
                   type="submit"
-                  className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-sm font-medium transition-all hover:scale-[1.02] mt-2 cursor-pointer"
+                  disabled={loading}
+                  className="flex items-center justify-center gap-2 w-full py-4 rounded-xl text-sm font-medium transition-all hover:scale-[1.02] mt-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                   style={{ background: 'var(--accent-gold)', color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}
                 >
                   <Send size={15} />
-                  Send Message
+                  {loading ? 'Sending…' : 'Send Message'}
                 </button>
+
+                {sendError && (
+                  <p className="text-center text-xs mt-1" style={{ color: '#ff6b6b' }}>
+                    Something went wrong. Please try WhatsApp or email us directly.
+                  </p>
+                )}
 
                 <p className="text-center text-xs mt-1" style={{ color: 'rgba(255,255,255,0.2)' }}>
                   Or reach us directly on{' '}

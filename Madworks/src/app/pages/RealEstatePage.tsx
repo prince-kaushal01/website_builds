@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Play, ArrowRight, Camera, Wind, BarChart2, CheckCircle, MessageCircle } from 'lucide-react';
@@ -180,6 +180,64 @@ function ServicesSection() {
 }
 
 /* ── GALLERY ── */
+const propertyListings = [
+  {
+    img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    title: 'Lodha Altus', sub: 'Mumbai · Penthouse', wide: true,
+    video: '/videos/building1.mp4',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
+    title: 'Bandra Villa', sub: 'Mumbai · 4BHK', wide: false,
+    video: '/videos/building2.mp4',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
+    title: 'Pune Skyline', sub: 'Pune · 3BHK', wide: false,
+    video: '/videos/building3.mp4',
+  },
+  {
+    img: 'https://images.unsplash.com/photo-1448630360428-65456885c650?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
+    title: 'Aerial Reveal', sub: 'Drone · Goa', wide: false,
+    video: '/videos/building4.mp4',
+  },
+];
+
+function PropertyVideoCard({ item }: { item: typeof propertyListings[0] }) {
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  return (
+    <motion.div variants={fadeUp}
+      className={`relative rounded-2xl overflow-hidden ${item.wide ? 'md:col-span-2' : ''}`}>
+      {!playing ? (
+        <>
+          <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div className="absolute inset-0" style={{ background: 'linear-gradient(to top,rgba(5,5,5,0.72) 0%,transparent 55%)' }} />
+          <button
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer group"
+            aria-label={`Play ${item.title}`}
+          >
+            <div className="w-14 h-14 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
+              style={{ background: `${ACCENT}cc` }}>
+              <Play size={20} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft: '2px' }} />
+            </div>
+          </button>
+          <div className="absolute bottom-5 left-5 pointer-events-none">
+            <p className="text-[10px] tracking-widest uppercase mb-1" style={{ color: ACCENT }}>{item.sub}</p>
+            <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '18px' }}>{item.title}</p>
+          </div>
+        </>
+      ) : (
+        <video ref={videoRef} autoPlay playsInline controls className="w-full h-full object-cover">
+          <source src={item.video} type="video/mp4" />
+        </video>
+      )}
+    </motion.div>
+  );
+}
+
 function Gallery() {
   return (
     <section className="py-28 px-6 md:px-12" style={{ backgroundColor: '#080808' }}>
@@ -191,26 +249,8 @@ function Gallery() {
           </motion.h2>
         </Reveal>
         <Reveal className="grid md:grid-cols-3 gap-4" style={{ gridAutoRows: '280px' }}>
-          {[
-            { img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', title: 'Lodha Altus',      sub: 'Mumbai · Penthouse',   wide: true },
-            { img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', title: 'Bandra Villa',    sub: 'Mumbai · 4BHK',        wide: false },
-            { img: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', title: 'Pune Skyline',    sub: 'Pune · 3BHK',          wide: false },
-            { img: 'https://images.unsplash.com/photo-1448630360428-65456885c650?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', title: 'Aerial Reveal',  sub: 'Drone · Goa',          wide: false },
-          ].map(item => (
-            <motion.div key={item.title} variants={fadeUp}
-              className={`relative rounded-2xl overflow-hidden group cursor-pointer ${item.wide ? 'md:col-span-2' : ''}`}>
-              <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top,rgba(5,5,5,0.72) 0%,transparent 55%)' }} />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: `${ACCENT}cc` }}>
-                  <Play size={20} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft: '2px' }} />
-                </div>
-              </div>
-              <div className="absolute bottom-5 left-5">
-                <p className="text-[10px] tracking-widest uppercase mb-1" style={{ color: ACCENT }}>{item.sub}</p>
-                <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '18px' }}>{item.title}</p>
-              </div>
-            </motion.div>
+          {propertyListings.map(item => (
+            <PropertyVideoCard key={item.title} item={item} />
           ))}
         </Reveal>
       </div>

@@ -152,8 +152,52 @@ function ServicePillars() {
 }
 
 /* ── FEATURED FILM SHOWCASE ── */
+const smallFilms = [
+  { title:'Meera & Raj',   loc:'Jaipur Heritage',  img:'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'3:18', video:'/videos/wedding3.mp4' },
+  { title:'Sarah & James', loc:'Santorini, Greece', img:'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'5:02', video:'/videos/wedding2.mp4' },
+  { title:'Kavya & Rohan', loc:'Goa Beach',         img:'https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700',  dur:'4:47', video:'/videos/wedding4.mp4' },
+];
+
+function WeddingFilmCard({ f }: { f: typeof smallFilms[0] }) {
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  return (
+    <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ aspectRatio:'4/3' }}>
+      {!playing ? (
+        <>
+          <img src={f.img} alt={f.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+          <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.5)' }} />
+          <button
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
+            aria-label={`Play ${f.title}`}
+          >
+            <div className="w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300"
+              style={{ background:'rgba(200,169,106,0.85)' }}>
+              <Play size={16} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'2px' }} />
+            </div>
+          </button>
+          <div className="absolute top-3 right-3 px-2 py-1 rounded-full text-[10px] pointer-events-none"
+            style={{ background:'rgba(5,5,5,0.65)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.55)' }}>{f.dur}</div>
+          <div className="absolute bottom-4 left-4 pointer-events-none">
+            <p className="text-white/40 text-[10px] uppercase tracking-widest mb-0.5">{f.loc}</p>
+            <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'16px' }}>{f.title}</p>
+          </div>
+        </>
+      ) : (
+        <video ref={videoRef} autoPlay playsInline controls className="w-full h-full object-cover">
+          <source src={f.video} type="video/mp4" />
+        </video>
+      )}
+    </motion.div>
+  );
+}
+
 function FilmShowcase() {
   const [playing, setPlaying] = useState(false);
+  const featuredRef = useRef<HTMLVideoElement>(null);
+
   return (
     <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'#060606' }}>
       <div className="max-w-[1280px] mx-auto">
@@ -171,51 +215,42 @@ function FilmShowcase() {
           </motion.div>
         </Reveal>
 
-        {/* Featured film */}
+        {/* Featured film — wedding1 */}
         <Reveal>
-          <motion.div variants={fadeUp} className="relative rounded-3xl overflow-hidden mb-5 group cursor-pointer"
-            style={{ aspectRatio:'16/7' }} onClick={() => setPlaying(!playing)}>
-            <img src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600"
-              alt="Feature film" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.45)' }} />
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-              <motion.div whileHover={{ scale:1.1 }} className="w-20 h-20 rounded-full flex items-center justify-center"
-                style={{ background:'rgba(200,169,106,0.9)', boxShadow:'0 0 60px rgba(200,169,106,0.4)' }}>
-                <Play size={28} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'4px' }} />
-              </motion.div>
-              <p className="text-white/60 text-xs uppercase tracking-[0.25em]">Play Showreel · 4:32</p>
-            </div>
-            <div className="absolute bottom-6 left-8">
-              <p className="text-white/40 text-xs tracking-widest uppercase mb-1">Featured Film</p>
-              <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'24px' }}>Priya &amp; Aryan — Mumbai Palace Wedding</p>
-            </div>
+          <motion.div variants={fadeUp} className="relative rounded-3xl overflow-hidden mb-5" style={{ aspectRatio:'16/7' }}>
+            {!playing ? (
+              <>
+                <img src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600"
+                  alt="Feature film" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.45)' }} />
+                <button
+                  onClick={() => setPlaying(true)}
+                  className="absolute inset-0 flex flex-col items-center justify-center gap-4 w-full h-full cursor-pointer"
+                  aria-label="Play featured film"
+                >
+                  <motion.div whileHover={{ scale:1.1 }} className="w-20 h-20 rounded-full flex items-center justify-center"
+                    style={{ background:'rgba(200,169,106,0.9)', boxShadow:'0 0 60px rgba(200,169,106,0.4)' }}>
+                    <Play size={28} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'4px' }} />
+                  </motion.div>
+                  <p className="text-white/60 text-xs uppercase tracking-[0.25em]">Play Showreel · 4:32</p>
+                </button>
+                <div className="absolute bottom-6 left-8 pointer-events-none">
+                  <p className="text-white/40 text-xs tracking-widest uppercase mb-1">Featured Film</p>
+                  <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'24px' }}>Priya &amp; Aryan — Mumbai Palace Wedding</p>
+                </div>
+              </>
+            ) : (
+              <video ref={featuredRef} autoPlay playsInline controls className="w-full h-full object-cover">
+                <source src="/videos/wedding1.mp4" type="video/mp4" />
+              </video>
+            )}
           </motion.div>
         </Reveal>
 
-        {/* 3 smaller films */}
+        {/* 3 smaller films — wedding2, wedding3, wedding4 */}
         <Reveal className="grid md:grid-cols-3 gap-4">
-          {[
-            { title:'Meera & Raj',      loc:'Jaipur Heritage',   img:'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'3:18' },
-            { title:'Sarah & James',    loc:'Santorini, Greece',  img:'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'5:02' },
-            { title:'Kavya & Rohan',    loc:'Goa Beach',          img:'https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'4:47' },
-          ].map(f => (
-            <motion.div key={f.title} variants={fadeUp}
-              className="relative rounded-2xl overflow-hidden group cursor-pointer" style={{ aspectRatio:'4/3' }}>
-              <img src={f.img} alt={f.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
-              <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.5)' }} />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300"
-                  style={{ background:'rgba(200,169,106,0.85)' }}>
-                  <Play size={16} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'2px' }} />
-                </div>
-              </div>
-              <div className="absolute top-3 right-3 px-2 py-1 rounded-full text-[10px]"
-                style={{ background:'rgba(5,5,5,0.65)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.55)' }}>{f.dur}</div>
-              <div className="absolute bottom-4 left-4">
-                <p className="text-white/40 text-[10px] uppercase tracking-widest mb-0.5">{f.loc}</p>
-                <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'16px' }}>{f.title}</p>
-              </div>
-            </motion.div>
+          {smallFilms.map(f => (
+            <WeddingFilmCard key={f.title} f={f} />
           ))}
         </Reveal>
       </div>

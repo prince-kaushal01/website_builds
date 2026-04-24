@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { Play, ArrowRight, Zap, TrendingUp, Target, Clock, CheckCircle, MessageCircle } from 'lucide-react';
@@ -124,6 +124,7 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Dish hero shots','Kitchen process','Chef profiles','Menu campaign films'],
     big: false,
+    video: '/videos/fine.mp4',
   },
   {
     title:'Corporate & Brand',
@@ -132,6 +133,7 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Brand identity films','Company culture','Product launches','Event coverage'],
     big: false,
+    video: '/videos/corporate.mp4',
   },
   {
     title:'Fashion & Jewellery',
@@ -140,8 +142,51 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Lookbook shoots','Product reels','Campaign films','Social cutdowns'],
     big: false,
+    video: '/videos/fashion.mp4',
   },
 ];
+
+function CommercialVideoCard({ ad }: { ad: typeof adTypes[0] }) {
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  return (
+    <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden group cursor-pointer">
+      {!playing ? (
+        <>
+          <img src={ad.img} alt={ad.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+          <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.85) 0%,rgba(5,5,5,0.15) 60%,transparent 100%)' }} />
+          <button
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
+            aria-label={`Play ${ad.title}`}
+          >
+            <div className="w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+              style={{ background:'rgba(212,149,106,0.85)' }}>
+              <Play size={18} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'2px' }} />
+            </div>
+          </button>
+          <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
+            <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color:'#D4956A' }}>{ad.sub}</p>
+            <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'18px' }}>{ad.title}</p>
+          </div>
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px]"
+            style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.5)' }}>{ad.dur}</div>
+        </>
+      ) : (
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          controls
+          className="w-full h-full object-cover"
+        >
+          <source src={ad.video} type="video/mp4" />
+        </video>
+      )}
+    </motion.div>
+  );
+}
 
 function AdTypesGrid() {
   return (
@@ -201,25 +246,10 @@ function AdTypesGrid() {
           ))}
         </Reveal>
 
-        {/* remaining 3 small cards */}
+        {/* remaining 3 small cards — click to play */}
         <Reveal className="grid md:grid-cols-3 gap-4 mt-4" style={{ gridAutoRows:'260px' }}>
           {adTypes.filter(a => !a.big).slice(1).map(ad => (
-            <motion.div key={ad.title} variants={fadeUp}
-              className="relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src={ad.img} alt={ad.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
-              <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.85) 0%,rgba(5,5,5,0.15) 60%,transparent 100%)' }} />
-              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ background:'rgba(212,149,106,0.85)' }}>
-                  <Play size={18} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'2px' }} />
-                </div>
-              </div>
-              <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color:'#D4956A' }}>{ad.sub}</p>
-                <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'18px' }}>{ad.title}</p>
-              </div>
-              <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px]"
-                style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.5)' }}>{ad.dur}</div>
-            </motion.div>
+            <CommercialVideoCard key={ad.title} ad={ad} />
           ))}
         </Reveal>
       </div>
@@ -305,14 +335,58 @@ function ProcessSection() {
 }
 
 /* ── REEL SHOWCASE ── */
-function ReelShowcase() {
-  const reels = [
-    { title:'GlowUp Skincare',    sub:'Instagram Campaign',  img:'https://images.unsplash.com/photo-1512941937938-a272e3be2a57?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30' },
-    { title:'Aurelia Jewels',     sub:'Lookbook Film',       img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:45' },
-    { title:'Mango Beverages',    sub:'Brand Reel',          img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28' },
-    { title:'SmilePlus Dental',   sub:'Patient Journey',     img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:40' },
-  ];
+const reels = [
+  { title:'GlowUp Skincare',  sub:'Instagram Campaign', img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/skincare.mp4' },
+  { title:'Aurelia Jewels',   sub:'Lookbook Film',      img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:45', video:'/videos/jwellery2.mp4' },
+  { title:'Mango Beverages',  sub:'Brand Reel',         img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'/videos/beverage.mp4' },
+  { title:'SmilePlus Dental', sub:'Patient Journey',    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:40', video:'/videos/dental.mp4' },
+];
 
+function ReelVideoCard({ r }: { r: typeof reels[0] }) {
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  return (
+    <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ aspectRatio:'9/14' }}>
+      {!playing ? (
+        <>
+          <img src={r.img} alt={r.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+          <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.9) 0%,rgba(5,5,5,0.1) 60%,transparent 100%)' }} />
+          <button
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
+            aria-label={`Play ${r.title}`}
+          >
+            <motion.div className="w-14 h-14 rounded-full flex items-center justify-center"
+              style={{ background:'rgba(212,149,106,0)', border:'1.5px solid rgba(212,149,106,0.5)' }}
+              whileHover={{ background:'rgba(212,149,106,0.9)', border:'1.5px solid transparent' }}
+              transition={{ duration:0.25 }}>
+              <Play size={20} color="rgba(212,149,106,0.9)" style={{ marginLeft:'3px' }} />
+            </motion.div>
+          </button>
+          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] pointer-events-none"
+            style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.55)' }}>{r.dur}</div>
+          <div className="absolute bottom-4 left-4 pointer-events-none">
+            <p style={{ color:'#D4956A', fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.18em', marginBottom:'2px' }}>{r.sub}</p>
+            <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'17px' }}>{r.title}</p>
+          </div>
+        </>
+      ) : (
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          controls
+          className="w-full h-full object-cover"
+        >
+          <source src={r.video} type="video/mp4" />
+        </video>
+      )}
+    </motion.div>
+  );
+}
+
+function ReelShowcase() {
   return (
     <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'var(--deep-green)' }}>
       <div className="max-w-[1280px] mx-auto">
@@ -331,26 +405,7 @@ function ReelShowcase() {
         </Reveal>
         <Reveal className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {reels.map(r => (
-            <motion.div key={r.title} variants={fadeUp}
-              className="group relative rounded-2xl overflow-hidden cursor-pointer" style={{ aspectRatio:'9/14' }}
-              whileHover={{ y:-5 }} transition={{ duration:0.3, ease }}>
-              <img src={r.img} alt={r.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
-              <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.9) 0%,rgba(5,5,5,0.1) 60%,transparent 100%)' }} />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div className="w-14 h-14 rounded-full flex items-center justify-center"
-                  style={{ background:'rgba(212,149,106,0)', border:'1.5px solid rgba(212,149,106,0.5)' }}
-                  whileHover={{ background:'rgba(212,149,106,0.9)', border:'1.5px solid transparent' }}
-                  transition={{ duration:0.25 }}>
-                  <Play size={20} color="rgba(212,149,106,0.9)" style={{ marginLeft:'3px' }} />
-                </motion.div>
-              </div>
-              <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px]"
-                style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.55)' }}>{r.dur}</div>
-              <div className="absolute bottom-4 left-4">
-                <p style={{ color:'#D4956A', fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.18em', marginBottom:'2px' }}>{r.sub}</p>
-                <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'17px' }}>{r.title}</p>
-              </div>
-            </motion.div>
+            <ReelVideoCard key={r.title} r={r} />
           ))}
         </Reveal>
       </div>
