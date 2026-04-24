@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import logo from "../assets/logo.PNG"
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [theme, setTheme] = useState('dark');
+
   const location = useLocation();
 
   // Scroll effect
@@ -24,20 +24,10 @@ export function Navbar() {
     setIsOpen(false);
   }, [location]);
 
-  // Load theme
+  // Force dark mode always
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-    document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+    document.documentElement.classList.add('dark');
   }, []);
-
-  // Toggle theme
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.classList.toggle('dark', newTheme === 'dark');
-  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -85,19 +75,8 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Right Controls (Theme + Mobile Menu) */}
+          {/* Right Controls */}
           <div className="flex-1 flex justify-end items-center gap-4">
-
-            {/* Theme Toggle (Desktop only) */}
-            <button
-              onClick={toggleTheme}
-              className="hidden md:flex items-center justify-center w-10 h-10 rounded-full cursor-pointer 
-              backdrop-blur-md bg-white/40 dark:bg-white/10 
-              border border-white/20 dark:border-white/10 
-              hover:scale-105 transition"
-            >
-              {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-            </button>
 
             {/* Mobile Menu Button */}
             <button

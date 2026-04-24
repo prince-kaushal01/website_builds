@@ -406,6 +406,46 @@ const foodImages = [
   { img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', label: 'Artisan Creations' },
 ];
 
+function FoodVideoCard({ title, sub, img, video }: { title: string; sub: string; img: string; video: string }) {
+  const [playing, setPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  return (
+    <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ height: '240px' }}>
+      {!playing ? (
+        <>
+          <img src={img} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div className="absolute inset-0" style={{ background: 'rgba(5,5,5,0.55)' }} />
+          <button
+            onClick={() => setPlaying(true)}
+            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
+            aria-label={`Play ${title}`}
+          >
+            <div className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+              style={{ background: 'rgba(200,169,106,0.9)' }}>
+              <Play size={20} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft: '3px' }} />
+            </div>
+          </button>
+          <div className="absolute bottom-5 left-5 pointer-events-none">
+            <p className="text-white/40 text-[10px] uppercase tracking-widest mb-1">{sub}</p>
+            <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '18px' }}>{title}</p>
+          </div>
+        </>
+      ) : (
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          controls
+          className="w-full h-full object-cover"
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+      )}
+    </motion.div>
+  );
+}
+
 function FoodSection() {
   return (
     <section className="py-28 px-6 md:px-12" style={{ backgroundColor: 'var(--mode-surface)' }}>
@@ -439,24 +479,18 @@ function FoodSection() {
 
         {/* reel previews */}
         <Reveal className="grid md:grid-cols-2 gap-4">
-          {[
-            { title: 'Zaffran Fine Dining', sub: '0:38 reel', img: 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900' },
-            { title: 'The Artisan Café',    sub: '0:30 reel', img: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900' },
-          ].map((r) => (
-            <motion.div key={r.title} variants={fadeUp} className="relative rounded-2xl overflow-hidden group cursor-pointer" style={{ height: '240px' }}>
-              <img src={r.img} alt={r.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0" style={{ background: 'rgba(5,5,5,0.55)' }} />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-14 h-14 rounded-full flex items-center justify-center" style={{ background: 'rgba(200,169,106,0.9)' }}>
-                  <Play size={20} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft: '3px' }} />
-                </div>
-              </div>
-              <div className="absolute bottom-5 left-5">
-                <p className="text-white/40 text-[10px] uppercase tracking-widest mb-1">{r.sub}</p>
-                <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '18px' }}>{r.title}</p>
-              </div>
-            </motion.div>
-          ))}
+          <FoodVideoCard
+            title="Zaffran Fine Dining"
+            sub="0:38 reel"
+            img="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
+            video="../assets/finedining.mp4"
+          />
+          <FoodVideoCard
+            title="The Artisan Café"
+            sub="0:30 reel"
+            img="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
+            video="../assets/coffee.mp4"
+          />
         </Reveal>
       </div>
     </section>
