@@ -1,5 +1,5 @@
-import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import { motion, useInView, useAnimation } from "motion/react";
+import { useRef, useEffect } from "react";
 
 import peacock from "../../asset/main_peacock.png";
 import bgImage from "../../asset/1_page.jpeg";
@@ -7,67 +7,39 @@ import boat from "../../asset/main_boat.png";
 import flowers from "../../asset/main_flower.png";
 import tomb from "../../asset/main_tomb.png";
 import sign from "../../asset/main_sign.png";
+import petalImg from "../../asset/petal.jpg";
+import birdsVideo from "../../asset/Birds animatio.webm";
 
 interface HomePageProps {
   gateOpen?: boolean;
 }
 
-function FlappingBird({
-  width = 80,
-  speed = 0.55,
-  delay = 0,
-  facingLeft = false,
-}: {
-  width?: number;
-  speed?: number;
-  delay?: number;
-  facingLeft?: boolean;
-}) {
-  const h     = width * 0.55;
-  const color = "#354573";
+const HOME_PETALS = Array.from({ length: 20 }, (_, i) => ({
+  id: i,
+  x: (i * 5.23 + 3.7) % 100,
+  delay: 1.5 + (i * 0.31) % 3.5,
+  duration: 6.5 + (i * 0.47) % 3.5,
+  rotation: (i * 73) % 360,
+  drift: ((i * 37) % 80) - 40,
+  size: 8 + (i * 3) % 8,
+}));
 
-  return (
-    <svg
-      viewBox="0 0 100 55"
-      width={width}
-      height={h}
-      style={{ overflow: "visible", transform: facingLeft ? "scaleX(-1)" : undefined }}
-    >
-      <motion.path
-        fill={color}
-        animate={{ d: [
-          "M50,30 C42,22 26,12 5,16 C18,22 34,27 50,30 Z",
-          "M50,30 C42,32 26,34 5,30 C18,31 34,31 50,30 Z",
-          "M50,30 C42,38 26,46 5,42 C18,39 34,35 50,30 Z",
-          "M50,30 C42,32 26,34 5,30 C18,31 34,31 50,30 Z",
-          "M50,30 C42,22 26,12 5,16 C18,22 34,27 50,30 Z",
-        ]}}
-        transition={{ duration: speed, repeat: Infinity, ease: "easeInOut", delay, times: [0, 0.25, 0.5, 0.75, 1] }}
-      />
-      <motion.path
-        fill={color}
-        animate={{ d: [
-          "M50,30 C58,22 74,12 95,16 C82,22 66,27 50,30 Z",
-          "M50,30 C58,32 74,34 95,30 C82,31 66,31 50,30 Z",
-          "M50,30 C58,38 74,46 95,42 C82,39 66,35 50,30 Z",
-          "M50,30 C58,32 74,34 95,30 C82,31 66,31 50,30 Z",
-          "M50,30 C58,22 74,12 95,16 C82,22 66,27 50,30 Z",
-        ]}}
-        transition={{ duration: speed, repeat: Infinity, ease: "easeInOut", delay, times: [0, 0.25, 0.5, 0.75, 1] }}
-      />
-      <ellipse cx="50" cy="30" rx="9"   ry="4.5" fill={color} />
-      <circle  cx="58" cy="27.5" r="4.5" fill={color} />
-      <path d="M62,27 L70,29 L62,31" fill="#4a3a28" />
-      <circle cx="60"   cy="27" r="1.2" fill="white" />
-      <circle cx="60.4" cy="27" r="0.6" fill="#111"  />
-      <path d="M41,30 C35,27 28,23 24,26 C28,29 35,31 41,30 Z" fill={color} />
-      <path d="M41,31 C35,34 28,38 24,35 C28,33 35,32 41,31 Z" fill={color} opacity="0.8" />
-    </svg>
-  );
-}
+const HOME_PETAL_CSS = `
+${HOME_PETALS.map(
+  (p) => `
+  @keyframes home-petal-fall-${p.id} {
+    0%   { transform: translateY(-50px) translateX(0px) rotate(${p.rotation}deg); opacity: 0; }
+    8%   { opacity: 0.8; }
+    90%  { opacity: 0.7; }
+    100% { transform: translateY(calc(100vh + 60px)) translateX(${p.drift}px) rotate(${p.rotation + 320}deg); opacity: 0; }
+  }`,
+).join("")}
+`;
+
 
 export function HomePage({ gateOpen = false }: HomePageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   // Single isInView drives ALL elements — text AND decoratives
   const isInView = useInView(containerRef, { margin: "-5%", once: false });
 
@@ -82,6 +54,42 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
 
   const show = gateOpen && isInView;
 
+  const peacockCtrl = useAnimation();
+
+  useEffect(() => {
+    if (show) {
+      peacockCtrl.start({
+        x: "0%", opacity: 1, y: 0, scale: 1,
+        transition: { duration: 1.1, delay: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+      }).then(() => {
+        peacockCtrl.start({
+          y: [0, -8, 0],
+          scale: [1, 1.04, 1],
+          transition: { duration: 2.5, repeat: Infinity, ease: "easeInOut", repeatType: "loop" as const },
+        });
+      });
+    } else {
+      peacockCtrl.stop();
+      if (gateOpen) {
+        peacockCtrl.start({ y: 180, opacity: 0, x: "0%", scale: 1, transition: { duration: 0.45, ease: "easeIn" as const } });
+      } else {
+        peacockCtrl.set({ x: "120%", opacity: 0, y: 0, scale: 1 });
+      }
+    }
+  }, [show, gateOpen, peacockCtrl]);
+
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.playbackRate = 0.6;
+  }, []);
+
+  useEffect(() => {
+    const tag = document.createElement("style");
+    tag.id = "home-petal-keyframes";
+    tag.textContent = HOME_PETAL_CSS;
+    document.head.appendChild(tag);
+    return () => { document.getElementById("home-petal-keyframes")?.remove(); };
+  }, []);
+
   return (
     <div ref={containerRef} className="relative w-full h-screen overflow-hidden">
       {/* Background */}
@@ -95,55 +103,28 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         }}
       />
 
-      {/* ── Bird 1 — Left → Right ── */}
-      <motion.div
-        className="absolute z-20"
-        style={{ top: "18%", left: 0 }}
-        initial={{ x: -140, opacity: 0 }}
-        animate={show ? { x: window.innerWidth + 160, opacity: [0, 1, 1, 0] } : { opacity: 0, x: -140 }}
-        transition={show
-          ? { duration: 10, delay: 0.5, ease: "linear", repeat: Infinity, repeatDelay: 5 }
-          : exitT}
-      >
-        <FlappingBird width={64} speed={0.52} facingLeft={false} />
-      </motion.div>
+      {/* ── Birds Video ── */}
+      <motion.video
+        ref={videoRef}
+        src={birdsVideo}
+        className="absolute z-20 w-full pointer-events-none"
+        style={{ top: "5%", left: 0, height: "45%", objectFit: "cover", mixBlendMode: "multiply" }}
+        autoPlay
+        loop
+        muted
+        playsInline
+        initial={{ opacity: 0 }}
+        animate={show ? { opacity: 1 } : { opacity: 0 }}
+        transition={show ? { duration: 1.2, ease: "easeOut" } : exitT}
+      />
 
-      {/* ── Bird 2 — slightly higher, same direction ── */}
-      <motion.div
-        className="absolute z-20"
-        style={{ top: "10%", left: 0 }}
-        initial={{ x: -180, opacity: 0 }}
-        animate={show ? { x: window.innerWidth + 160, opacity: [0, 1, 1, 0] } : { opacity: 0, x: -180 }}
-        transition={show
-          ? { duration: 10, delay: 3, ease: "linear", repeat: Infinity, repeatDelay: 8 }
-          : exitT}
-      >
-        <FlappingBird width={64} speed={0.62} delay={0.1} facingLeft={false} />
-      </motion.div>
-
-      {/* ── Bird 3 — Right → Left ── */}
-      <motion.div
-        className="absolute z-20"
-        style={{ top: "30%", right: 0 }}
-        initial={{ x: 140, opacity: 0 }}
-        animate={show ? { x: -(window.innerWidth + 160), opacity: [0, 1, 1, 0] } : { opacity: 0, x: 140 }}
-        transition={show
-          ? { duration: 12, delay: 2.5, ease: "linear", repeat: Infinity, repeatDelay: 7 }
-          : exitT}
-      >
-        <FlappingBird width={78} speed={0.56} delay={0.1} facingLeft={true} />
-      </motion.div>
-
-      {/* ── Peacock — entry from right, exit down ── */}
+      {/* ── Peacock — entry from right, then gentle bob ── */}
       <motion.img
         src={peacock}
         className="absolute z-20"
         style={{ bottom: 220, right: -20, height: "120px" }}
         initial={{ x: "120%", opacity: 0, y: 0 }}
-        animate={show
-          ? { x: "0%", opacity: 1, y: 0 }
-          : gateOpen ? { y: 180, opacity: 0 } : { x: "120%", opacity: 0, y: 0 }}
-        transition={show ? entry(0.3) : exitT}
+        animate={peacockCtrl}
       />
 
       {/* ── Boat — entry from bottom, exit down ── */}
@@ -193,7 +174,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
       <div className="relative z-10 flex h-full flex-col items-center justify-start text-center px-6 pt-10">
 
         <motion.h2
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.5rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={isInView ? { duration: 0.8, delay: 0.3, ease: "easeOut" } : exitT}
@@ -202,7 +183,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         </motion.h2>
 
         <motion.h3
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.8rem", color: "#3D0C11", lineHeight: 1 }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.4rem", color: "#3D0C11", lineHeight: 1 }}
           initial={{ opacity: 0, scale: 0.6 }}
           animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
           transition={isInView ? { duration: 0.7, delay: 0.5, ease: "easeOut" } : exitT}
@@ -211,7 +192,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         </motion.h3>
 
         <motion.h1
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.5rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={isInView ? { duration: 0.8, delay: 0.7, ease: "easeOut" } : exitT}
@@ -219,7 +200,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
           Diksha
         </motion.h1>
 
-        <motion.div
+        {/* <motion.div
           className="my-4 flex items-center gap-4"
           initial={{ opacity: 0, scaleX: 0 }}
           animate={isInView ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
@@ -228,7 +209,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
           <div className="h-[1px] w-16 bg-[#3D0C11]/60" />
           <div className="w-3 h-3 rotate-45 border-2 border-[#3D0C11]/70" />
           <div className="h-[1px] w-16 bg-[#3D0C11]/60" />
-        </motion.div>
+        </motion.div> */}
 
         <motion.p
           className="mb-2"
@@ -237,7 +218,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
           transition={isInView ? { duration: 0.8, delay: 1.1, ease: "easeOut" } : exitT}
         >
-          22nd December, 2026
+          22nd DECEMBER, 2026
         </motion.p>
 
         <motion.p

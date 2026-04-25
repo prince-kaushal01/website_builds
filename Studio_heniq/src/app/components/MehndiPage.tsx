@@ -28,8 +28,8 @@ const textLines = [
     id: "title",
     content: "Mehndi",
     style: {
-      fontFamily: "'Great Vibes', cursive",
-      fontSize: "5rem",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontSize: "4rem",
       color: "#1c0a02",
       fontWeight: 400,
       lineHeight: 1,
@@ -45,24 +45,13 @@ const textLines = [
   },
   {
     id: "date",
-    content: "20th December, 2026",
+    content: "20th DECEMBER, 2026",
     style: {
       fontFamily: "'Cormorant Garamond', Georgia, serif",
       fontSize: "1.3rem",
       color: "#2d1200",
       fontWeight: 600,
       letterSpacing: "0.05em",
-    },
-    className: "mb-1",
-  },
-  {
-    id: "time",
-    content: "6 : 00 PM onwards",
-    style: {
-      fontFamily: "'Cormorant Garamond', Georgia, serif",
-      fontSize: "1rem",
-      color: "#3b1a05",
-      letterSpacing: "0.2em",
     },
     className: "mb-1",
   },

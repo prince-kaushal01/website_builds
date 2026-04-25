@@ -25,8 +25,8 @@ const textLines = [
     id: "title",
     content: "Sangeet",
     style: {
-      fontFamily: "'Great Vibes', cursive",
-      fontSize: "5.5rem",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontSize: "4.5rem",
       color: "white",
       fontWeight: 400,
       lineHeight: 1,
@@ -49,17 +49,6 @@ const textLines = [
       color: "white",
       fontWeight: 600,
       letterSpacing: "0.05em",
-    },
-    className: "mb-1",
-  },
-  {
-    id: "time",
-    content: "7 : 00 PM onwards",
-    style: {
-      fontFamily: "'Cormorant Garamond', Georgia, serif",
-      fontSize: "1rem",
-      color: "white",
-      letterSpacing: "0.2em",
     },
     className: "mb-1",
   },

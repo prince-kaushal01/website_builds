@@ -6,6 +6,7 @@ import flowerLeft from "../../asset/2_left_b_flower.png";
 import flowerRight from "../../asset/2_right_b_flower.png";
 import flowerRight2 from "../../asset/2_right_t_flower.png";
 import flowerLeft2 from "../../asset/2_left_t_flower.png";
+import petalImg from "../../asset/petal.jpg";
 
 // ─── Static data — created once, never recreated ──────────────────────────────
 
@@ -39,7 +40,7 @@ const SPARKLES = Array.from({ length: 10 }, (_, i) => ({
 }));
 
 const CANVAS_W = 326;
-const CANVAS_H = 166;
+const CANVAS_H = 100;
 const BRUSH_R  = 34;
 const STEP_PX  = 6;   // interpolation step — one circle every 6 px
 const COUNT_EVERY = 18; // pixel-count only every Nth draw call
@@ -97,41 +98,16 @@ export function ScratchCard() {
     canvas.width  = CANVAS_W;
     canvas.height = CANVAS_H;
 
-    // Gold gradient
-    const g = ctx.createLinearGradient(0, 0, CANVAS_W, CANVAS_H);
-    g.addColorStop(0,    "#b8860b");
-    g.addColorStop(0.18, "#f5d76e");
-    g.addColorStop(0.42, "#c9a84c");
-    g.addColorStop(0.62, "#f0d060");
-    g.addColorStop(0.82, "#d4a017");
-    g.addColorStop(1,    "#f5d76e");
-    ctx.fillStyle = g;
+    // Single blush pink fill
+    ctx.fillStyle = "#f9c0cb";
     ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
-    // Shimmer streaks
-    ctx.save();
-    ctx.strokeStyle = "rgba(255,255,200,0.2)";
-    ctx.lineWidth = 1.5;
-    for (let i = -CANVAS_H; i < CANVAS_W + CANVAS_H; i += 10) {
-      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i + CANVAS_H, CANVAS_H); ctx.stroke();
-    }
-    ctx.restore();
-
-    // Vignette
-    const vig = ctx.createRadialGradient(CANVAS_W / 2, CANVAS_H / 2, 20, CANVAS_W / 2, CANVAS_H / 2, CANVAS_W * 0.72);
-    vig.addColorStop(0, "rgba(0,0,0,0)");
-    vig.addColorStop(1, "rgba(0,0,0,0.28)");
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
 
     // Label text
     ctx.textAlign  = "center";
-    ctx.fillStyle  = "rgba(80,50,0,0.85)";
-    ctx.font       = "bold 22px 'Cormorant Garamond', Georgia, serif";
-    ctx.fillText("✦  Scratch to Reveal  ✦", CANVAS_W / 2, CANVAS_H / 2 - 10);
-    ctx.font       = "14px 'Cormorant Garamond', Georgia, serif";
-    ctx.fillStyle  = "rgba(80,50,0,0.6)";
-    ctx.fillText("~ a special message awaits ~", CANVAS_W / 2, CANVAS_H / 2 + 16);
+    ctx.fillStyle  = "rgba(150,50,70,0.85)";
+    ctx.font       = "bold 18px 'Cormorant Garamond', Georgia, serif";
+    ctx.fillText("✦  Scratch to Reveal  ✦", CANVAS_W / 2, CANVAS_H / 2 + 6);
   }, []);
 
   // ── Get pointer in canvas coords ─────────────────────────────────────────
@@ -234,21 +210,24 @@ export function ScratchCard() {
 
       {/* ── Petals: pure CSS animations — zero JS / Framer Motion overhead ── */}
       {PETALS.map((p) => (
-        <div
-          key={p.id}
-          className="absolute pointer-events-none select-none"
-          style={{
-            left: `${p.x}%`,
-            top: 0,
-            fontSize: "18px",
-            zIndex: 5,
-            willChange: "transform, opacity",
-            animation: `petal-fall-${p.id} ${p.duration}s ${p.delay}s linear infinite`,
-          }}
-        >
-          🌸
-        </div>
-      ))}
+  <div
+    key={p.id}
+    className="absolute pointer-events-none select-none"
+    style={{
+      left: `${p.x}%`,
+      top: 0,
+      zIndex: 5,
+      willChange: "transform, opacity",
+      animation: `petal-fall-${p.id} ${p.duration}s ${p.delay}s linear infinite`,
+    }}
+  >
+    <img
+      src={petalImg}
+      alt=""
+      style={{ width: "32px", height: "32px", objectFit: "contain" }}
+    />
+  </div>
+))}
 
       {/* ── Main content ─────────────────────────────────────────────────── */}
       <div className="relative z-10 flex min-h-screen flex-col items-center justify-start pt-14 px-6">
@@ -294,34 +273,26 @@ export function ScratchCard() {
             className="relative rounded-2xl p-[3px]"
             animate={
               isRevealed
-                ? { boxShadow: ["0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,160,23,0.3)", "0 20px 60px rgba(0,0,0,0.5), 0 0 90px rgba(255,210,60,0.95)", "0 20px 60px rgba(0,0,0,0.5), 0 0 50px rgba(212,160,23,0.55)"] }
-                : { boxShadow: "0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(212,160,23,0.3)" }
+                ? { boxShadow: ["0 8px 30px rgba(249,192,203,0.3)", "0 8px 40px rgba(249,192,203,0.7)", "0 8px 30px rgba(249,192,203,0.45)"] }
+                : { boxShadow: "0 6px 24px rgba(249,192,203,0.35)" }
             }
             transition={{ duration: 0.55 }}
             style={{
-              background: "linear-gradient(135deg, #f5d76e 0%, #c9a84c 30%, #f0d060 60%, #b8860b 100%)",
+              background: "#f9c0cb",
             }}
           >
             {/* Revealed card content */}
             <motion.div
-              className="flex h-[160px] w-[320px] flex-col items-center justify-center rounded-2xl px-8"
-              style={{ background: "linear-gradient(160deg, #1a0800 0%, #2d1200 60%, #1a0800 100%)" }}
+              className="flex h-[94px] w-[320px] flex-col items-center justify-center rounded-2xl px-8"
+              style={{ background: "#fff5f7" }}
               animate={isRevealed ? { scale: [1, 1.035, 1] } : {}}
               transition={{ duration: 0.45, delay: 0.15 }}
             >
-              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "0.7rem", letterSpacing: "0.35em", color: "#c9a84c" }} className="uppercase mb-3">
-                You are invited
-              </p>
-              <p style={{ fontFamily: "'Great Vibes', cursive", fontSize: "2.2rem", color: "#fff8ee", lineHeight: 1.1 }} className="mb-2">
-                Kabir &amp; Diksha
-              </p>
-              <div className="flex items-center gap-3 mb-2">
-                <div className="h-px w-10 bg-amber-600/60" />
-                <div className="w-1.5 h-1.5 rotate-45 bg-amber-500" />
-                <div className="h-px w-10 bg-amber-600/60" />
-              </div>
-              <p style={{ fontFamily: "Cormorant Garamond, serif", fontSize: "1rem", color: "#f5d76e" }}>
-                22nd December, 2026
+              {/* <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "0.6rem", letterSpacing: "0.35em", color: "#b05068" }} className="uppercase mb-2">
+                Save the Date
+              </p> */}
+              <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.5rem", color: "#7a3045", fontWeight: 600, letterSpacing: "0.04em" }}>
+                22nd DECEMBER, 2026
               </p>
             </motion.div>
 
@@ -357,7 +328,7 @@ export function ScratchCard() {
             {isRevealed && SPARKLES.map((s) => (
               <motion.div
                 key={s.id}
-                className="absolute pointer-events-none text-yellow-300 text-sm"
+                className="absolute pointer-events-none text-pink-300 text-sm"
                 style={{ left: "50%", top: "50%", willChange: "transform, opacity" }}
                 initial={{ x: 0, y: 0, opacity: 1, scale: 0 }}
                 animate={{
@@ -379,7 +350,7 @@ export function ScratchCard() {
           {isRevealed && (
             <motion.p
               className="mt-6 text-center tracking-[0.3em] text-xs uppercase"
-              style={{ color: "#3D0C11", fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
+              style={{ color: "#b05068", fontFamily: "'Cormorant Garamond', serif", fontWeight: 600 }}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.25 }}

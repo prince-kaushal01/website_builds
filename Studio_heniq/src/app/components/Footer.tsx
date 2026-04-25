@@ -27,7 +27,7 @@ export function Footer() {
         <div className="h-px flex-1 max-w-[80px]" style={{ background: "linear-gradient(to right, transparent, #c9956a)" }} />
         <div className="w-1.5 h-1.5 rotate-45 bg-[#c9956a] opacity-70" />
         <div className="h-px w-6" style={{ background: "#c9956a", opacity: 0.6 }} />
-        <span style={{ fontFamily: "'Great Vibes', cursive", fontSize: "1.6rem", color: "#7a3b1e", lineHeight: 1 }}>
+        <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.6rem", color: "#7a3b1e", lineHeight: 1 }}>
           K &amp; D
         </span>
         <div className="h-px w-6" style={{ background: "#c9956a", opacity: 0.6 }} />
@@ -37,7 +37,7 @@ export function Footer() {
 
       {/* ── Main names ── */}
       <motion.div className="text-center mb-2" {...fadeUp(0.1)}>
-        <h2 style={{ fontFamily: "'Great Vibes', cursive", fontSize: "3.2rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 10px rgba(61,12,17,0.12)" }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.2rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 10px rgba(61,12,17,0.12)" }}>
           Kabir &amp; Diksha
         </h2>
       </motion.div>

@@ -23,8 +23,8 @@ export function FinalPage() {
   });
 
   // HANDS — slide together from sides
-  const leftHandX = useTransform(scrollYProgress, [0.2, 0.42], ["-100%", "0%"]);
-  const rightHandX = useTransform(scrollYProgress, [0.2, 0.42], ["100%", "0%"]);
+  const leftHandX = useTransform(scrollYProgress, [0.1, 0.32], ["-100%", "0%"]);
+  const rightHandX = useTransform(scrollYProgress, [0.1, 0.32], ["100%", "0%"]);
 
   // GRASS — rise from bottom
   const grassLeftY = useTransform(scrollYProgress, [0.1, 0.38], [110, 0]);
@@ -51,39 +51,38 @@ export function FinalPage() {
         }}
       />
 
-      {/* HANDS — scroll-driven merge from sides */}
-      <motion.img
-        src={left_hand}
-        className="absolute z-20 object-cover"
-        style={{
-          x: leftHandX,
-          opacity: 0.9,
-          left: "4rem",
-          top: "-5%",
-          height: "16rem",
-          width: "12rem",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
+      {/* HANDS — top section, hands fill width before text */}
+      <div className="relative -mt-30 z-20 w-full" style={{ height: "75vw" }}>
+        <motion.img
+          src={left_hand}
+          className="absolute"
+          style={{
+            x: leftHandX,
+            opacity: 0.9,
+            left: 0,
+            top: 0,
+            width: "55%",
+            height: "auto",
+          }}
+        />
+        <motion.img
+          src={right_hand}
+          className="absolute"
+          style={{
+            x: rightHandX,
+            opacity: 0.8,
+            right: 0,
+            top: 0,
+            width: "55%",
+            height: "auto",
+          }}
+        />
+      </div>
 
-      <motion.img
-        src={right_hand}
-        className="absolute z-10 object-cover"
-        style={{
-          x: rightHandX,
-          opacity: 0.8,
-          left: "10rem",
-          top: "-5%",
-          height: "16rem",
-          width: "11rem",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-
-      {/* TEXT — fires when text block enters view */}
+      {/* TEXT — flows below the hands */}
       <div
         ref={textRef}
-        className="relative z-30 flex min-h-screen flex-col items-center justify-start text-center px-6 pt-36"
+        className="relative z-30  p-8  mt-15 flex flex-col items-center justify-start text-center px-6 pt-6 pb-24"
       >
         <motion.p
           className="mb-2"
@@ -103,8 +102,8 @@ export function FinalPage() {
 
         <motion.h2
           style={{
-            fontFamily: "'Great Vibes', cursive",
-            fontSize: "4rem",
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: "3.2rem",
             color: "#3D0C11",
             lineHeight: 1.1,
             textShadow: "0 2px 12px rgba(61,12,17,0.2)",

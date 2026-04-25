@@ -9,6 +9,7 @@ import leftBouquet from "../../asset/5_left_bouquet.png";
 import rightBouquet from "../../asset/5_right_bouquet.png";
 import chairs from "../../asset/5_chairs.png";
 import groomWalk from "../../asset/Groom_walk.png";
+import colourImg from "../../asset/5_colour.png";
 
 const textLines = [
   {
@@ -27,8 +28,8 @@ const textLines = [
     id: "title",
     content: "Wedding Ceremony",
     style: {
-      fontFamily: "'Great Vibes', cursive",
-      fontSize: "4rem",
+      fontFamily: "'Cormorant Garamond', serif",
+      fontSize: "2.5rem",
       color: "#3D0C11",
       fontWeight: 400,
       lineHeight: 1.1,
@@ -45,17 +46,6 @@ const textLines = [
       color: "#2d1200",
       fontWeight: 600,
       letterSpacing: "0.05em",
-    },
-    className: "mb-1",
-  },
-  {
-    id: "time",
-    content: "10 : 00 AM",
-    style: {
-      fontFamily: "'Cormorant Garamond', Georgia, serif",
-      fontSize: "1rem",
-      color: "#3b1a05",
-      letterSpacing: "0.2em",
     },
     className: "mb-1",
   },
@@ -102,6 +92,14 @@ export function WeddingPage() {
   // CHAIRS — rise from below
   const chairsY = useTransform(scrollYProgress, [0.15, 0.43], [110, 0]);
   const chairsOpacity = useTransform(scrollYProgress, [0.15, 0.38], [0, 1]);
+
+  // // COLOUR — wipe in upwards (clipPath reveal from bottom to top)
+  // const colourClip = useTransform(
+  //   scrollYProgress,
+  //   [0.18, 0.52],
+  //   ["inset(100% 0% 0% 0%)", "inset(0% 0% 0% 0%)"],
+  // );
+  // const colourOpacity = useTransform(scrollYProgress, [0.15, 0.28], [0, 1]);
 
   // GROOM — uses useAnimation for the 2-step entry + breathing loop
   const groomIsInView = useInView(containerRef, { margin: "-10%", once: false });
@@ -179,6 +177,13 @@ export function WeddingPage() {
         style={{ x: rightBouquetX, opacity: bouquetOpacity }}
       />
 
+      {/* COLOUR — scroll-driven upward wipe, behind everything */}
+      {/* <motion.img
+        src={colourImg}
+        className="absolute top-18 left-1/2 -translate-x-1/2 pointer-events-none"
+        style={{ zIndex: 0, width: "55%", clipPath: colourClip, opacity: colourOpacity, maskImage: "linear-gradient(to bottom, black 65%, transparent 100%)", WebkitMaskImage: "linear-gradient(to bottom, black 65%, transparent 100%)" }}
+      /> */}
+
       {/* CHAIRS — scroll-driven rise from below */}
       <motion.img
         src={chairs}
@@ -197,7 +202,7 @@ export function WeddingPage() {
       {/* TEXT — fires when text block enters view */}
       <div
         ref={textRef}
-        className="relative z-30 flex min-h-screen flex-col items-center justify-start text-center px-6 pt-10"
+        className="relative z-30 mt-15 flex min-h-screen flex-col items-center justify-start text-center px-6 pt-10"
       >
         {textLines.map((line, i) => (
           <motion.div
