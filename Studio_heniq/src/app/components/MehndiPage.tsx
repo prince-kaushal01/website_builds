@@ -29,7 +29,7 @@ const textLines = [
     content: "Mehndi",
     style: {
       fontFamily: "'Cormorant Garamond', serif",
-      fontSize: "4rem",
+      fontSize: "clamp(3rem, 10.5vw, 4rem)",
       color: "#1c0a02",
       fontWeight: 400,
       lineHeight: 1,
@@ -147,8 +147,8 @@ export function MehndiPage() {
       {/* CAMP — scroll-driven entrance from right */}
       <motion.img
         src={camp}
-        className="absolute bottom-56 w-96 z-10"
-        style={{ x: campX, opacity: campOpacity }}
+        className="absolute bottom-56 z-10"
+        style={{ x: campX, opacity: campOpacity, width: "min(24rem, 92vw)" }}
       />
 
       {/* CURTAIN (sit) — rises from bottom on scroll */}

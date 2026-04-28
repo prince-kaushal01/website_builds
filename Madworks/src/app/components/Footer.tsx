@@ -7,8 +7,8 @@ export function Footer() {
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <Mail size={18} className="text-[var(--accent-gold)]" />
-            <a href="mailto:info@eternalmoments.com" className="hover:text-[var(--accent-gold)] transition-colors">
-              info@eternalmoments.com
+            <a href="mailto:manager@madworksvideo.com" className="hover:text-[var(--accent-gold)] transition-colors">
+              manager@madworksvideo.com
             </a>
           </div>
           <div className="flex items-center gap-2">
@@ -21,7 +21,7 @@ export function Footer() {
 
         <div className="flex items-center gap-4">
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/madworksvideo?igsh=Y3hic2tpNzB1aXkz"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[var(--accent-gold)] transition-colors"

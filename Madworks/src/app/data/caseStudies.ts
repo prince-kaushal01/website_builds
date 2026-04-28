@@ -27,6 +27,7 @@ export interface CaseStudy {
   approach: string;
   stats: CaseStat[];
   testimonial: CaseTestimonial;
+  video?: string;
   featured?: boolean;
 }
 
@@ -88,7 +89,7 @@ export const caseStudies: CaseStudy[] = [
       'https://images.unsplash.com/photo-1439130490301-25e322d88054?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
     gallery: [
       'https://images.unsplash.com/photo-1571896349842-33c89424de2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
-      'https://images.unsplash.com/photo-1582610116397-edb72ad0ce5d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
+      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
     ],
@@ -151,7 +152,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: 4,
-    client: 'Zara Bridal Collection',
+    client: 'Zara Collection',
     category: 'Fashion Ad',
     categorySlug: 'brand-ads',
     location: 'Mumbai',
@@ -244,7 +245,7 @@ export const caseStudies: CaseStudy[] = [
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
     gallery: [
       'https://images.unsplash.com/photo-1600566752355-35792bedcfea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6d349947?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
+      'https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHJlc29ydHxlbnwwfHwwfHx8MA%3D%3D',
       'https://images.unsplash.com/photo-1600121848594-d8644e57abab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
       'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
     ],
@@ -264,6 +265,46 @@ export const caseStudies: CaseStudy[] = [
         "The film didn't just show the property — it sold a way of life. We moved inventory we weren't expecting to move for another year.",
       author: 'Aakash Jain',
       role: 'CEO, Vista Realty',
+    },
+  },
+  {
+    id: 7,
+    client: 'Pixotell Azzure',
+    category: 'Brand Film',
+    categorySlug: 'brand-ads',
+    location: 'Panchgani, Maharashtra',
+    year: '2025',
+    duration: '3 Days',
+    tagline: 'Where the clouds touch the earth — and luxury begins.',
+    description:
+      'A cinematic brand film for Panchgani\'s most intimate luxury retreat — Pixotell Azzure, a hilltop escape set above the Sahyadri valleys.',
+    coverImage:
+      'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200',
+    heroImage:
+      'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920',
+    video: '/videos/pixottel.mp4',
+    gallery: [
+      'https://images.unsplash.com/photo-1455587734955-081b22074882?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
+      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900',
+    ],
+    services: ['Brand Filmmaking', 'Aerial Drone', 'Property Photography', 'Social Cuts'],
+    brief:
+      "Pixotell Azzure needed a film that could speak to the discerning traveller — one that communicated not just the property's luxury, but the feeling of being above it all. Set at over 1,000 metres above sea level in Panchgani, the brief called for a visual identity that matched the resort's promise: intimate, unhurried, and breathtakingly beautiful.",
+    approach:
+      "We spent three days across the property at every light condition — from pre-dawn mist drifting over the Sahyadri valleys to candlelit evenings by the infinity pool. Drone sequences captured the full scale of the hilltop setting, while intimate close-ups of the spa, the chef's table, and the suites communicated the warmth that sets Azzure apart. The hero film runs at 2 minutes 30 seconds, with shorter social cuts for Instagram and YouTube.",
+    stats: [
+      { value: '3', label: 'Shoot Days' },
+      { value: '1,000m', label: 'Altitude' },
+      { value: '2:30', label: 'Hero Film' },
+      { value: '6', label: 'Social Cuts' },
+    ],
+    testimonial: {
+      quote:
+        "Madworks didn't just shoot our hotel — they captured the soul of Azzure. Every frame felt like a painting we'd hang on the wall.",
+      author: 'Pixotell Azzure',
+      role: 'Management, Panchgani',
     },
   },
 ];

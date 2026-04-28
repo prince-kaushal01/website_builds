@@ -29,7 +29,7 @@ const textLines = [
     content: "Wedding Ceremony",
     style: {
       fontFamily: "'Cormorant Garamond', serif",
-      fontSize: "2.5rem",
+      fontSize: "clamp(1.8rem, 6.5vw, 2.5rem)",
       color: "#3D0C11",
       fontWeight: 400,
       lineHeight: 1.1,

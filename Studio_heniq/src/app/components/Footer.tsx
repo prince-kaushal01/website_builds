@@ -16,7 +16,7 @@ export function Footer() {
     <footer
       ref={ref}
       style={{ background: "linear-gradient(180deg, #fdf6ef 0%, #f9ede0 60%, #f5e4d2 100%)" }}
-      className="relative h-screen w-full overflow-hidden px-6 pt-14 pb-8"
+      className="relative min-h-screen w-full overflow-hidden px-6 pt-14 pb-8"
     >
 
       {/* ── Top decorative rule ── */}
@@ -37,7 +37,7 @@ export function Footer() {
 
       {/* ── Main names ── */}
       <motion.div className="text-center mb-2" {...fadeUp(0.1)}>
-        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3.2rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 10px rgba(61,12,17,0.12)" }}>
+        <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.2rem, 8.5vw, 3.2rem)", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 10px rgba(61,12,17,0.12)" }}>
           Kabir &amp; Diksha
         </h2>
       </motion.div>

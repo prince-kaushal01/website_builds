@@ -26,7 +26,7 @@ const textLines = [
     content: "Sangeet",
     style: {
       fontFamily: "'Cormorant Garamond', serif",
-      fontSize: "4.5rem",
+      fontSize: "clamp(3.2rem, 11.5vw, 4.5rem)",
       color: "white",
       fontWeight: 400,
       lineHeight: 1,

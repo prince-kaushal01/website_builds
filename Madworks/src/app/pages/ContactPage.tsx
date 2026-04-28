@@ -8,7 +8,7 @@ const ease = [0.22, 1, 0.36, 1] as const;
 const contactDetails = [
   { icon: Phone,        label: 'Phone',     value: '+91 97697 21010' },
   { icon: MessageCircle,label: 'WhatsApp',  value: 'Chat with us'   },
-  { icon: Mail,         label: 'Email',     value: 'hello@madworks.in' },
+  { icon: Mail,         label: 'Email',     value: 'manager@madworksvideo.com' },
   { icon: MapPin,       label: 'Based in',  value: 'Mumbai, India — shooting globally' },
 ];
 

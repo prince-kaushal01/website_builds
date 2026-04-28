@@ -103,7 +103,7 @@ export function FinalPage() {
         <motion.h2
           style={{
             fontFamily: "'Cormorant Garamond', serif",
-            fontSize: "3.2rem",
+            fontSize: "clamp(2.2rem, 8.5vw, 3.2rem)",
             color: "#3D0C11",
             lineHeight: 1.1,
             textShadow: "0 2px 12px rgba(61,12,17,0.2)",

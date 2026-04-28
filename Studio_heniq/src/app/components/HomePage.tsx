@@ -8,7 +8,7 @@ import flowers from "../../asset/main_flower.png";
 import tomb from "../../asset/main_tomb.png";
 import sign from "../../asset/main_sign.png";
 import petalImg from "../../asset/petal.jpg";
-import birdsVideo from "../../asset/Birds animatio.webm";
+import birdGif from "../../asset/placidplace-hummingbird-12098_512.gif";
 
 interface HomePageProps {
   gateOpen?: boolean;
@@ -39,17 +39,13 @@ ${HOME_PETALS.map(
 
 export function HomePage({ gateOpen = false }: HomePageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  // Single isInView drives ALL elements — text AND decoratives
   const isInView = useInView(containerRef, { margin: "-5%", once: false });
 
-  // Entry transition — smooth, staggered
   const entry = (delay = 0) => ({
     duration: 1.1,
     delay,
-    ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+    ease: [0.05, 1, 0.36, 1] as [number, number, number, number],
   });
-  // Exit transition — quick drop
   const exitT = { duration: 0.45, ease: "easeIn" as const };
 
   const show = gateOpen && isInView;
@@ -79,10 +75,6 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
   }, [show, gateOpen, peacockCtrl]);
 
   useEffect(() => {
-    if (videoRef.current) videoRef.current.playbackRate = 0.6;
-  }, []);
-
-  useEffect(() => {
     const tag = document.createElement("style");
     tag.id = "home-petal-keyframes";
     tag.textContent = HOME_PETAL_CSS;
@@ -103,26 +95,41 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         }}
       />
 
-      {/* ── Birds Video ── */}
-      <motion.video
-        ref={videoRef}
-        src={birdsVideo}
-        className="absolute z-20 w-full pointer-events-none"
-        style={{ top: "5%", left: 0, height: "45%", objectFit: "cover", mixBlendMode: "multiply" }}
-        autoPlay
-        loop
-        muted
-        playsInline
-        initial={{ opacity: 0 }}
-        animate={show ? { opacity: 1 } : { opacity: 0 }}
-        transition={show ? { duration: 1.2, ease: "easeOut" } : exitT}
-      />
+      {/* ── Bird 1 — right → left (mirrored), fades out before reaching text ──
+      <motion.div
+        className="absolute z-20"
+        style={{ top: 300 , right: 0 }}
+        initial={{ x: 120, opacity: 0 }}
+        animate={show
+          ? { x: -(window.innerWidth * 0.42), opacity: [0, 1, 1, 0] }
+          : { x: 120, opacity: 0 }}
+        transition={show
+          ? { duration: 9, delay: 0.5, ease: "linear" }
+          : exitT}
+      >
+        <img src={birdGif} alt="" style={{ width: 90, height: "auto", transform: "scaleX(-1)" }} />
+      </motion.div> */}
+
+      ── Bird 2 — left → right, fades out before reaching text ──
+      <motion.div
+        className="absolute z-20"
+        style={{ top: "75px", left: 0 }}
+        initial={{ x: -120, opacity: 0 }}
+        animate={show
+          ? { x: window.innerWidth * 0.42, opacity: [0, 1, 1, 0] }
+          : { x: -120, opacity: 0 }}
+        transition={show
+          ? { duration: 9, delay: 2.5, ease: "linear" }
+          : exitT}
+      >
+        <img src={birdGif} alt="" style={{ width: 80, height: "auto" }} />
+      </motion.div>
 
       {/* ── Peacock — entry from right, then gentle bob ── */}
       <motion.img
         src={peacock}
         className="absolute z-20"
-        style={{ bottom: 220, right: -20, height: "120px" }}
+        style={{ bottom: "clamp(165px, 24.4vh, 220px)", right: -20, height: "clamp(88px, 13.3vh, 120px)" }}
         initial={{ x: "120%", opacity: 0, y: 0 }}
         animate={peacockCtrl}
       />
@@ -131,11 +138,9 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
       <motion.img
         src={boat}
         className="absolute"
-        style={{ bottom: 0, left: 0, height: "180px" }}
+        style={{ bottom: 0, left: 0, height: "clamp(130px, 20vh, 180px)" }}
         initial={{ y: "120%", opacity: 0 }}
-        animate={show
-          ? { y: "0%", opacity: 1 }
-          : { y: "120%", opacity: 0 }}
+        animate={show ? { y: "0%", opacity: 1 } : { y: "120%", opacity: 0 }}
         transition={show ? entry(0.6) : exitT}
       />
 
@@ -143,26 +148,24 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
       <motion.img
         src={flowers}
         className="absolute"
-        style={{ bottom: -15, left: 120, height: "190px" }}
+        style={{ bottom: -15, left: "clamp(80px, 30vw, 120px)", height: "clamp(138px, 21vh, 190px)" }}
         initial={{ y: "120%", opacity: 0 }}
-        animate={show
-          ? { y: "0%", opacity: 1 }
-          : { y: "120%", opacity: 0 }}
+        animate={show ? { y: "0%", opacity: 1 } : { y: "120%", opacity: 0 }}
         transition={show ? entry(0.9) : exitT}
       />
 
-      {/* ── Tomb — entry from left, exit down ── */}
+      {/* ── Tomb ── */}
       <img
-  src={tomb}
-  className="absolute z-10"
-  style={{ bottom: 295, left: 0, height: "300px" }}
-/>
+        src={tomb}
+        className="absolute z-10"
+        style={{ bottom: "clamp(190px, 33vh, 295px)", left: 0, height: "clamp(210px, 33vh, 300px)" }}
+      />
 
       {/* ── Sign — entry from left, exit down ── */}
       <motion.img
         src={sign}
         className="absolute z-10"
-        style={{ bottom: 270, left: 15, height: "110px" }}
+        style={{ bottom: "clamp(175px, 30vh, 270px)", left: 15, height: "clamp(78px, 12vh, 110px)" }}
         initial={{ x: "-120%", opacity: 0, y: 0 }}
         animate={show
           ? { x: "0%", opacity: 1, y: 0 }
@@ -170,11 +173,11 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         transition={show ? entry(1.5) : exitT}
       />
 
-      {/* ── Text — drops down on exit ── */}
-      <div className="relative z-10 flex h-full flex-col items-center justify-start text-center px-6 pt-10">
+      {/* ── Text ── */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-start text-center px-6 pt-2">
 
         <motion.h2
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(3.6rem, 13vw, 5rem)", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={isInView ? { duration: 0.8, delay: 0.3, ease: "easeOut" } : exitT}
@@ -183,7 +186,7 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         </motion.h2>
 
         <motion.h3
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "2.4rem", color: "#3D0C11", lineHeight: 1 }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(2.4rem, 8vw, 3.2rem)", color: "#3D0C11", lineHeight: 1 }}
           initial={{ opacity: 0, scale: 0.6 }}
           animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.6 }}
           transition={isInView ? { duration: 0.7, delay: 0.5, ease: "easeOut" } : exitT}
@@ -192,24 +195,13 @@ export function HomePage({ gateOpen = false }: HomePageProps) {
         </motion.h3>
 
         <motion.h1
-          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "3rem", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
+          style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(3.6rem, 13vw, 5rem)", color: "#3D0C11", lineHeight: 1.1, textShadow: "0 2px 12px rgba(61,12,17,0.25)" }}
           initial={{ opacity: 0, y: 60 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
           transition={isInView ? { duration: 0.8, delay: 0.7, ease: "easeOut" } : exitT}
         >
           Diksha
         </motion.h1>
-
-        {/* <motion.div
-          className="my-4 flex items-center gap-4"
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={isInView ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
-          transition={isInView ? { duration: 0.7, delay: 0.9 } : exitT}
-        >
-          <div className="h-[1px] w-16 bg-[#3D0C11]/60" />
-          <div className="w-3 h-3 rotate-45 border-2 border-[#3D0C11]/70" />
-          <div className="h-[1px] w-16 bg-[#3D0C11]/60" />
-        </motion.div> */}
 
         <motion.p
           className="mb-2"

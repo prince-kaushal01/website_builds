@@ -21,34 +21,65 @@ function Reveal({ children, className }: { children: React.ReactNode; className?
 }
 
 /* ── data ── */
+const FILLER_MALE   = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800';
+const FILLER_FEMALE = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800';
+
 const team = [
   {
-    name: 'Arjun Madaan',
-    role: 'Founder & Lead Photographer',
-    img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
-    thought: 'Every wedding is a universe of its own. My job is to disappear into it and bring back the moments that made it real.',
+    name: 'Aniket Patil',
+    role: 'Founder & Creative Head',
+    img: FILLER_MALE,
+    thought: 'Founder of Madworks since 2017, Aniket started his journey with international editing projects before stepping into full-scale production and shooting. With a strong creative vision and hands-on approach, he leads the team with a focus on storytelling, innovation, and high-quality visual experiences.',
     index: '01',
   },
   {
-    name: 'Sneha Kapoor',
-    role: 'Senior Videographer',
-    img: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
-    thought: 'Film is time travel. When you press play ten years from now, I want you to feel every single second of that day.',
+    name: 'Manali Patil',
+    role: 'Creative Director & Co-Founder',
+    img: FILLER_FEMALE,
+    thought: 'Manali plays a key role in shaping the creative direction of Madworks. Beyond being a constant support system, she contributes through candid photography and overall creative guidance, ensuring every project carries a unique and refined touch.',
     index: '02',
   },
   {
-    name: 'Rahul Verma',
-    role: 'Creative Director',
-    img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
-    thought: 'Great visuals don\'t happen by accident. We obsess over light, composition, and story — so you never have to.',
+    name: 'Omkar Chikane',
+    role: 'Chief Editor',
+    img: '/images/omkar.jpeg',
+    thought: 'Omkar is the backbone of post-production at Madworks. Known for his creativity and dedication, he brings stories to life through editing and is deeply committed to his craft — often going beyond time limits to achieve perfection.',
     index: '03',
   },
   {
-    name: 'Priya Sharma',
-    role: 'Ads & Brand Specialist',
-    img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
-    thought: 'Whether it\'s a brand or a bride, every subject has a story worth telling with intention and beauty.',
+    name: 'Mahesh Suroshe',
+    role: 'Cinematographer',
+    img: FILLER_MALE,
+    thought: 'Mahesh is a passionate cinematographer who strives for perfection in every frame. His ability to go the extra mile ensures that every visual captured meets the highest standards of quality and creativity.',
     index: '04',
+  },
+  {
+    name: 'Naresh Shelar',
+    role: 'Photographer',
+    img: '/images/NARESH.jpeg',
+    thought: 'Naresh excels in both traditional and candid photography. His versatility and eye for detail help capture moments in their most authentic and timeless form.',
+    index: '05',
+  },
+  {
+    name: 'Sumedh Bansode',
+    role: 'Associate Editor',
+    img: '/images/sumedh.jpeg',
+    thought: 'Sumedh specializes in wedding and story-based edits. With a natural sense of direction and storytelling, he adds emotional depth and narrative flow to every project he works on.',
+    index: '06',
+  },
+  {
+    name: 'Swapnil Mestry',
+    role: 'Photographer & Videographer',
+    img: '/images/swapnil.jpeg',
+    thought: 'Swapnil is a true hybrid shooter, skilled in both photography and videography. His adaptability allows him to handle any situation seamlessly, making him a valuable asset to the team.',
+    index: '07',
+  },
+  {
+    name: 'Sairaj',
+    role: 'Operations Manager',
+    img: '/images/sairaj.jpeg',
+    thought: 'Sairaj manages the backbone of Madworks\' operations. From planning and logistics to project delivery and team coordination, he ensures every shoot runs smoothly and efficiently.',
+    index: '08',
   },
 ];
 
@@ -63,7 +94,7 @@ function TeamHero() {
       {/* parallax image */}
       <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
         <img
-          src="../images/team.JPG"
+          src="/images/team.JPG"
           alt="Madworks team"
           className="w-full h-full fixed bg-cover object-cover object-top"
         />

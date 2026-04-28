@@ -70,7 +70,7 @@ function Hero() {
           </a>
           <Link to="/portfolio"
             className="px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: 'rgba(255,255,255,0.07)', color: 'white', border: '1px solid rgba(255,255,255,0.18)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}>
+            style={{ background: 'rgba(255, 3, 3, 0.07)', color: 'white', border: '1px solid rgba(255,255,255,0.18)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}>
             View Property Work
           </Link>
         </motion.div>
@@ -363,11 +363,29 @@ function CTA() {
             style={{ background: ACCENT, color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
             <MessageCircle size={15} /> WhatsApp to Book
           </a>
-          <Link to="/contact"
-            className="px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.14)', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
-            Get a Quote
-          </Link>
+          <Link
+  to="/contact"
+  className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+  style={{
+    background: "rgba(20,20,20,0.65)",
+    backdropFilter: "blur(12px)",
+    color: "#ffffff",
+    border: "1px solid rgba(255,255,255,0.35)",
+    fontFamily: "var(--font-heading)",
+    letterSpacing: "0.05em",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.background = "rgba(85, 80, 80, 0.65)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+  }}
+>
+  Get a Proposal
+</Link>
         </motion.div>
       </Reveal>
     </section>

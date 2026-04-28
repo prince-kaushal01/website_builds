@@ -266,7 +266,7 @@ export function ScratchCard() {
           viewport={{ once: false }}
           transition={{ duration: 0.7, delay: 0.3 }}
           className="relative"
-          style={{ willChange: "transform" }}
+          style={{ willChange: "transform", width: "min(326px, calc(100vw - 3rem))" }}
         >
           {/* Gold border glow on reveal */}
           <motion.div
@@ -283,7 +283,7 @@ export function ScratchCard() {
           >
             {/* Revealed card content */}
             <motion.div
-              className="flex h-[94px] w-[320px] flex-col items-center justify-center rounded-2xl px-8"
+              className="flex h-[94px] w-full flex-col items-center justify-center rounded-2xl px-8"
               style={{ background: "#fff5f7" }}
               animate={isRevealed ? { scale: [1, 1.035, 1] } : {}}
               transition={{ duration: 0.45, delay: 0.15 }}

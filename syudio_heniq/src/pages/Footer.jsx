@@ -38,7 +38,7 @@ import bg from '../assets/page1_bg.png'
 // }
 // ─────────────────────────────────────────────────────────────────────────────
 
-const SHEET_URL = 'https://script.google.com/macros/s/AKfycbyalLEy_3_YMXmBsMr0bEAjcvUb5r_Bb2hYCklcGtSHMfO8V9r94JeyUuLlK7KsXYx/exec'
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbz9F4CBR1nbx38q8950OE_foh0wEaH3kT4b2oZBeP1ASuMmb6gYAIdBeVZO7E7pFbeL/exec'
 
 // ─────────────────────────────────────────────────────────────────────────────
 

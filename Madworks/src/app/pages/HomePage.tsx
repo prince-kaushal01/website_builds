@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
-import { motion, useInView, useScroll, useTransform } from 'motion/react';
+import { useRef, useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { MessageCircle, Play, Star, ArrowRight, Globe, Clock, Zap, ChevronRight } from 'lucide-react';
+import { MessageCircle, Play, Star, ArrowRight, ArrowLeft, Globe, Clock, Zap, ChevronRight } from 'lucide-react';
 
 /* ── constants ─────────────────────────────────────────── */
 const WA = 'https://wa.me/919769721010?text=Hi%20Madworks%2C%20I%27d%20like%20to%20inquire%20about%20your%20video%20production%20services.%20Please%20share%20more%20details%20on%20how%20we%20can%20collaborate!';
@@ -49,13 +49,21 @@ function HeroSection({ onBook }: { onBook: () => void }) {
   return (
     <section ref={ref} className="relative h-screen overflow-hidden flex items-center justify-center">
       {/* parallax video/image */}
-      <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
+      <motion.div className="absolute inset-0 scale-110 overflow-hidden" style={{ y: imgY }}>
         <video
           autoPlay muted loop playsInline
-          className="w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+          // poster="/images/DSC09193.JPG"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            width: '100vh',
+            height: '100vw',
+            transform: 'translate(-50%, -50%) rotate(-90deg)',
+            objectFit: 'cover',
+          }}
         >
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-fireworks-in-the-night-sky-1953-large.mp4" type="video/mp4" />
+          <source src="/videos/wedding7.mp4" type="video/mp4" />
         </video>
       </motion.div>
 
@@ -66,26 +74,51 @@ function HeroSection({ onBook }: { onBook: () => void }) {
 
       {/* content */}
       <motion.div style={{ y: textY, opacity: fade }} className="relative z-20 text-center px-6 max-w-[900px]">
-        {/* pill tags */}
         <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.25 }}
-          className="flex flex-wrap items-center justify-center gap-3 mt-2 mb-8"
-        >
-          {tags.map((t, i) => (
-            <span key={t} className="flex items-center gap-3">
-              <span
-                className="px-4 py-1.5 rounded-full text-xs uppercase tracking-[0.18em]"
-                style={{ background: 'rgba(21, 21, 19, 0.15)', border: '1px solid rgba(236, 163, 16, 0.35)', color: 'var(--accent-gold)' }}
-              >
-                {t}
-              </span>
-              {i < tags.length - 1 && <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />}
-            </span>
-          ))}
-        </motion.div>
+  initial={{ opacity: 0, y: -16 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 1, delay: 0.25 }}
+  className="flex flex-wrap items-center justify-center gap-3 mt-2 mb-8"
+>
+  {tags.map((t, i) => (
+    <span key={t} className="flex items-center gap-3">
+      
+      {/* 🔥 TAG */}
+      <span
+        className="px-4 py-1.5 rounded-full text-xs uppercase tracking-[0.18em] transition-all duration-300 hover:scale-105"
+        style={{
+          background: "rgba(20,20,20,0.65)", // darker for visibility
+          backdropFilter: "blur(10px)",
+          border: "1px solid rgba(200,169,106,0.5)",
+          color: "var(--accent-gold)",
+          boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = "rgba(200,169,106,0.15)";
+          e.currentTarget.style.border = "1px solid rgba(200,169,106,0.9)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = "rgba(20,20,20,0.65)";
+          e.currentTarget.style.border = "1px solid rgba(200,169,106,0.5)";
+        }}
+      >
+        {t}
+      </span>
 
+      {/* 🔹 separator dot */}
+      {i < tags.length - 1 && (
+        <span
+          style={{
+            width: "4px",
+            height: "4px",
+            borderRadius: "50%",
+            background: "rgba(255,255,255,0.4)", // brighter
+          }}
+        />
+      )}
+    </span>
+  ))}
+</motion.div>
         {/* headline */}
         <motion.h1
           initial={{ opacity: 0, y: 60 }}
@@ -126,22 +159,40 @@ function HeroSection({ onBook }: { onBook: () => void }) {
             Book Now
           </button>
           <Link
-            to="/portfolio"
-            className="px-8 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
-            style={{ background: 'rgba(255,255,255,0.08)', color: 'white', border: '1px solid rgba(255,255,255,0.2)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
-          >
-            View Portfolio
-          </Link>
+  to="/portfolio"
+  className="px-8 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+  style={{
+    background: "rgba(20, 20, 20, 0.6)", // darker for contrast
+    backdropFilter: "blur(12px)",
+    border: "1px solid rgba(255,255,255,0.35)",
+    color: "#ffffff",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.background = "rgba(20, 20, 20, 0.6)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+  }}
+>
+  View Portfolio
+</Link>
           <a
-            href={WA}
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
-            style={{ background: 'rgba(37,211,102,0.12)', color: '#20733f', border: '1px solid rgba(37,211,102,0.3)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
-          >
-            <MessageCircle size={16} />
-            WhatsApp
-          </a>
+  href={WA}
+  target="_blank"
+  rel="noreferrer"
+  className="flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-medium transition-all duration-300"
+  style={{
+    background: "#25D366",
+    color: "#0a0a0a",
+    boxShadow: "0 6px 20px rgba(37,211,102,0.35)",
+  }}
+>
+  <MessageCircle size={16} />
+  WhatsApp
+</a>
         </motion.div>
       </motion.div>
 
@@ -166,9 +217,9 @@ function HeroSection({ onBook }: { onBook: () => void }) {
    02  WEDDING SHOWCASE
 ═══════════════════════════════════════════════════════════ */
 const weddingGrid = [
-  { img: 'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900', label: 'The Ceremony', tall: true },
-  { img: 'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', label: 'Indian Traditions' },
-  { img: 'https://images.unsplash.com/photo-1533091090875-1ff4acc497dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800', label: 'Ring Detail' },
+  { img: '/images/VOW01559.jpg',  label: 'The Ceremony',    tall: true },
+  { img: '/images/DSC06395.jpg',  label: 'Indian Traditions' },
+  { img: '/images/VOW01254.jpg',  label: 'Ring Detail' },
 ];
 
 function WeddingShowcase() {
@@ -199,9 +250,9 @@ function WeddingShowcase() {
               <video
                 autoPlay muted loop playsInline
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                poster="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
+                poster="/images/DSC08825.JPG"
               >
-                <source src="/videos/wedding_dance.mp4" type="video/mp4" />
+                <source src="/videos/wedding5.mp4" type="video/mp4" />
               </video>
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.75) 0%, transparent 55%)' }} />
               <div className="absolute inset-0 flex items-center justify-center">
@@ -264,85 +315,146 @@ const adCards = [
     video: '/videos/corporate.mp4',
     tag: 'Corporate'
   },
+  {
+    title: 'BBQ Lounge',
+    sub: 'Food & Beverage Reel',
+    dur: '0:30',
+    video: '/videos/Lofi%20BBQ%201_V2.mp4',
+    tag: 'F&B'
+  },
+  {
+    title: 'Omkar Brand',
+    sub: 'Brand Campaign',
+    dur: '0:25',
+    video: '/videos/Omkar_Test_V2.mp4',
+    tag: 'Brand'
+  },
+  {
+    title: 'Commercial Reel',
+    sub: 'Brand Identity',
+    dur: '0:30',
+    video: '/videos/Reel_01.mp4',
+    tag: 'Commercial'
+  },
+  {
+    title: 'Cinematic Reel',
+    sub: 'Brand Campaign',
+    dur: '0:30',
+    video: '/videos/Reel_02.mp4',
+    tag: 'Commercial'
+  },
+  {
+    title: 'Skin Agency',
+    sub: 'Beauty Campaign',
+    dur: '0:28',
+    video: '/videos/Skin%20Agency_V6.mp4',
+    tag: 'Beauty'
+  },
 ];
-
 function AdsShowcase({ onBook }: { onBook: () => void }) {
+  const [index, setIndex] = useState(0);
+  const visible = 4;
+
+  const extended = [...adCards, ...adCards];
+
+  // auto slide
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % adCards.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <section className="py-28 px-6 md:px-12" style={{ backgroundColor: 'var(--deep-green)' }}>
+    <section className="py-28 px-6 md:px-12 bg-[var(--deep-green)]">
       <div className="max-w-[1300px] mx-auto">
-        <Reveal className="mb-14 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-          <div>
-            <SectionLabel>Business Ads &amp; Commercials</SectionLabel>
-            <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(30px, 4vw, 52px)', lineHeight: 1.1 }}>
-              Stop the Scroll.
-              <br />Start the Conversation.
-            </motion.h2>
-          </div>
-          <motion.p variants={fadeUp} className="max-w-[320px]" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '15px', lineHeight: 1.8 }}>
-            30–40 second cinematic reels for dentists, salons, brands, and corporates — built to convert.
-          </motion.p>
-        </Reveal>
 
-        <Reveal className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {adCards.map((ad) => (
-            <motion.div
-              key={ad.title}
-              variants={fadeUp}
-              className="group relative rounded-2xl overflow-hidden cursor-pointer"
-              style={{ aspectRatio: '9/14' }}
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.35, ease }}
-            >
-              <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                <source src={ad.video} type="video/mp4" />
-              </video>
-              <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(5,5,5,0.88) 0%, rgba(5,5,5,0.1) 60%, transparent 100%)' }} />
-
-              {/* tag top */}
-              {/* <div className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] uppercase tracking-[0.18em]"
-                style={{ background: 'rgba(5,5,5,0.55)', backdropFilter: 'blur(8px)', color: 'var(--accent-gold)', border: '1px solid rgba(200,169,106,0.25)' }}>
-                {ad.tag}
-              </div> */}
-
-              {/* duration top-right */}
-              <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-[10px]"
-                style={{ background: 'rgba(5,5,5,0.6)', backdropFilter: 'blur(6px)', color: 'rgba(255,255,255,0.6)' }}>
-                {ad.dur}
-              </div>
-
-              {/* play button centre */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="w-14 h-14 rounded-full flex items-center justify-center"
-                  style={{ background: 'rgba(200,169,106,0.0)', border: '1.5px solid rgba(200,169,106,0.4)' }}
-                  whileHover={{ background: 'rgba(200,169,106,0.9)', border: '1.5px solid transparent' }}
-                  transition={{ duration: 0.25 }}
-                >
-                  <Play size={20} color="rgba(200,169,106,0.9)" style={{ marginLeft: '3px' }} className="group-hover:[color:#0a0a0a]" />
-                </motion.div>
-              </div>
-
-              {/* info bottom */}
-              <div className="absolute bottom-5 left-5 right-5">
-                <p className="text-white/40 text-[10px] uppercase tracking-widest mb-1">{ad.sub}</p>
-                <p className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', lineHeight: 1.2 }}>{ad.title}</p>
-              </div>
-            </motion.div>
-          ))}
-        </Reveal>
-
-        <Reveal className="mt-10 flex justify-center">
-          <motion.button
-            variants={fadeUp}
-            onClick={onBook}
-            className="flex items-center gap-2 px-8 py-3.5 rounded-full text-sm cursor-pointer transition-all"
-            style={{ background: 'var(--accent-gold)', color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
-            whileHover={{ scale: 1.05 }}
+        {/* CAROUSEL */}
+        <div className="overflow-hidden">
+          <motion.div
+            className="flex gap-4"
+            animate={{
+              x: `-${index * 25}%`, // 4 items → 25% each
+            }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            Get Your Brand Film
-            <ChevronRight size={16} />
-          </motion.button>
-        </Reveal>
+            {extended.map((ad, i) => {
+              const videoRef = useRef<HTMLVideoElement | null>(null);
+
+              // correct visibility logic
+              const realIndex = i % adCards.length;
+              const isVisible =
+                realIndex >= index &&
+                realIndex < index + visible;
+
+              // control playback manually (IMPORTANT)
+              useEffect(() => {
+                const vid = videoRef.current;
+                if (!vid) return;
+
+                if (isVisible) {
+                  vid.play().catch(() => {});
+                } else {
+                  vid.pause();
+                  vid.currentTime = 0;
+                }
+              }, [isVisible]);
+
+              return (
+                <div
+                  key={i}
+                  className="min-w-[25%] relative rounded-2xl overflow-hidden"
+                  style={{ aspectRatio: "9/14" }}
+                >
+                  <video
+                    ref={videoRef}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  >
+                    <source src={ad.video} type="video/mp4" />
+                  </video>
+
+                  {/* overlay */}
+                  <div className="absolute inset-0 bg-black/40" />
+
+                  {/* duration */}
+                  <div className="absolute top-4 right-4 px-2 py-1 text-xs rounded-full bg-black/70 text-white/70">
+                    {ad.dur}
+                  </div>
+
+                  {/* info */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-white/40 text-[10px] uppercase tracking-widest">
+                      {ad.sub}
+                    </p>
+                    <p className="text-white text-sm font-medium">
+                      {ad.title}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-12 flex justify-center">
+          <button
+            onClick={onBook}
+            className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105"
+            style={{
+              background: "linear-gradient(135deg, #e0b973, #c89a3c)",
+              color: "#0a0a0a",
+              boxShadow: "0 8px 30px rgba(200,169,106,0.25)",
+            }}
+          >
+            Get Your Brand Film →
+          </button>
+        </div>
       </div>
     </section>
   );
@@ -796,6 +908,7 @@ function TestimonialsSection() {
 function CTASection({ onBook }: { onBook: () => void }) {
   return (
     <section className="relative overflow-hidden py-36 px-6 text-center" style={{ backgroundColor: 'var(--dark)' }}>
+      
       {/* bg texture ring */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <div className="w-[700px] h-[700px] rounded-full" style={{ border: '1px solid rgba(200,169,106,0.07)' }} />
@@ -804,45 +917,103 @@ function CTASection({ onBook }: { onBook: () => void }) {
 
       <Reveal className="relative z-10 max-w-[700px] mx-auto flex flex-col items-center gap-6">
         <SectionLabel>Ready to Begin?</SectionLabel>
-        <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(34px, 5vw, 66px)', lineHeight: 1.05, letterSpacing: '-0.02em' }}>
+
+        <motion.h2
+          variants={fadeUp}
+          className="text-white"
+          style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(34px, 5vw, 66px)',
+            lineHeight: 1.05,
+            letterSpacing: '-0.02em'
+          }}
+        >
           Let's Build Something
           <br />
           <span style={{ color: 'var(--accent-gold)' }}>Extraordinary.</span>
         </motion.h2>
-        <motion.p variants={fadeUp} style={{ color: 'rgba(255,255,255,0.4)', fontSize: '16px', lineHeight: 1.85, maxWidth: '460px' }}>
+
+        <motion.p
+          variants={fadeUp}
+          style={{
+            color: 'rgba(255,255,255,0.45)',
+            fontSize: '16px',
+            lineHeight: 1.85,
+            maxWidth: '460px'
+          }}
+        >
           Whether you're planning a wedding, launching a campaign, or need world-class editing — we're ready.
         </motion.p>
-        <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 mt-4">
+
+        {/* 🔥 BUTTONS (FIXED) */}
+        <motion.div
+          variants={fadeUp}
+          className="flex flex-wrap items-center justify-center gap-4 mt-6"
+        >
+          
+          {/* PRIMARY (Gold) */}
           <button
             onClick={onBook}
-            className="px-8 py-4 rounded-full text-sm font-medium cursor-pointer transition-all hover:scale-105"
-            style={{ background: 'var(--accent-gold)', color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}
+            className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+            style={{
+              background: "linear-gradient(135deg, #e0b973, #c89a3c)",
+              color: "#0a0a0a",
+              fontFamily: "var(--font-heading)",
+              letterSpacing: "0.05em",
+              boxShadow: "0 10px 30px rgba(200,169,106,0.3)",
+            }}
           >
             Book Your Shoot
           </button>
+
+          {/* SECONDARY (Glass but visible) */}
           <button
             onClick={onBook}
-            className="px-8 py-4 rounded-full text-sm font-medium cursor-pointer transition-all hover:scale-105"
-            style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.15)', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}
+            className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+            style={{
+              background: "rgba(20,20,20,0.65)",
+              backdropFilter: "blur(12px)",
+              color: "#ffffff",
+              border: "1px solid rgba(255,255,255,0.35)",
+              fontFamily: "var(--font-heading)",
+              letterSpacing: "0.05em",
+              boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+              e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(20,20,20,0.65)";
+              e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+            }}
           >
             Get a Quote
           </button>
+
+          {/* WHATSAPP (Solid & strong) */}
           <a
             href={WA}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 px-7 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: 'rgba(37,211,102,0.1)', color: '#25D366', border: '1px solid rgba(37,211,102,0.25)', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}
+            className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+            style={{
+              background: "#25D366",
+              color: "#0a0a0a",
+              fontFamily: "var(--font-heading)",
+              letterSpacing: "0.05em",
+              boxShadow: "0 10px 30px rgba(37,211,102,0.35)",
+            }}
           >
             <MessageCircle size={16} />
             WhatsApp Us
           </a>
+
         </motion.div>
       </Reveal>
     </section>
   );
 }
-
 /* ═══════════════════════════════════════════════════════════
    PAGE EXPORT
 ═══════════════════════════════════════════════════════════ */

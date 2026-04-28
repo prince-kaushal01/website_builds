@@ -43,8 +43,8 @@ function Hero() {
     <section ref={ref} className="relative h-screen overflow-hidden flex items-center justify-center">
       <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
         <video autoPlay muted loop playsInline className="w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920">
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-wedding-ceremony-with-guests-3891-large.mp4" type="video/mp4" />
+          poster="/images/DSC09533.JPG">
+          <source src="/videos/wedding5.mp4" type="video/mp4" />
         </video>
       </motion.div>
       <div className="absolute inset-0 z-10" style={{ background:'linear-gradient(to bottom,rgba(5,5,5,.6) 0%,rgba(5,5,5,.2) 45%,rgba(5,5,5,.9) 100%)' }} />
@@ -153,9 +153,9 @@ function ServicePillars() {
 
 /* ── FEATURED FILM SHOWCASE ── */
 const smallFilms = [
-  { title:'Meera & Raj',   loc:'Jaipur Heritage',  img:'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'3:18', video:'/videos/wedding3.mp4' },
-  { title:'Sarah & James', loc:'Santorini, Greece', img:'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'5:02', video:'/videos/wedding2.mp4' },
-  { title:'Kavya & Rohan', loc:'Goa Beach',         img:'https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700',  dur:'4:47', video:'/videos/wedding4.mp4' },
+  { title:'Meera & Raj',   loc:'Jaipur Heritage',  img:'/images/VOV01537.jpg',    dur:'3:18', video:'/videos/wedding3.mp4' },
+  { title:'Sarah & James', loc:'Santorini, Greece', img:'/images/DSC06241.jpg',    dur:'5:02', video:'/videos/wedding2.mp4' },
+  { title:'Kavya & Rohan', loc:'Goa Beach',         img:'/images/VOW01354.jpg',    dur:'4:47', video:'/videos/wedding4.mp4' },
 ];
 
 function WeddingFilmCard({ f }: { f: typeof smallFilms[0] }) {
@@ -220,7 +220,7 @@ function FilmShowcase() {
           <motion.div variants={fadeUp} className="relative rounded-3xl overflow-hidden mb-5" style={{ aspectRatio:'16/7' }}>
             {!playing ? (
               <>
-                <img src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600"
+                <img src="/images/DSC08733.JPG"
                   alt="Feature film" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.45)' }} />
                 <button
@@ -275,8 +275,8 @@ function IndianSection() {
           </div>
           <motion.div variants={fadeUp} className="grid grid-cols-2 gap-3">
             {[
-              { img:'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', h:'280px' },
-              { img:'https://images.unsplash.com/photo-1520854221256-17451cc331bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', h:'280px' },
+              { img:'/images/DSC02699.JPG', h:'280px' },
+              { img:'/images/DSC00827.JPG', h:'280px' },
             ].map((img, i) => (
               <div key={i} className="rounded-2xl overflow-hidden" style={{ height:img.h }}>
                 <img src={img.img} alt="Indian wedding" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
@@ -287,12 +287,12 @@ function IndianSection() {
 
         {/* full-bleed horizontal gallery strip */}
         <Reveal>
-          <motion.div variants={fadeUp} className="grid grid-cols-4 gap-3 rounded-2xl overflow-hidden" style={{ height:'220px' }}>
+          <motion.div variants={fadeUp} className="grid grid-cols-4 gap-3 mt-5 rounded-2xl overflow-hidden" style={{ height:'220px' }}>
             {[
-              'https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
-              'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
-              'https://images.unsplash.com/photo-1533091090875-1ff4acc497dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
-              'https://images.unsplash.com/flagged/photo-1552981941-424aac2b4311?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
+              '/images/DSC08858.JPG',
+              '/images/DSC01230.jpg',
+              '/images/DSC00382.JPG',
+              '/images/DSC01959.JPG',
             ].map((src, i) => (
               <div key={i} className="overflow-hidden rounded-xl">
                 <img src={src} alt="" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
@@ -316,7 +316,7 @@ function DestinationSection() {
   return (
     <section ref={ref} className="relative overflow-hidden" style={{ height:'85vh' }}>
       <motion.div className="absolute inset-0 scale-110" style={{ y }}>
-        <img src="https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
+        <img src="/images/DSC07192.JPG"
           alt="Destination wedding" className="w-full h-full object-cover" />
       </motion.div>
       <div className="absolute inset-0 z-10" style={{ background:'linear-gradient(to right,rgba(5,5,5,0.88) 0%,rgba(5,5,5,0.4) 60%,rgba(5,5,5,0.1) 100%)' }} />
@@ -358,9 +358,9 @@ function PreWeddingSection() {
         </Reveal>
         <Reveal className="grid md:grid-cols-[1fr_1.5fr_1fr] gap-4" style={{ gridAutoRows:'340px' }}>
           {[
-            { img:'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', label:'Golden Hour Portraits' },
-            { img:'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900', label:'Destination Sessions'  },
-            { img:'https://images.unsplash.com/photo-1533091090875-1ff4acc497dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', label:'Intimate Detail Shots'  },
+            { img:'/images/DSC07158.JPG', label:'Golden Hour Portraits' },
+            { img:'/images/08.jpg', label:'Destination Sessions'  },
+            { img:'/images/A_W03451.JPG', label:'Intimate Detail Shots'  },
           ].map(p => (
             <motion.div key={p.label} variants={fadeUp}
               className="relative rounded-2xl overflow-hidden group cursor-pointer">

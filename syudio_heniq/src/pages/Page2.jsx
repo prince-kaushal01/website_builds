@@ -9,7 +9,8 @@ const BRUSH_RADIUS      = 28
 const REVEAL_THRESHOLD  = 0.50
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
-const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3)
+const easeOutCubic    = (t) => 1 - Math.pow(1 - t, 3)
+const easeInOutCubic  = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2
 const lerp         = (a, b, t) => a + (b - a) * t
 
 const getScrollParent = (el) => {
@@ -82,7 +83,7 @@ const Page2 = () => {
     const BANK_SMOOTH = 0.88
 
     const frame = () => {
-      const ANIM_DURATION = 4000  // ms — full flight duration
+      const ANIM_DURATION = 13000  // ms — full flight duration
       if (pageRef.current) {
         const r = pageRef.current.getBoundingClientRect()
 
@@ -104,24 +105,25 @@ const Page2 = () => {
       }
 
       const ratio    = ratioRef.current
-      const progress = easeOutCubic(ratio)
+      const progress = easeInOutCubic(ratio)
       const vw = window.innerWidth
       const vh = window.innerHeight
 
-      // ── Cubic Bezier: bottom-right → top-left with natural banking arc ─────
-      // All Y values are offsets from the CSS `top: 62%` anchor on the image.
-      const sx  = vw * 0.88,  sy  =  vh * 0.26   // start  (lower-right)
-      const c1x = vw * 0.66,  c1y =  vh * 0.05   // ctrl 1 (ease upward early)
-      const c2x = vw * 0.36,  c2y = -vh * 0.14   // ctrl 2 (bank left + climb)
-      const ex  = vw * 0.06,  ey  = -vh * 0.34   // end    (upper-left)
+      // ── Bee-style path: sinusoidal loops layered over the base trajectory ────
+      // Two oscillations at coprime frequencies (×3.2π and ×4.8π) produce a
+      // figure-8 / looping weave from start to end, like a bee in flight.
+      const sx = vw * 0.86, sy =  vh * 0.26   // start (lower-right)
+      const ex = vw * 0.03, ey = -vh * 0.50   // end   (upper-left)
 
-      const t = progress, t1 = 1 - t
-      const x = t1**3*sx + 3*t1**2*t*c1x + 3*t1*t**2*c2x + t**3*ex
-      const y = t1**3*sy + 3*t1**2*t*c1y + 3*t1*t**2*c2y + t**3*ey
+      const baseX = sx + (ex - sx) * progress
+      const baseY = sy + (ey - sy) * progress
 
-      // Tangent of the Bezier → rotation so the nose tracks the flight path
-      const dtx = 3*(t1**2*(c1x-sx) + 2*t1*t*(c2x-c1x) + t**2*(ex-c2x))
-      const dty = 3*(t1**2*(c1y-sy) + 2*t1*t*(c2y-c1y) + t**2*(ey-c2y))
+      const x = baseX + Math.sin(progress * Math.PI * 3.2) * vw * 0.09
+      const y = baseY + Math.sin(progress * Math.PI * 4.8) * vh * 0.11
+
+      // Velocity vector so the nose always faces the direction of travel
+      const dtx = (ex - sx) + Math.cos(progress * Math.PI * 3.2) * Math.PI * 3.2 * vw * 0.09
+      const dty = (ey - sy) + Math.cos(progress * Math.PI * 4.8) * Math.PI * 4.8 * vh * 0.11
       const pathAngle = Math.atan2(dty, dtx) * (180 / Math.PI)
 
       // Velocity for bank calculation (computed before updating prevXRef)
@@ -314,19 +316,7 @@ const Page2 = () => {
         style={slideStyle('Y', '-110%', '0.08s')}
       />
 
-      {/* ── TEXT BLOCK — route + date ────────────────────────────────────── */}
-      {/* TWEAK: top-[31%] → move text block up / down                       */}
-      <div
-        className="absolute top-[31%] left-0 w-full z-20 flex flex-col items-center"
-        style={slideStyle('Y', '-130%', '0.08s')}
-      >
-        <p className="font-cormorant text-[2vh] font-light tracking-[0.38em] uppercase text-black leading-none">
-          Houston &nbsp;&#8594;&nbsp; Mumbai
-        </p>
-        <p className="font-libre text-[1.5vh] tracking-[0.28em] italic text-[#6b4c2a] mt-4">
-          7th June 2026
-        </p>
-      </div>
+      {/*  */}
 
       {/* ── SCRATCH CARD ─────────────────────────────────────────────────── */}
       {/* TWEAK: top-[42%] → card vertical position                          */}

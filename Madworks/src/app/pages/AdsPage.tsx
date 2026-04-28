@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'motion/react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Play, ArrowRight, Zap, TrendingUp, Target, Clock, CheckCircle, MessageCircle } from 'lucide-react';
 import { BackToServices } from '../components/BackToServices';
@@ -340,79 +340,125 @@ const reels = [
   { title:'Aurelia Jewels',   sub:'Lookbook Film',      img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:45', video:'/videos/jwellery2.mp4' },
   { title:'Mango Beverages',  sub:'Brand Reel',         img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'/videos/beverage.mp4' },
   { title:'SmilePlus Dental', sub:'Patient Journey',    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:40', video:'/videos/dental.mp4' },
+  { title:'BBQ Lounge',       sub:'Food & Beverage Reel', img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/Lofi%20BBQ%201_V2.mp4' },
+  { title:'Omkar Brand',      sub:'Brand Campaign',     img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:25', video:'/videos/Omkar_Test_V2.mp4' },
+  { title:'Commercial Reel',  sub:'Brand Identity',     img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/Reel_01.mp4' },
+  { title:'Cinematic Reel',   sub:'Brand Campaign',     img:'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/Reel_02.mp4' },
+  { title:'Skin Agency',      sub:'Beauty Campaign',    img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'/videos/Skin%20Agency_V6.mp4' },
 ];
 
-function ReelVideoCard({ r }: { r: typeof reels[0] }) {
-  const [playing, setPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  return (
-    <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ aspectRatio:'9/14' }}>
-      {!playing ? (
-        <>
-          <img src={r.img} alt={r.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
-          <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.9) 0%,rgba(5,5,5,0.1) 60%,transparent 100%)' }} />
-          <button
-            onClick={() => setPlaying(true)}
-            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
-            aria-label={`Play ${r.title}`}
-          >
-            <motion.div className="w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ background:'rgba(212,149,106,0)', border:'1.5px solid rgba(212,149,106,0.5)' }}
-              whileHover={{ background:'rgba(212,149,106,0.9)', border:'1.5px solid transparent' }}
-              transition={{ duration:0.25 }}>
-              <Play size={20} color="rgba(212,149,106,0.9)" style={{ marginLeft:'3px' }} />
-            </motion.div>
-          </button>
-          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] pointer-events-none"
-            style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.55)' }}>{r.dur}</div>
-          <div className="absolute bottom-4 left-4 pointer-events-none">
-            <p style={{ color:'#D4956A', fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.18em', marginBottom:'2px' }}>{r.sub}</p>
-            <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'17px' }}>{r.title}</p>
-          </div>
-        </>
-      ) : (
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          controls
-          className="w-full h-full object-cover"
-        >
-          <source src={r.video} type="video/mp4" />
-        </video>
-      )}
-    </motion.div>
-  );
-}
-
 function ReelShowcase() {
+  const [index, setIndex] = useState(0);
+  const visible = 4;
+
+  const extended = [...reels, ...reels];
+
+  // auto slide
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % reels.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'var(--deep-green)' }}>
       <div className="max-w-[1280px] mx-auto">
+
+        {/* HEADER */}
         <Reveal className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4">
           <div>
             <Label>Recent Work</Label>
-            <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.5vw,48px)', lineHeight:1.1 }}>
+            <motion.h2 variants={fadeUp} className="text-white"
+              style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.5vw,48px)', lineHeight:1.1 }}>
               Ads We're Proud Of
             </motion.h2>
           </div>
+
           <motion.div variants={fadeUp}>
-            <Link to="/portfolio" className="flex items-center gap-2 text-sm group" style={{ color:'#D4956A' }}>
-              All Commercial Work <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            <Link to="/portfolio" className="flex items-center gap-2 text-sm group"
+              style={{ color:'#D4956A' }}>
+              All Commercial Work
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
         </Reveal>
-        <Reveal className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {reels.map(r => (
-            <ReelVideoCard key={r.title} r={r} />
-          ))}
-        </Reveal>
+
+        {/* 🎬 CAROUSEL */}
+        <div className="overflow-hidden">
+          <motion.div
+            className="flex gap-4"
+            animate={{
+              x: `-${index * 25}%`,
+            }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {extended.map((r, i) => {
+              const videoRef = useRef<HTMLVideoElement | null>(null);
+
+              const realIndex = i % reels.length;
+              const isVisible =
+                realIndex >= index &&
+                realIndex < index + visible;
+
+              useEffect(() => {
+                const vid = videoRef.current;
+                if (!vid) return;
+
+                if (isVisible) {
+                  vid.play().catch(() => {});
+                } else {
+                  vid.pause();
+                  vid.currentTime = 0;
+                }
+              }, [isVisible]);
+
+              return (
+                <div
+                  key={i}
+                  className="min-w-[25%] relative rounded-2xl overflow-hidden"
+                  style={{ aspectRatio: "9/14" }}
+                >
+                  <video
+                    ref={videoRef}
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                  >
+                    <source src={r.video} type="video/mp4" />
+                  </video>
+
+                  {/* overlay */}
+                  <div className="absolute inset-0 bg-black/40" />
+
+                  {/* duration */}
+                  <div className="absolute top-3 right-3 px-2 py-1 text-[10px] rounded-full bg-black/70 text-white/70">
+                    {r.dur}
+                  </div>
+
+                  {/* info */}
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <p className="text-[10px] uppercase tracking-widest mb-1"
+                      style={{ color:'#D4956A' }}>
+                      {r.sub}
+                    </p>
+                    <p className="text-white text-sm font-medium">
+                      {r.title}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
+        </div>
+
       </div>
     </section>
   );
 }
-
 /* ── WHAT'S INCLUDED ── */
 const included = [
   'Professional lighting & crew','4K cinematic cameras','On-location sound recording',
@@ -470,11 +516,29 @@ function CTA() {
             style={{ background:'#D4956A', color:'#0a0a0a', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
             <MessageCircle size={15} /> WhatsApp Us Now
           </a>
-          <Link to="/contact"
-            className="px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background:'rgba(255,255,255,0.06)', color:'white', border:'1px solid rgba(255,255,255,0.14)', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
-            Request a Proposal
-          </Link>
+          <Link
+  to="/contact"
+  className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+  style={{
+    background: "rgba(20,20,20,0.65)",
+    backdropFilter: "blur(12px)",
+    color: "#ffffff",
+    border: "1px solid rgba(255,255,255,0.35)",
+    fontFamily: "var(--font-heading)",
+    letterSpacing: "0.05em",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.background = "rgba(103, 96, 96, 0.65)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+  }}
+>
+  Get a Proposal
+</Link>
         </motion.div>
       </Reveal>
     </section>
