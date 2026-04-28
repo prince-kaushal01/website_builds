@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* ─── base: not possible via Tailwind utilities ─────────────────────────── */
 html, body, #root {
   height: 100%;
   overflow: hidden;
@@ -9,58 +8,46 @@ html, body, #root {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ─── custom tokens (fonts + named animations) ──────────────────────────── */
 @theme {
-  /* Google Fonts → font-great-vibes / font-cormorant / font-libre */
   --font-great-vibes: 'Great Vibes', cursive;
   --font-cormorant:   'Cormorant Garamond', serif;
   --font-libre:       'Libre Baskerville', serif;
 
-  /* ── bird: outer div = flight path, inner img = wing flap ── */
-  /* TWEAK: change the 10s to make the bird faster / slower     */
-  --animate-bird-fly:  bird-fly  10s ease-in-out infinite;
-  /* TWEAK: change 0.45s to make wing flap faster / slower      */
-  --animate-bird-flap: bird-flap 0.45s ease-in-out infinite;
+  /* Bird */
+  --animate-bird-fly-right: bird-fly-right 10s linear forwards;
 
-  /* ── bottom decoration slides in from below on mount ── */
-  /* TWEAK: change 0.9s to adjust slide-in speed           */
-  --animate-slide-in-bottom: slide-in-bottom 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Bottom in/out */
+  --animate-bottom-in:  bottom-in 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-bottom-out: bottom-out 1s ease forwards;
 
-  /* ── wedding text: 3 lines, each drops in with stagger ── */
-  /* TWEAK: change 7s to change how often text loops          */
-  /* TWEAK: change 0.7s / 1.4s delay to adjust stagger gap   */
-  --animate-text-l1: text-drop 7s ease-in-out infinite;
-  --animate-text-l2: text-drop 7s ease-in-out 0.7s  infinite;
-  --animate-text-l3: text-drop 7s ease-in-out 1.4s  infinite;
+  /* Text (run once) */
+  --animate-text-l1-once: text-drop 1.2s ease forwards;
+  --animate-text-l2-once: text-drop 1.2s ease 0.4s forwards;
+  --animate-text-l3-once: text-drop 1.2s ease 0.8s forwards;
 }
 
-/* ─── keyframes ─────────────────────────────────────────────────────────── */
-
-/* Bird flies from left edge to right edge, resets with invisible pause */
-@keyframes bird-fly {
-  0%   { transform: translateX(-120px); opacity: 0; }
-  8%   { opacity: 1; }
-  82%  { opacity: 1; }
-  95%  { transform: translateX(calc(100vw + 120px)); opacity: 0; }
-  100% { transform: translateX(-120px); opacity: 0; }
+/* Bird */
+@keyframes bird-fly-right {
+  0%   { transform: translateX(-120vw) rotate(-16deg); opacity: 0; }
+  10%  { opacity: 1; }
+  50%  { transform: translateX(0) rotate(-16deg); opacity: 1; }
+  100% { transform: translateX(120vw) rotate(-16deg); opacity: 0; }
 }
 
-/* Wing flap: rapid vertical bob + slight y-scale squeeze */
-@keyframes bird-flap {
-  0%, 100% { transform: translateY(0px)  scaleY(1);    }
-  30%       { transform: translateY(-6px) scaleY(0.84); }
-  70%       { transform: translateY(4px)  scaleY(1.08); }
+/* Bottom enter */
+@keyframes bottom-in {
+  from { transform: translateY(110%); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
 }
 
-/* Bottom image slides up from below screen */
-@keyframes slide-in-bottom {
-  from { transform: translateY(110%); }
-  to   { transform: translateY(0);    }
+/* Bottom exit */
+@keyframes bottom-out {
+  from { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(110%); opacity: 0; }
 }
 
-/* Text: drops in from above → holds → lifts back up → loops */
+/* Text */
 @keyframes text-drop {
-  0%, 8%     { transform: translateY(-28px); opacity: 0; }
-  22%, 72%   { transform: translateY(0);     opacity: 1; }
-  85%, 100%  { transform: translateY(-28px); opacity: 0; }
+  0%   { transform: translateY(-28px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
 }

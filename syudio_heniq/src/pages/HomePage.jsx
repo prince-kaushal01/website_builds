@@ -1,21 +1,45 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import bg        from '../assets/page1_bg.png'
-import bird      from '../assets/page1_bird.png'
+import birdVideo from '../assets/bird_video.webm'
 import bottomDeco from '../assets/page1_down.png'
 
 const HomePage = () => {
-  /*
-   * animKey is set to a unique timestamp on every mount.
-   * Passing it as key= to each animated element forces React to
-   * re-create the DOM node, which restarts the CSS animation from
-   * scratch every time the user navigates back to this page.
-   */
-  const [animKey] = useState(() => Date.now())
+  const [birdKey, setBirdKey] = useState(0)
+  const [isVisible, setIsVisible] = useState(false)
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+  const el = containerRef.current
+  if (!el) return
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      const ratio = entry.intersectionRatio
+
+      // ENTER when ~90% visible
+      if (ratio >= 0.2) {
+        setBirdKey(k => k + 1)
+        setIsVisible(true)
+      }
+
+      // EXIT when less than 80% visible
+      if (ratio < 0.2) {
+        setIsVisible(false)
+      }
+    },
+    {
+      threshold: [0.2, 0.2]
+    }
+  )
+
+  observer.observe(el)
+  return () => observer.disconnect()
+}, [])
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-black">
+    <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-black">
 
-      {/* ── BACKGROUND ────────────────────────────────────────────── */}
+      {/* BACKGROUND */}
       <img
         src={bg}
         alt=""
@@ -23,102 +47,46 @@ const HomePage = () => {
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
-      {/* ── WEDDING TEXT — top-center, staggered drop-in loop ──────── */}
-      {/*
-       * TWEAK: top-[6%]  → vertical position of text block
-       * TWEAK: text-4xl  → font size of first line
-       * TWEAK: text-2xl  → font size of names line
-       * TWEAK: text-sm   → font size of date line
-       * TWEAK: gap-2     → spacing between lines
-       * Colors, fonts, and animation timing live in index.css @theme
-       */}
-      <div
-        key={animKey}
-        className="absolute top-[6%] left-0 w-full flex flex-col items-center gap-2 z-20 px-6"
-      >
-        {/* Line 1 — "We're Getting Married" */}
-        <span
-          className="
-            font-cormorant mb-5 text-4xl
-            text-[black]
-            drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)]
-            animate-text-l1
-          "
-        >
+      {/* TEXT — run once when fully visible */}
+      <div className="absolute top-[6%] left-0 w-full flex flex-col items-center gap-2 z-20 px-6">
+        <span className={`font-cormorant mb-5 text-4xl text-[black] drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] ${isVisible ? 'animate-text-l1-once' : ''}`}>
           We&apos;re Getting Married
         </span>
 
-        {/* Line 2 — Names */}
-        <span
-          className="
-            font-cormorant text-2xl tracking-[0.18em]
-            text-[black]
-            drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)]
-            animate-text-l2 mb-5
-          "
-        >
+        <span className={`font-cormorant text-2xl tracking-[0.18em] text-[black] drop-shadow-[0_2px_6px_rgba(0,0,0,0.55)] mb-5 ${isVisible ? 'animate-text-l2-once' : ''}`}>
           Hayaa &amp; Mohammed
         </span>
 
-        {/* Line 3 — Date */}
-        <span
-          className="
-            font-libre text-sm tracking-[0.3em] uppercase italic
-            text-[black]
-            drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]
-            animate-text-l3
-          "
-        >
+        <span className={`font-libre text-sm tracking-[0.3em] uppercase italic text-[black] drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] ${isVisible ? 'animate-text-l3-once' : ''}`}>
           June 7th 2026
         </span>
       </div>
 
-      {/* ── BIRD — flies left → right, flaps wings ─────────────────── */}
-      {/*
-       * Outer div  → handles horizontal flight path (animate-bird-fly)
-       * Inner img  → handles wing-flap oscillation (animate-bird-flap)
-       * Two separate elements so the transforms don't conflict.
-       *
-       * TWEAK: top-[38%] → vertical position of the bird's flight path
-       * TWEAK: w-14      → bird size
-       * Animation speed / timing lives in index.css @theme
-       */}
+      {/* SINGLE BIRD */}
       <div
-        key={`bird-${animKey}`}
-        className="absolute top-[38%] left-0 z-10 animate-bird-fly"
+        key={`bird-${birdKey}`}
+        className="absolute top-[30%] -rotate-16 left-0 w-full flex justify-start z-10 pointer-events-none animate-bird-fly-right"
       >
-        <img
-          src={bird}
-          alt=""
+        <video
+          src={birdVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
           draggable={false}
-          className="w-14 object-contain animate-bird-flap"
-        />
-      </div>
-      <div
-        key={`bird-${animKey}`}
-        className="absolute top-[18%] left-0 z-10 animate-bird-fly"
-      >
-        <img
-          src={bird}
-          alt=""
-          draggable={false}
-          className="w-14 object-contain animate-bird-flap transform rotate-360"
+          className="w-40 object-contain"
         />
       </div>
 
-      {/* ── BOTTOM DECORATION — slides in from below on mount ────────── */}
-      {/*
-       * TWEAK: z-20 keeps it above background but below text overlay
-       * Animation speed lives in index.css @theme (slide-in-bottom)
-       */}
+      {/* BOTTOM — enter + exit animation */}
       <img
-        key={`bottom-${animKey}`}
         src={bottomDeco}
         alt=""
         draggable={false}
-        className="absolute -bottom-8 left-0 w-full h-86 object-cover object-top z-20 animate-slide-in-bottom"
+        className={`absolute -bottom-8 left-0 w-full h-86 object-cover object-top z-20 ${
+          isVisible ? 'animate-bottom-in' : 'animate-bottom-out'
+        }`}
       />
-
     </div>
   )
 }
