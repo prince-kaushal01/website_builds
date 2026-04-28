@@ -37,10 +37,11 @@ const Page2 = () => {
   const moveCount = useRef(0)
 
   // Airplane animation state (all refs — no React re-renders)
-  const ratioRef   = useRef(0)   // current scroll ratio, updated by scroll listener
-  const prevXRef   = useRef(null) // previous frame's X position (for velocity)
-  const bankRef    = useRef(0)    // current smoothed bank angle (degrees)
-  const rafLoopRef = useRef(null) // continuous rAF handle
+  const ratioRef        = useRef(0)    // 0→1 animation progress
+  const animStartRef    = useRef(null) // timestamp when plane animation began
+  const prevXRef        = useRef(null) // previous frame's X position (for velocity)
+  const bankRef         = useRef(0)    // current smoothed bank angle (degrees)
+  const rafLoopRef      = useRef(null) // continuous rAF handle
 
   const [inView,   setInView]   = useState(false)
   const [revealed, setRevealed] = useState(false)
@@ -81,50 +82,74 @@ const Page2 = () => {
     const BANK_SMOOTH = 0.88
 
     const frame = () => {
+      const ANIM_DURATION = 4000  // ms — full flight duration
+      if (pageRef.current) {
+        const r = pageRef.current.getBoundingClientRect()
+
+        // Arm once page top is within 60px of viewport top (page fully/nearly scrolled in).
+        // Wide tolerance so it reliably fires in both free-scroll and snap-scroll layouts.
+        if (animStartRef.current === null && r.top <= 60) {
+          animStartRef.current = Date.now()
+        }
+
+        // Reset only when page has scrolled fully off the bottom (user went back up).
+        if (r.top > window.innerHeight) {
+          animStartRef.current = null
+          ratioRef.current     = 0
+        }
+
+        if (animStartRef.current !== null) {
+          ratioRef.current = Math.min(1, (Date.now() - animStartRef.current) / ANIM_DURATION)
+        }
+      }
+
       const ratio    = ratioRef.current
-      const progress = easeOutCubic(Math.min(1, ratio / 0.7))
-      const vw       = window.innerWidth
-      const fromX    =  vw * 1.1
-      const toX      =  vw * 0.5 - PLANE_W / 2
-      const x        = fromX + (toX - fromX) * progress
+      const progress = easeOutCubic(ratio)
+      const vw = window.innerWidth
+      const vh = window.innerHeight
+
+      // ── Cubic Bezier: bottom-right → top-left with natural banking arc ─────
+      // All Y values are offsets from the CSS `top: 62%` anchor on the image.
+      const sx  = vw * 0.88,  sy  =  vh * 0.26   // start  (lower-right)
+      const c1x = vw * 0.66,  c1y =  vh * 0.05   // ctrl 1 (ease upward early)
+      const c2x = vw * 0.36,  c2y = -vh * 0.14   // ctrl 2 (bank left + climb)
+      const ex  = vw * 0.06,  ey  = -vh * 0.34   // end    (upper-left)
+
+      const t = progress, t1 = 1 - t
+      const x = t1**3*sx + 3*t1**2*t*c1x + 3*t1*t**2*c2x + t**3*ex
+      const y = t1**3*sy + 3*t1**2*t*c1y + 3*t1*t**2*c2y + t**3*ey
+
+      // Tangent of the Bezier → rotation so the nose tracks the flight path
+      const dtx = 3*(t1**2*(c1x-sx) + 2*t1*t*(c2x-c1x) + t**2*(ex-c2x))
+      const dty = 3*(t1**2*(c1y-sy) + 2*t1*t*(c2y-c1y) + t**2*(ey-c2y))
+      const pathAngle = Math.atan2(dty, dtx) * (180 / Math.PI)
+
+      // Velocity for bank calculation (computed before updating prevXRef)
+      const dx = prevXRef.current !== null ? x - prevXRef.current : 0
+      prevXRef.current = x
 
       // ── Airplane ──────────────────────────────────────────────────────────
       if (airplaneRef.current) {
-        // Velocity: pixels moved since last frame (negative = moving left)
-        const dx = prevXRef.current !== null ? x - prevXRef.current : 0
-        prevXRef.current = x
-
-        // Bank angle: nose pitches UP slightly while the plane moves in
-        // −dx is positive when moving left → produces a positive bank target
-        // clamp to [−MAX_BANK, 0] so the nose only pitches up (never down)
         const bankTarget = Math.max(-MAX_BANK, Math.min(0, dx * 0.5))
         bankRef.current  = lerp(bankRef.current, bankTarget, 1 - BANK_SMOOTH)
 
-        // Vertical bob — sine wave, only while plane is visible
         const bobY = progress > 0.04
           ? Math.sin(Date.now() / BOB_SPEED) * BOB_AMP
           : 0
 
-        // Final transform: translate → bob → rotate (world-space first, then rotate)
         airplaneRef.current.style.transform =
-          `translateX(${x}px) translateY(${bobY}px) rotate(${180 + bankRef.current}deg)`
-        airplaneRef.current.style.opacity = progress < 0.03 ? '0' : '1'
+          `translateX(${x}px) translateY(${y + bobY}px) rotate(${pathAngle + bankRef.current - 30}deg)`
+        airplaneRef.current.style.opacity = animStartRef.current !== null ? '1' : '0'
       }
 
       // ── Contrail ──────────────────────────────────────────────────────────
-      // A gradient ribbon extending right of the plane, fading with speed.
       if (contrailRef.current) {
-        const dx        = prevXRef.current !== null
-          ? x - (prevXRef.current ?? x) : 0
-        const speed     = Math.abs(dx)                     // px/frame
+        const speed      = Math.abs(dx)
         const planeRight = x + PLANE_W
-        const trailW    = Math.max(0, vw * 1.1 - planeRight)
-        // Opacity tied to speed: faster = more visible trail
-        const opacity   = progress > 0.03
-          ? Math.min(0.55, speed * 0.12)
-          : 0
+        const trailW     = Math.max(0, vw * 1.1 - planeRight)
+        const opacity    = (animStartRef.current !== null && speed > 0) ? Math.min(0.55, speed * 0.12) : 0
 
-        contrailRef.current.style.transform = `translateX(${planeRight}px)`
+        contrailRef.current.style.transform = `translateX(${planeRight}px) translateY(${y}px)`
         contrailRef.current.style.width     = `${trailW}px`
         contrailRef.current.style.opacity   = String(opacity)
       }
