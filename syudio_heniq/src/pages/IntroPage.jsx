@@ -10,7 +10,7 @@ const IntroPage = ({ onComplete }) => {
     if (opened) return
     setOpened(true)
     // TWEAK: match this number to the duration-[Xms] values below
-    setTimeout(onComplete, 3000)
+    setTimeout(onComplete, 1500)
   }
 
   return (
@@ -38,7 +38,7 @@ const IntroPage = ({ onComplete }) => {
         draggable={false}
         className={`
           absolute top-0 left-0 w-full z-30
-          transition-transform duration-[3000ms] ease-in-out
+          transition-transform duration-[1500ms] ease-in-out
           ${opened ? '-translate-y-full' : 'translate-y-0'}
         `}
       />
@@ -51,7 +51,7 @@ const IntroPage = ({ onComplete }) => {
         draggable={false}
         className={`
           absolute bottom-0 left-0 w-full z-20
-          transition-transform duration-[3000ms] ease-in-out
+          transition-transform duration-[1500ms] ease-in-out
           ${opened ? 'translate-y-full' : 'translate-y-0'}
         `}
       />

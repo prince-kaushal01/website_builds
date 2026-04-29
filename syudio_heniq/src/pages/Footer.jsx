@@ -136,17 +136,17 @@ const Footer = () => {
             style={{ animation: 'rsvp-float 4s ease-in-out infinite' }}
           >
             {/* "Kindly" label */}
-            <p className="font-libre text-[0.48rem] tracking-[0.5em] uppercase text-black mb-[10px]">
+            <p className="font-libre text-[0.60rem] tracking-[0.5em] uppercase text-[#710C20] mb-[10px]">
               Kindly
             </p>
 
             {/* Big script RSVP */}
-            <p className="font-cormorant text-[2.6rem] text-[black] leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
+            <p className="font-cormorant text-[2.6rem] text-[#710C20] leading-none drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
               RSVP
             </p>
 
             {/* Deadline */}
-            <p className="font-cormorant text-[0.62rem] tracking-[0.22em] font-semibold uppercase text-red-950 mt-[5px]">
+            <p className="font-cormorant text-[0.82rem] tracking-[0.22em] font-semibold uppercase text-[#710C20] mt-[5px]">
               by 10th May 2026
             </p>
 
@@ -168,7 +168,7 @@ const Footer = () => {
               >
                 Thank you!
               </p>
-              <p className="font-cormorant text-[0.62rem] tracking-[0.18em] italic text-[#d4a84b]">
+              <p className="font-cormorant text-[0.90rem] tracking-[0.18em] italic text-[#d4a84b]">
                 We look forward to celebrating with you.
               </p>
             </div>
@@ -182,7 +182,7 @@ const Footer = () => {
 
               {/* ── Guest name input ─────────────────────────────────────── */}
               <div className="w-full flex flex-col gap-[5px]">
-                <label className="font-libre text-[0.44rem] tracking-[0.35em] uppercase text-[#c9a87a] text-center">
+                <label className="font-libre text-[0.74rem] tracking-[0.35em] uppercase text-[#710C20] text-center">
                   Guest Name
                 </label>
                 <input
@@ -191,7 +191,7 @@ const Footer = () => {
                   value={name}
                   onChange={e => setName(e.target.value)}
                   required
-                  className="rsvp-input w-full rounded-lg px-4 py-[10px] font-cormorant text-[0.72rem] tracking-[0.1em] text-black uppercase text-center transition-colors"
+                  className="rsvp-input w-full font-semibold rounded-lg px-4 py-[10px] font-cormorant text-[0.72rem] tracking-[0.1em] text-black uppercase text-center transition-colors"
                   style={{
                     background:   'rgba(255,255,255,0.07)',
                     border:       '1px solid rgba(212,168,75,0.45)',
@@ -202,7 +202,7 @@ const Footer = () => {
 
               {/* ── Attendance dropdown ──────────────────────────────────── */}
               <div className="w-full flex flex-col gap-[5px]">
-                <label className="font-libre text-[0.44rem] tracking-[0.35em] uppercase text-[#c9a87a]  text-center">
+                <label className="font-libre text-[0.62rem] tracking-[0.35em] uppercase text-[#710C20] font-semibold text-center">
                   Will you attend?
                 </label>
                 <select
@@ -229,11 +229,11 @@ const Footer = () => {
               <button
                 type="submit"
                 disabled={status === 'submitting' || !name.trim() || !attending}
-                className="rsvp-btn mt-1 w-full rounded-full py-[10px] font-libre text-[0.5rem] tracking-[0.32em] uppercase transition-all"
+                className="rsvp-btn mt-1 w-full rounded-full py-[10px]  font-libre text-[0.5rem] tracking-[0.32em] uppercase transition-all"
                 style={{
                   color:      'black',
                   boxShadow:  '0 3px 14px rgba(184,130,42,0.45)',
-                  fontWeight: 700,
+                  fontWeight: 800,
                 }}
               >
                 {status === 'submitting' ? 'Sending…' : 'Send RSVP  ✦'}
