@@ -1,23 +1,29 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import IntroPage    from './pages/IntroPage'
 import HomePage     from './pages/HomePage'
 import Page2        from './pages/Page2'
 import GateSection  from './pages/GateSection'
 import Page4        from './pages/Page4'
 import Footer       from './pages/Footer'
+import songSrc      from './assets/song.mp3'
 
 const App = () => {
   const [introGone, setIntroGone] = useState(false)
+  const audioRef = useRef(null)
+  useEffect(() => {
+    if (!introGone) return
+    const audio = new Audio(songSrc)
+    audio.currentTime = 8        // start at 00:08
+    audio.play().catch(() => {}) 
+    audioRef.current = audio
+    return () => {
+      audio.pause()
+      audio.src = ''
+    }
+  }, [introGone])
 
   return (
     <div className="relative w-full h-full">
-
-      {/*
-       * Vertical snap-scroll container.
-       * Swipe up on mobile to move between pages.
-       * Each child div = one full-screen page.
-       * TWEAK: remove 'snap-mandatory' to allow free scrolling instead.
-       */}
       <div
         className="w-full h-full overflow-y-scroll"
         style={{ scrollbarWidth: 'none' }}        /* hide scrollbar Firefox */
@@ -27,7 +33,7 @@ const App = () => {
 
         {/* Page 1 — Home */}
         <div className="w-full h-full flex-shrink-0">
-          <HomePage />
+          <HomePage ready={introGone} />
         </div>
 
         {/* Page 2 — Scratch card */}
