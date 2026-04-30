@@ -5,7 +5,7 @@ import Page2        from './pages/Page2'
 import GateSection  from './pages/GateSection'
 import Page4        from './pages/Page4'
 import Footer       from './pages/Footer'
-import songSrc      from './assets/song.mp3'
+import songSrc      from './assets/song2.mp3'
 
 const App = () => {
   const [introGone, setIntroGone] = useState(false)
@@ -13,7 +13,7 @@ const App = () => {
   useEffect(() => {
     if (!introGone) return
     const audio = new Audio(songSrc)
-    audio.currentTime = 8        // start at 00:08
+    audio.currentTime = 0        // start at 00:08
     audio.play().catch(() => {}) 
     audioRef.current = audio
     return () => {
