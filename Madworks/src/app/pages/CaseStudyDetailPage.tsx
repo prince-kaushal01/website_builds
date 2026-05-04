@@ -248,6 +248,42 @@ function StorySection({ study }: { study: CaseStudy }) {
   );
 }
 
+/* ── Video Section ──────────────────────────────────────── */
+function VideoSection({ video }: { video: string }) {
+  return (
+    <section className="py-16 px-6 md:px-10" style={{ backgroundColor: 'var(--dark)' }}>
+      <div className="max-w-[1280px] mx-auto">
+        <Reveal>
+          <motion.p
+            variants={fadeUp}
+            className="uppercase text-[9px] tracking-[0.35em] mb-8"
+            style={{ color: 'var(--accent-gold)' }}
+          >
+            The Film
+          </motion.p>
+        </Reveal>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.9, ease }}
+          className="w-full overflow-hidden rounded-2xl"
+          style={{ border: '1px solid rgba(255,255,255,0.08)' }}
+        >
+          <video
+            controls
+            playsInline
+            className="w-full"
+            style={{ display: 'block', maxHeight: '70vh', background: '#000' }}
+          >
+            <source src={video} type="video/mp4" />
+          </video>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 /* ── Gallery ────────────────────────────────────────────── */
 function GallerySection({ images, client }: { images: string[]; client: string }) {
   const ref = useRef(null);
@@ -523,6 +559,7 @@ export function CaseStudyDetailPage() {
       <CinematicHero study={study} />
       <MetaStrip study={study} />
       <StorySection study={study} />
+      {study.video && <VideoSection video={study.video} />}
       <GallerySection images={study.gallery} client={study.client} />
       <ResultsSection stats={study.stats} />
       <TestimonialSection testimonial={study.testimonial} />

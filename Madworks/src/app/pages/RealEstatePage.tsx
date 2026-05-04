@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Play, ArrowRight, Camera, Wind, BarChart2, CheckCircle, MessageCircle } from 'lucide-react';
 import { BackToServices } from '../components/BackToServices';
 
-const WA = 'https://wa.me/919876543210';
+const WA = 'https://wa.me/919769721010';
 const ACCENT = '#8AABBA';
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -70,7 +70,7 @@ function Hero() {
           </a>
           <Link to="/portfolio"
             className="px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: 'rgba(255,255,255,0.07)', color: 'white', border: '1px solid rgba(255,255,255,0.18)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}>
+            style={{ background: 'rgba(255, 3, 3, 0.07)', color: 'white', border: '1px solid rgba(255,255,255,0.18)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}>
             View Property Work
           </Link>
         </motion.div>
@@ -167,7 +167,7 @@ function ServicesSection() {
                   </ul>
                 </motion.div>
                 <motion.div variants={fadeUp} className="relative overflow-hidden" style={{ minHeight: '340px' }}>
-                  <img src={svc.img} alt={svc.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                  <img src={svc.img} alt={svc.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                   <div className="absolute inset-0" style={{ background: `linear-gradient(135deg,${ACCENT}10 0%,transparent 60%)` }} />
                 </motion.div>
               </Reveal>
@@ -184,22 +184,22 @@ const propertyListings = [
   {
     img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     title: 'Lodha Altus', sub: 'Mumbai · Penthouse', wide: true,
-    video: '/videos/building1.mp4',
+    video: '/videos/Building1.mp4',
   },
   {
     img: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
     title: 'Bandra Villa', sub: 'Mumbai · 4BHK', wide: false,
-    video: '/videos/building2.mp4',
+    video: '/videos/Building2.mp4',
   },
   {
     img: 'https://images.unsplash.com/photo-1560184897-ae75f418493e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
     title: 'Pune Skyline', sub: 'Pune · 3BHK', wide: false,
-    video: '/videos/building3.mp4',
+    video: '/videos/Building3.mp4',
   },
   {
     img: 'https://images.unsplash.com/photo-1448630360428-65456885c650?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600',
     title: 'Aerial Reveal', sub: 'Drone · Goa', wide: false,
-    video: '/videos/building4.mp4',
+    video: '/videos/Building4.mp4',
   },
 ];
 
@@ -212,7 +212,7 @@ function PropertyVideoCard({ item }: { item: typeof propertyListings[0] }) {
       className={`relative rounded-2xl overflow-hidden ${item.wide ? 'md:col-span-2' : ''}`}>
       {!playing ? (
         <>
-          <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <img src={item.img} alt={item.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
           <div className="absolute inset-0" style={{ background: 'linear-gradient(to top,rgba(5,5,5,0.72) 0%,transparent 55%)' }} />
           <button
             onClick={() => setPlaying(true)}
@@ -360,14 +360,32 @@ function CTA() {
         <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 mt-4">
           <a href={WA} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: ACCENT, color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
+            style={{ background: '#128C7E', color: '#ffffff', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
             <MessageCircle size={15} /> WhatsApp to Book
           </a>
-          <Link to="/contact"
-            className="px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.14)', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
-            Get a Quote
-          </Link>
+          <Link
+  to="/contact"
+  className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+  style={{
+    background: "rgba(20,20,20,0.65)",
+    backdropFilter: "blur(12px)",
+    color: "#ffffff",
+    border: "1px solid rgba(255,255,255,0.35)",
+    fontFamily: "var(--font-heading)",
+    letterSpacing: "0.05em",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.background = "rgba(85, 80, 80, 0.65)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+  }}
+>
+  Get a Proposal
+</Link>
         </motion.div>
       </Reveal>
     </section>

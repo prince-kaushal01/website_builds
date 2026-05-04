@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Globe, Clock, Zap, ArrowRight, UploadCloud, Film, Palette, Volume2, Scissors, MessageCircle } from 'lucide-react';
 import { BackToServices } from '../components/BackToServices';
 
-const WA = 'https://wa.me/919876543210';
+const WA = 'https://wa.me/919769721010';
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = {
@@ -206,7 +206,7 @@ function ServicesSection() {
 
                 {/* image */}
                 <motion.div variants={fadeUp} className="relative overflow-hidden" style={{ minHeight:'340px' }}>
-                  <img src={svc.img} alt={svc.title} className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                  <img src={svc.img} alt={svc.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
                   <div className="absolute inset-0" style={{ background:'linear-gradient(135deg,rgba(181,168,200,0.08) 0%,transparent 60%)' }} />
                 </motion.div>
               </Reveal>
@@ -450,14 +450,32 @@ function CTA() {
         <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 mt-4">
           <a href={WA} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background:'#B5A8C8', color:'#0a0a0a', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
+            style={{ background:'#128C7E', color:'#ffffff', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
             <MessageCircle size={15} /> WhatsApp to Start
           </a>
-          <Link to="/contact"
-            className="px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background:'rgba(255,255,255,0.06)', color:'white', border:'1px solid rgba(255,255,255,0.14)', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
-            Request Free Sample
-          </Link>
+          <Link
+  to="/contact"
+  className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+  style={{
+    background: "rgba(20,20,20,0.65)",
+    backdropFilter: "blur(12px)",
+    color: "#ffffff",
+    border: "1px solid rgba(255,255,255,0.35)",
+    fontFamily: "var(--font-heading)",
+    letterSpacing: "0.05em",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.background = "rgba(92, 86, 86, 0.65)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+  }}
+>
+  Get a Proposal
+</Link>
         </motion.div>
       </Reveal>
     </section>

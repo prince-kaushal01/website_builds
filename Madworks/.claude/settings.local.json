@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "WebFetch(domain:mixkit.co)"
+      "WebFetch(domain:mixkit.co)",
+      "WebFetch(domain:www.pixotell.com)"
     ]
   }
 }

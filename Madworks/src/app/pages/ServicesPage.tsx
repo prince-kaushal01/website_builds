@@ -32,7 +32,7 @@ const services = [
     description:
       'From the first look to the final farewell, we craft complete wedding narratives — spanning multiple days, rituals, and emotions.',
     items: ['Cinematic Films', 'Traditional Coverage', 'Pre-Wedding Shoots', 'Destination Weddings', 'Drone Coverage', 'Wedding Albums'],
-    bg: 'https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600',
+    bg: '/images/Copy of DSC07602.webp',
     video: 'https://assets.mixkit.co/videos/preview/mixkit-couple-dancing-at-their-wedding-42-large.mp4',
     accent: '#C8A96A',
     link: '/wedding',
@@ -93,6 +93,7 @@ const services = [
 
 /* ─── Hero slideshow data ─── */
 const heroSlides = [
+  { type: 'image' as const, src: '/images/DSC05533.webp' },
   { type: 'image' as const, src: 'https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
   { type: 'image' as const, src: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
   { type: 'video' as const, src: 'https://assets.mixkit.co/videos/preview/mixkit-couple-dancing-at-their-wedding-42-large.mp4', poster: 'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920' },
@@ -454,7 +455,7 @@ export function ServicesPage() {
       {services.map((svc, i) => (
         <div key={svc.id}>
           <ServiceBlock svc={svc} index={i} />
-          {i === 1 && <MosaicStrip images={mosaicImages} />}
+          {i === 0 && <MosaicStrip images={mosaicImages} />}
         </div>
       ))}
 

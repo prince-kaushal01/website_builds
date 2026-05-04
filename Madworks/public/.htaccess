@@ -1,0 +1,45 @@
+# ── SPA routing ──────────────────────────────────────────────
+# Send all non-file requests to index.html so React Router works
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ── Video MIME types ──────────────────────────────────────────
+# Without these, Apache serves mp4 as octet-stream and browsers refuse to play
+AddType video/mp4         .mp4
+AddType video/webm        .webm
+AddType video/ogg         .ogv
+
+# ── Video streaming (byte-range requests) ────────────────────
+# Required so browsers can seek/stream videos rather than downloading whole file
+<IfModule mod_headers.c>
+  <FilesMatch "\.(mp4|webm|ogv)$">
+    Header set Accept-Ranges bytes
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+</IfModule>
+
+# ── Image MIME types ─────────────────────────────────────────
+AddType image/webp        .webp
+AddType image/svg+xml     .svg
+
+# ── Compression ──────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+
+# ── Browser caching for static assets ────────────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 month"
+  ExpiresByType image/png                 "access plus 1 month"
+  ExpiresByType image/webp                "access plus 1 month"
+  ExpiresByType video/mp4                 "access plus 1 month"
+</IfModule>

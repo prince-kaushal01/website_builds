@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Play, ArrowRight, Utensils, Layers, Camera, Wind, MessageCircle } from 'lucide-react';
 import { BackToServices } from '../components/BackToServices';
 
-const WA = 'https://wa.me/919876543210';
+const WA = 'https://wa.me/919769721010';
 const ACCENT = '#A8C5B5';
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -149,7 +149,7 @@ function ShowcaseGallery() {
           <Reveal className="md:col-span-2 row-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
             <motion.div variants={fadeUp} className="w-full h-full">
               <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1200"
-                alt="Resort pool" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                alt="Resort pool" loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0" style={{ background: 'linear-gradient(to top,rgba(5,5,5,0.75) 0%,transparent 55%)' }} />
               <div className="absolute bottom-6 left-6">
                 <p className="text-xs tracking-widest uppercase mb-1" style={{ color: ACCENT }}>Udaipur, Rajasthan</p>
@@ -166,7 +166,7 @@ function ShowcaseGallery() {
           ].map(item => (
             <Reveal key={item.title} className="relative rounded-2xl overflow-hidden group cursor-pointer">
               <motion.div variants={fadeUp} className="w-full h-full">
-                <img src={item.img} alt={item.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+                <img src={item.img} alt={item.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
                 <div className="absolute inset-0" style={{ background: 'linear-gradient(to top,rgba(5,5,5,0.72) 0%,transparent 55%)' }} />
                 <div className="absolute bottom-4 left-4">
                   <p className="text-[10px] tracking-widest uppercase mb-0.5" style={{ color: ACCENT }}>{item.loc}</p>
@@ -211,7 +211,7 @@ function FoodSection() {
             { img: 'https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', tall: false },
           ].map((img, i) => (
             <motion.div key={i} variants={fadeUp} className="rounded-2xl overflow-hidden group" style={{ height: img.tall ? '380px' : '180px' }}>
-              <img src={img.img} alt="" className="w-full h-full object-cover hover:scale-106 transition-transform duration-700" />
+              <img src={img.img} alt="" loading="lazy" className="w-full h-full object-cover hover:scale-106 transition-transform duration-700" />
             </motion.div>
           ))}
         </Reveal>
@@ -298,14 +298,32 @@ function CTA() {
         <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 mt-4">
           <a href={WA} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: ACCENT, color: '#0a0a0a', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
+            style={{ background: '#128C7E', color: '#ffffff', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
             <MessageCircle size={15} /> WhatsApp Us
           </a>
-          <Link to="/contact"
-            className="px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background: 'rgba(255,255,255,0.06)', color: 'white', border: '1px solid rgba(255,255,255,0.14)', fontFamily: 'var(--font-heading)', letterSpacing: '0.05em' }}>
-            Get a Proposal
-          </Link>
+          <Link
+  to="/contact"
+  className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+  style={{
+    background: "rgba(20,20,20,0.65)",
+    backdropFilter: "blur(12px)",
+    color: "#ffffff",
+    border: "1px solid rgba(255,255,255,0.35)",
+    fontFamily: "var(--font-heading)",
+    letterSpacing: "0.05em",
+    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.background = "rgba(102, 91, 91, 0.65)";
+    e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+  }}
+>
+  Get a Proposal
+</Link>
         </motion.div>
       </Reveal>
     </section>

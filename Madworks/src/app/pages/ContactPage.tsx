@@ -6,10 +6,15 @@ const WA = 'https://wa.me/919769721010?text=Hi%20Madworks%2C%20I%27d%20like%20to
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const contactDetails = [
-  { icon: Phone,        label: 'Phone',     value: '+91 97697 21010' },
-  { icon: MessageCircle,label: 'WhatsApp',  value: 'Chat with us'   },
-  { icon: Mail,         label: 'Email',     value: 'hello@madworks.in' },
-  { icon: MapPin,       label: 'Based in',  value: 'Mumbai, India — shooting globally' },
+  { icon: Phone,        label: 'Phone',     value: '+91 97697 21010',          href: undefined },
+  { icon: MessageCircle,label: 'WhatsApp',  value: 'Chat with us',             href: undefined },
+  { icon: Mail,         label: 'Email',     value: 'manager@madworksvideo.com', href: undefined },
+  {
+    icon: MapPin,
+    label: 'Address',
+    value: 'Ganesh Chowk, Shop no. 110, First Floor, Patil Arcade, Badlapur, Maharashtra 421503',
+    href: 'https://share.google/B3mDKVTe3jlzVnmjP',
+  },
 ];
 
 export function ContactPage() {
@@ -33,7 +38,7 @@ export function ContactPage() {
     setLoading(true);
     setSendError(false);
     try {
-      const res = await fetch('/.netlify/functions/contact', {
+      const res = await fetch('/contact.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
@@ -107,7 +112,7 @@ export function ContactPage() {
             transition={{ duration: 0.9, delay: 0.7 }}
             className="flex flex-col gap-4"
           >
-            {contactDetails.map(({ icon: Icon, label, value }) => (
+            {contactDetails.map(({ icon: Icon, label, value, href }) => (
               <div key={label} className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                   style={{ background: 'rgba(200,169,106,0.15)', border: '1px solid rgba(200,169,106,0.3)' }}>
@@ -115,7 +120,11 @@ export function ContactPage() {
                 </div>
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] mb-0.5" style={{ color: 'rgba(255,255,255,0.3)' }}>{label}</p>
-                  <p className="text-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>{value}</p>
+                  {href ? (
+                    <a href={href} target="_blank" rel="noopener noreferrer" className="text-sm hover:text-[var(--accent-gold)] transition-colors" style={{ color: 'rgba(255,255,255,0.75)' }}>{value}</a>
+                  ) : (
+                    <p className="text-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>{value}</p>
+                  )}
                 </div>
               </div>
             ))}
@@ -130,7 +139,7 @@ export function ContactPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.9 }}
             className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full text-sm font-medium w-fit transition-all hover:scale-105"
-            style={{ background: 'rgba(37,211,102,0.12)', color: '#25D366', border: '1px solid rgba(37,211,102,0.3)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
+            style={{ background: '#128C7E', color: '#ffffff', border: '1px solid rgba(18,140,126,0.5)', fontFamily: 'var(--font-heading)', letterSpacing: '0.04em' }}
           >
             <MessageCircle size={15} />
             WhatsApp Us Directly

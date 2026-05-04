@@ -1,10 +1,10 @@
-import { useRef, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'motion/react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Play, ArrowRight, Zap, TrendingUp, Target, Clock, CheckCircle, MessageCircle } from 'lucide-react';
+import { ArrowRight, Zap, TrendingUp, Target, Clock, CheckCircle, MessageCircle, Volume2 } from 'lucide-react';
 import { BackToServices } from '../components/BackToServices';
 
-const WA = 'https://wa.me/919876543210';
+const WA = 'https://wa.me/919769721010';
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = {
@@ -66,7 +66,6 @@ function Hero() {
           30–40 second cinematic reels and brand campaigns that stop the scroll, build trust, and drive real results.
         </motion.p>
 
-        {/* industry tags */}
         <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
           transition={{ duration:0.8, delay:0.75 }} className="flex flex-wrap justify-center gap-2 mb-8">
           {words.map(w => (
@@ -124,7 +123,7 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Dish hero shots','Kitchen process','Chef profiles','Menu campaign films'],
     big: false,
-    video: '/videos/fine.mp4',
+    video: '/videos/Fine.mp4',
   },
   {
     title:'Corporate & Brand',
@@ -133,7 +132,7 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Brand identity films','Company culture','Product launches','Event coverage'],
     big: false,
-    video: '/videos/corporate.mp4',
+    video: '/videos/Corporate.mp4',
   },
   {
     title:'Fashion & Jewellery',
@@ -142,51 +141,9 @@ const adTypes = [
     img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     items:['Lookbook shoots','Product reels','Campaign films','Social cutdowns'],
     big: false,
-    video: '/videos/fashion.mp4',
+    video: '/videos/Fashion.mp4',
   },
 ];
-
-function CommercialVideoCard({ ad }: { ad: typeof adTypes[0] }) {
-  const [playing, setPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  return (
-    <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden group cursor-pointer">
-      {!playing ? (
-        <>
-          <img src={ad.img} alt={ad.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
-          <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.85) 0%,rgba(5,5,5,0.15) 60%,transparent 100%)' }} />
-          <button
-            onClick={() => setPlaying(true)}
-            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
-            aria-label={`Play ${ad.title}`}
-          >
-            <div className="w-12 h-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
-              style={{ background:'rgba(212,149,106,0.85)' }}>
-              <Play size={18} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'2px' }} />
-            </div>
-          </button>
-          <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
-            <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color:'#D4956A' }}>{ad.sub}</p>
-            <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'18px' }}>{ad.title}</p>
-          </div>
-          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px]"
-            style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.5)' }}>{ad.dur}</div>
-        </>
-      ) : (
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          controls
-          className="w-full h-full object-cover"
-        >
-          <source src={ad.video} type="video/mp4" />
-        </video>
-      )}
-    </motion.div>
-  );
-}
 
 function AdTypesGrid() {
   return (
@@ -211,7 +168,7 @@ function AdTypesGrid() {
           {adTypes.filter(a => a.big).map(ad => (
             <motion.div key={ad.title} variants={fadeUp}
               className="md:col-span-2 relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src={ad.img} alt={ad.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src={ad.img} alt={ad.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0" style={{ background:'linear-gradient(to right,rgba(5,5,5,0.92) 0%,rgba(5,5,5,0.4) 60%,transparent 100%)' }} />
               <div className="absolute inset-y-0 left-0 flex flex-col justify-end p-8 max-w-[360px]">
                 <span className="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest mb-4 self-start"
@@ -234,7 +191,7 @@ function AdTypesGrid() {
           {adTypes.filter(a => !a.big).slice(0,1).map(ad => (
             <motion.div key={ad.title} variants={fadeUp}
               className="relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src={ad.img} alt={ad.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+              <img src={ad.img} alt={ad.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
               <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.88) 0%,rgba(5,5,5,0.1) 60%,transparent 100%)' }} />
               <div className="absolute bottom-5 left-5 right-5">
                 <p className="text-[10px] uppercase tracking-widest mb-1" style={{ color:'#D4956A' }}>{ad.sub}</p>
@@ -246,10 +203,20 @@ function AdTypesGrid() {
           ))}
         </Reveal>
 
-        {/* remaining 3 small cards — click to play */}
+        {/* remaining small static image cards */}
         <Reveal className="grid md:grid-cols-3 gap-4 mt-4" style={{ gridAutoRows:'260px' }}>
           {adTypes.filter(a => !a.big).slice(1).map(ad => (
-            <CommercialVideoCard key={ad.title} ad={ad} />
+            <motion.div key={ad.title} variants={fadeUp}
+              className="relative rounded-2xl overflow-hidden group cursor-pointer">
+              <img src={ad.img} alt={ad.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+              <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.85) 0%,rgba(5,5,5,0.15) 60%,transparent 100%)' }} />
+              <div className="absolute bottom-4 left-4 right-4 pointer-events-none">
+                <p className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color:'#D4956A' }}>{ad.sub}</p>
+                <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'18px' }}>{ad.title}</p>
+              </div>
+              <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px]"
+                style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.5)' }}>{ad.dur}</div>
+            </motion.div>
           ))}
         </Reveal>
       </div>
@@ -334,80 +301,133 @@ function ProcessSection() {
   );
 }
 
-/* ── REEL SHOWCASE ── */
+/* ── REEL SHOWCASE (homepage-style carousel) ── */
 const reels = [
-  { title:'GlowUp Skincare',  sub:'Instagram Campaign', img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/skincare.mp4' },
-  { title:'Aurelia Jewels',   sub:'Lookbook Film',      img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:45', video:'/videos/jwellery2.mp4' },
-  { title:'Mango Beverages',  sub:'Brand Reel',         img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'/videos/beverage.mp4' },
-  { title:'SmilePlus Dental', sub:'Patient Journey',    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:40', video:'/videos/dental.mp4' },
+  { title:'GlowUp Skincare',  sub:'Instagram Campaign', img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/Skincare.mp4',            tag:'Beauty'     },
+  { title:'Aurelia Jewels',   sub:'Lookbook Film',      img:'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:45', video:'/videos/Jwellery2.mp4',           tag:'Retail'     },
+  { title:'Mango Beverages',  sub:'Brand Reel',         img:'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'/videos/Beverage.mp4',             tag:'F&B'        },
+  { title:'SmilePlus Dental', sub:'Patient Journey',    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:40', video:'/videos/Dental.mp4',              tag:'Healthcare' },
+  { title:'BBQ Lounge',       sub:'Food & Beverage Reel', img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/Lofi%20Bbq%201%20V2.mp4', tag:'F&B'        },
+  { title:'Omkar Brand',      sub:'Brand Campaign',     img:'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:25', video:'/videos/Omkar%20Test%20V2.mp4',    tag:'Brand'      },
+  { title:'Commercial Reel',  sub:'Brand Identity',     img:'https://images.unsplash.com/photo-1557804506-669a67965ba0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/Reel%2001.mp4',            tag:'Commercial' },
+  { title:'Cinematic Reel',   sub:'Brand Campaign',     img:'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:30', video:'/videos/Reel%2002.mp4',            tag:'Commercial' },
+  { title:'Skin Agency',      sub:'Beauty Campaign',    img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'0:28', video:'/videos/Skin%20Agency%20V6.mp4',  tag:'Beauty'     },
 ];
 
-function ReelVideoCard({ r }: { r: typeof reels[0] }) {
-  const [playing, setPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+function CarouselCard({ reel, isVisible }: { reel: typeof reels[0]; isVisible: boolean }) {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [muted, setMuted] = useState(true);
+
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    if (isVisible) {
+      vid.muted = true;
+      vid.play().catch(() => {});
+    } else {
+      vid.muted = true;
+      vid.pause();
+      vid.currentTime = 0;
+      setMuted(true);
+    }
+  }, [isVisible]);
+
+  const toggleMute = () => {
+    const vid = videoRef.current;
+    if (!vid) return;
+    const next = !muted;
+    vid.muted = next;
+    setMuted(next);
+  };
 
   return (
-    <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ aspectRatio:'9/14' }}>
-      {!playing ? (
-        <>
-          <img src={r.img} alt={r.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
-          <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.9) 0%,rgba(5,5,5,0.1) 60%,transparent 100%)' }} />
-          <button
-            onClick={() => setPlaying(true)}
-            className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
-            aria-label={`Play ${r.title}`}
-          >
-            <motion.div className="w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ background:'rgba(212,149,106,0)', border:'1.5px solid rgba(212,149,106,0.5)' }}
-              whileHover={{ background:'rgba(212,149,106,0.9)', border:'1.5px solid transparent' }}
-              transition={{ duration:0.25 }}>
-              <Play size={20} color="rgba(212,149,106,0.9)" style={{ marginLeft:'3px' }} />
-            </motion.div>
-          </button>
-          <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-[10px] pointer-events-none"
-            style={{ background:'rgba(5,5,5,0.6)', backdropFilter:'blur(6px)', color:'rgba(255,255,255,0.55)' }}>{r.dur}</div>
-          <div className="absolute bottom-4 left-4 pointer-events-none">
-            <p style={{ color:'#D4956A', fontSize:'10px', textTransform:'uppercase', letterSpacing:'0.18em', marginBottom:'2px' }}>{r.sub}</p>
-            <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'17px' }}>{r.title}</p>
-          </div>
-        </>
-      ) : (
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          controls
-          className="w-full h-full object-cover"
-        >
-          <source src={r.video} type="video/mp4" />
-        </video>
-      )}
-    </motion.div>
+    <div
+      className="min-w-full md:min-w-[25%] relative rounded-2xl overflow-hidden group cursor-pointer"
+      style={{ aspectRatio: '9/14' }}
+      onClick={toggleMute}
+    >
+      <video ref={videoRef} loop playsInline preload="metadata" muted className="w-full h-full object-cover">
+        <source src={reel.video} type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-300" />
+
+      {/* mute hint */}
+      <div className="absolute top-4 left-4 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="w-7 h-7 rounded-full flex items-center justify-center" style={{ background: 'rgba(212,149,106,0.85)' }}>
+          <Volume2 size={13} color="#0a0a0a" />
+        </div>
+        <span className="text-[10px] text-white/70">{muted ? 'tap for sound' : 'tap to mute'}</span>
+      </div>
+
+      <div className="absolute top-4 right-4 px-2 py-1 text-[10px] rounded-full bg-black/70 text-white/70">{reel.dur}</div>
+      <div className="absolute bottom-4 left-4 right-4">
+        <p className="text-[10px] uppercase tracking-widest mb-1" style={{ color:'#D4956A' }}>{reel.sub}</p>
+        <p className="text-white text-sm font-medium">{reel.title}</p>
+      </div>
+    </div>
   );
 }
 
 function ReelShowcase() {
+  const [index, setIndex] = useState(0);
+  const visible = 4;
+  const extended = [...reels, ...reels];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % reels.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'var(--deep-green)' }}>
       <div className="max-w-[1280px] mx-auto">
+
+        {/* HEADER */}
         <Reveal className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 gap-4">
           <div>
             <Label>Recent Work</Label>
-            <motion.h2 variants={fadeUp} className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.5vw,48px)', lineHeight:1.1 }}>
+            <motion.h2 variants={fadeUp} className="text-white"
+              style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(28px,3.5vw,48px)', lineHeight:1.1 }}>
               Ads We're Proud Of
             </motion.h2>
           </div>
           <motion.div variants={fadeUp}>
             <Link to="/portfolio" className="flex items-center gap-2 text-sm group" style={{ color:'#D4956A' }}>
-              All Commercial Work <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              All Commercial Work
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
         </Reveal>
-        <Reveal className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {reels.map(r => (
-            <ReelVideoCard key={r.title} r={r} />
+
+        {/* Mobile: native touch scroll snap */}
+        <div
+          className="md:hidden -mx-4 flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 px-4"
+          style={{ scrollbarWidth: 'none' }}
+        >
+          {reels.map((r, i) => (
+            <div key={i} className="snap-start shrink-0 w-[56vw]">
+              <CarouselCard reel={r} isVisible={true} />
+            </div>
           ))}
-        </Reveal>
+        </div>
+
+        {/* Desktop: auto-sliding framer motion carousel */}
+        <div className="hidden md:block overflow-hidden">
+          <motion.div
+            className="flex gap-4"
+            animate={{ x: `-${index * 25}%` }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {extended.map((r, i) => {
+              const realIndex = i % reels.length;
+              const isVisible = realIndex >= index && realIndex < index + visible;
+              return <CarouselCard key={i} reel={r} isVisible={isVisible} />;
+            })}
+          </motion.div>
+        </div>
+
       </div>
     </section>
   );
@@ -442,7 +462,7 @@ function WhatIsIncluded() {
         <Reveal>
           <motion.div variants={fadeUp} className="relative rounded-3xl overflow-hidden" style={{ aspectRatio:'4/5' }}>
             <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900"
-              alt="Commercial shoot" className="w-full h-full object-cover" />
+              alt="Commercial shoot" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.5) 0%,transparent 60%)' }} />
           </motion.div>
         </Reveal>
@@ -467,13 +487,31 @@ function CTA() {
         <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 mt-4">
           <a href={WA} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background:'#D4956A', color:'#0a0a0a', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
+            style={{ background:'#128C7E', color:'#ffffff', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
             <MessageCircle size={15} /> WhatsApp Us Now
           </a>
-          <Link to="/contact"
-            className="px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background:'rgba(255,255,255,0.06)', color:'white', border:'1px solid rgba(255,255,255,0.14)', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
-            Request a Proposal
+          <Link
+            to="/contact"
+            className="px-8 py-4 rounded-full text-sm font-medium transition-all duration-300 hover:scale-105 hover:-translate-y-[1px]"
+            style={{
+              background: "rgba(20,20,20,0.65)",
+              backdropFilter: "blur(12px)",
+              color: "#ffffff",
+              border: "1px solid rgba(255,255,255,0.35)",
+              fontFamily: "var(--font-heading)",
+              letterSpacing: "0.05em",
+              boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "rgba(255,255,255,0.12)";
+              e.currentTarget.style.border = "1px solid rgba(255,255,255,0.6)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "rgba(103, 96, 96, 0.65)";
+              e.currentTarget.style.border = "1px solid rgba(255,255,255,0.35)";
+            }}
+          >
+            Get a Proposal
           </Link>
         </motion.div>
       </Reveal>

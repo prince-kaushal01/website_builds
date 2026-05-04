@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Play, ArrowRight, Heart, Camera, Film, Globe, Layers, BookOpen, MessageCircle } from 'lucide-react';
 import { BackToServices } from '../components/BackToServices';
 
-const WA = 'https://wa.me/919876543210';
+const WA = 'https://wa.me/919769721010';
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const fadeUp = {
@@ -32,6 +32,7 @@ function Label({ children }: { children: React.ReactNode }) {
 }
 
 /* ── HERO ── */
+/* ── HERO ── */
 function Hero() {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
@@ -40,56 +41,54 @@ function Hero() {
   const textY = useTransform(scrollYProgress, [0,1], ['0%','14%']);
 
   return (
-    <section ref={ref} className="relative h-screen overflow-hidden flex items-center justify-center">
-      <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
+    <section ref={ref} className="relative min-h-[100svh] h-screen overflow-hidden flex items-center justify-center">
+      <motion.div className="absolute inset-0 md:scale-110" style={{ y: imgY }}>
         <video autoPlay muted loop playsInline className="w-full h-full object-cover"
-          poster="https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920">
-          <source src="https://assets.mixkit.co/videos/preview/mixkit-wedding-ceremony-with-guests-3891-large.mp4" type="video/mp4" />
+          poster="/images/DSC09533.webp">
+          <source src="/videos/Wedding5.mp4" type="video/mp4" />
         </video>
       </motion.div>
+
       <div className="absolute inset-0 z-10" style={{ background:'linear-gradient(to bottom,rgba(5,5,5,.6) 0%,rgba(5,5,5,.2) 45%,rgba(5,5,5,.9) 100%)' }} />
 
-      <motion.div style={{ y: textY, opacity: fade }} className="relative z-20 text-center px-6 max-w-[860px]">
-        <motion.p initial={{ opacity:0, letterSpacing:'0.55em' }} animate={{ opacity:1, letterSpacing:'0.3em' }}
-          transition={{ duration:1.5, delay:0.2 }} className="uppercase text-xs mb-5 tracking-[0.3em]" style={{ color:'var(--accent-gold)' }}>
-          Wedding Production
-        </motion.p>
-        <motion.h1 initial={{ opacity:0, y:60 }} animate={{ opacity:1, y:0 }}
-          transition={{ duration:1.1, delay:0.4, ease }} className="text-white mb-6"
-          style={{ fontFamily:'var(--font-heading)', fontSize:'clamp(46px,7.5vw,96px)', lineHeight:0.95, letterSpacing:'-0.025em' }}>
+      <motion.div style={{ y: textY, opacity: fade }} className="relative z-20 text-center px-4 sm:px-6 max-w-[860px]">
+        
+        <motion.h1
+          className="text-white mb-6"
+          style={{
+            fontFamily:'var(--font-heading)',
+            fontSize:'clamp(32px,8vw,96px)',
+            lineHeight:0.95
+          }}
+        >
           Every Love Story
           <br />
           <span style={{ color:'var(--accent-gold)', fontStyle:'italic' }}>Deserves a Film.</span>
         </motion.h1>
-        <motion.p initial={{ opacity:0, y:28 }} animate={{ opacity:1, y:0 }}
-          transition={{ duration:0.9, delay:0.65, ease }} className="text-white/50 mb-10 mx-auto"
-          style={{ fontSize:'clamp(14px,1.4vw,17px)', lineHeight:1.85, maxWidth:'480px' }}>
-          Cinematic wedding films, pre-wedding shoots, and destination coverage — for couples who want their day preserved as art.
+
+        <motion.p
+          className="text-white/50 mb-10 mx-auto"
+          style={{ fontSize:'clamp(13px,3.5vw,17px)', maxWidth:'480px' }}
+        >
+          Cinematic wedding films, pre-wedding shoots, and destination coverage.
         </motion.p>
-        <motion.div initial={{ opacity:0, y:22 }} animate={{ opacity:1, y:0 }}
-          transition={{ duration:0.8, delay:0.85, ease }} className="flex flex-wrap items-center justify-center gap-3">
-          <a href={WA} target="_blank" rel="noreferrer"
-            className="flex items-center gap-2 px-8 py-3.5 rounded-full text-sm font-medium cursor-pointer transition-all hover:scale-105"
-            style={{ background:'var(--accent-gold)', color:'#0a0a0a', fontFamily:'var(--font-heading)', letterSpacing:'0.04em' }}>
-            <MessageCircle size={15} /> Book Your Date
+
+        <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a href={WA} target="_blank"
+            className="px-6 py-3 rounded-full text-sm"
+            style={{ background:'var(--accent-gold)', color:'#0a0a0a' }}>
+            Book Your Date
           </a>
+
           <Link to="/portfolio"
-            className="px-8 py-3.5 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background:'rgba(255,255,255,0.07)', color:'white', border:'1px solid rgba(255,255,255,0.18)', fontFamily:'var(--font-heading)', letterSpacing:'0.04em' }}>
+            className="px-6 py-3 rounded-full text-sm border border-white/20 text-white">
             View Portfolio
           </Link>
         </motion.div>
       </motion.div>
-
-      <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.4 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20">
-        <motion.div animate={{ y:[0,9,0] }} transition={{ repeat:Infinity, duration:1.8, ease:'easeInOut' }}
-          style={{ width:'1px', height:'44px', background:'linear-gradient(to bottom,rgba(200,169,106,0.9),transparent)' }} />
-      </motion.div>
     </section>
   );
 }
-
 /* ── STATS BAR ── */
 const stats = [
   { value:'500+', label:'Weddings Filmed'  },
@@ -100,8 +99,7 @@ const stats = [
 function StatsBar() {
   return (
     <div className="py-7 px-6" style={{ backgroundColor:'var(--accent-gold)' }}>
-      <div className="max-w-[1200px] mx-auto flex flex-wrap items-center justify-center gap-x-14 gap-y-4">
-        {stats.map(s => (
+<div className="max-w-[1200px] mx-auto flex flex-wrap items-center justify-center gap-x-6 md:gap-x-14 gap-y-4">        {stats.map(s => (
           <div key={s.label} className="text-center text-white">
             <p style={{ fontFamily:'var(--font-heading)', fontSize:'30px', lineHeight:1 }}>{s.value}</p>
             <p className="text-white/75 text-xs mt-1 tracking-widest uppercase">{s.label}</p>
@@ -152,22 +150,56 @@ function ServicePillars() {
 }
 
 /* ── FEATURED FILM SHOWCASE ── */
-const smallFilms = [
-  { title:'Meera & Raj',   loc:'Jaipur Heritage',  img:'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'3:18', video:'/videos/wedding3.mp4' },
-  { title:'Sarah & James', loc:'Santorini, Greece', img:'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700', dur:'5:02', video:'/videos/wedding2.mp4' },
-  { title:'Kavya & Rohan', loc:'Goa Beach',         img:'https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=700',  dur:'4:47', video:'/videos/wedding4.mp4' },
+type FilmData = {
+  title: string;
+  loc: string;
+  img: string;
+  dur: string;
+  video?: string;
+  youtubeId?: string;
+};
+
+const FEATURED_YOUTUBE_ID = 'Oi3rAdX9PNY';
+
+const smallFilms: FilmData[] = [
+  { title:'Wedding Film', loc:'Madworks Production', img:'https://img.youtube.com/vi/2r5cD_3m2Cs/maxresdefault.jpg',  dur:'', youtubeId:'2r5cD_3m2Cs' },
+  { title:'Wedding Film', loc:'Madworks Production', img:'https://img.youtube.com/vi/_tFSHjqkDlw/maxresdefault.jpg',  dur:'', youtubeId:'_tFSHjqkDlw' },
+  { title:'Wedding Film', loc:'Madworks Production', img:'https://img.youtube.com/vi/l7HTFpLMM44/maxresdefault.jpg',  dur:'', youtubeId:'l7HTFpLMM44' },
 ];
 
-function WeddingFilmCard({ f }: { f: typeof smallFilms[0] }) {
+function YtEmbed({ id, aspect = '4/3' }: { id: string; aspect?: string }) {
+  return (
+    <iframe
+      src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&iv_load_policy=3`}
+      allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+      allowFullScreen
+      className="absolute inset-0 w-full h-full border-0"
+      style={{ aspectRatio: aspect }}
+    />
+  );
+}
+
+function WeddingFilmCard({ f }: { f: FilmData }) {
   const [playing, setPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const thumbnail = f.youtubeId
+    ? `https://img.youtube.com/vi/${f.youtubeId}/maxresdefault.jpg`
+    : f.img;
 
   return (
     <motion.div variants={fadeUp} className="relative rounded-2xl overflow-hidden" style={{ aspectRatio:'4/3' }}>
-      {!playing ? (
+      {playing && f.youtubeId ? (
+        <div className="relative w-full h-full">
+          <YtEmbed id={f.youtubeId} />
+        </div>
+      ) : playing && f.video ? (
+        <video autoPlay playsInline controls className="w-full h-full object-cover">
+          <source src={f.video} type="video/mp4" />
+        </video>
+      ) : (
         <>
-          <img src={f.img} alt={f.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
-          <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.5)' }} />
+          <img src={thumbnail} alt={f.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700" />
+          <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.45)' }} />
           <button
             onClick={() => setPlaying(true)}
             className="absolute inset-0 flex items-center justify-center w-full h-full cursor-pointer"
@@ -185,10 +217,6 @@ function WeddingFilmCard({ f }: { f: typeof smallFilms[0] }) {
             <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'16px' }}>{f.title}</p>
           </div>
         </>
-      ) : (
-        <video ref={videoRef} autoPlay playsInline controls className="w-full h-full object-cover">
-          <source src={f.video} type="video/mp4" />
-        </video>
       )}
     </motion.div>
   );
@@ -196,7 +224,6 @@ function WeddingFilmCard({ f }: { f: typeof smallFilms[0] }) {
 
 function FilmShowcase() {
   const [playing, setPlaying] = useState(false);
-  const featuredRef = useRef<HTMLVideoElement>(null);
 
   return (
     <section className="py-28 px-6 md:px-12" style={{ backgroundColor:'#060606' }}>
@@ -215,13 +242,19 @@ function FilmShowcase() {
           </motion.div>
         </Reveal>
 
-        {/* Featured film — wedding1 */}
+        {/* Featured film — YouTube */}
         <Reveal>
           <motion.div variants={fadeUp} className="relative rounded-3xl overflow-hidden mb-5" style={{ aspectRatio:'16/7' }}>
-            {!playing ? (
+            {playing ? (
+              <YtEmbed id={FEATURED_YOUTUBE_ID} aspect="16/7" />
+            ) : (
               <>
-                <img src="https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1600"
-                  alt="Feature film" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img
+                  src={`https://img.youtube.com/vi/${FEATURED_YOUTUBE_ID}/maxresdefault.jpg`}
+                  alt="Rutuja & Jitesh Wedding Highlight"
+                  loading="lazy"
+                  className="w-full h-full object-cover"
+                />
                 <div className="absolute inset-0" style={{ background:'rgba(5,5,5,0.45)' }} />
                 <button
                   onClick={() => setPlaying(true)}
@@ -232,17 +265,13 @@ function FilmShowcase() {
                     style={{ background:'rgba(200,169,106,0.9)', boxShadow:'0 0 60px rgba(200,169,106,0.4)' }}>
                     <Play size={28} fill="#0a0a0a" color="#0a0a0a" style={{ marginLeft:'4px' }} />
                   </motion.div>
-                  <p className="text-white/60 text-xs uppercase tracking-[0.25em]">Play Showreel · 4:32</p>
+                  <p className="text-white/60 text-xs uppercase tracking-[0.25em]">Play Highlight · 9:28</p>
                 </button>
                 <div className="absolute bottom-6 left-8 pointer-events-none">
                   <p className="text-white/40 text-xs tracking-widest uppercase mb-1">Featured Film</p>
-                  <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'24px' }}>Priya &amp; Aryan — Mumbai Palace Wedding</p>
+                  <p className="text-white" style={{ fontFamily:'var(--font-heading)', fontSize:'24px' }}>Rutuja &amp; Jitesh — Wedding Highlight</p>
                 </div>
               </>
-            ) : (
-              <video ref={featuredRef} autoPlay playsInline controls className="w-full h-full object-cover">
-                <source src="/videos/wedding1.mp4" type="video/mp4" />
-              </video>
             )}
           </motion.div>
         </Reveal>
@@ -275,11 +304,11 @@ function IndianSection() {
           </div>
           <motion.div variants={fadeUp} className="grid grid-cols-2 gap-3">
             {[
-              { img:'https://images.unsplash.com/photo-1686294588684-9607a670181c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', h:'280px' },
-              { img:'https://images.unsplash.com/photo-1520854221256-17451cc331bf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', h:'280px' },
+              { img:'/images/DSC08858.webp', h:'280px' },
+              { img:'/images/DSC01959.webp', h:'280px' },
             ].map((img, i) => (
               <div key={i} className="rounded-2xl overflow-hidden" style={{ height:img.h }}>
-                <img src={img.img} alt="Indian wedding" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                <img src={img.img} alt="Indian wedding" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
             ))}
           </motion.div>
@@ -287,15 +316,15 @@ function IndianSection() {
 
         {/* full-bleed horizontal gallery strip */}
         <Reveal>
-          <motion.div variants={fadeUp} className="grid grid-cols-4 gap-3 rounded-2xl overflow-hidden" style={{ height:'220px' }}>
+          <motion.div variants={fadeUp} className="grid grid-cols-4 gap-3 mt-5 rounded-2xl overflow-hidden" style={{ height:'220px' }}>
             {[
-              'https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
-              'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
-              'https://images.unsplash.com/photo-1533091090875-1ff4acc497dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
-              'https://images.unsplash.com/flagged/photo-1552981941-424aac2b4311?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=500',
+              '/images/DSC08858.webp',
+              '/images/DSC01230.webp',
+              '/images/DAV08752.webp',
+              '/images/DSC07158.webp',
             ].map((src, i) => (
               <div key={i} className="overflow-hidden rounded-xl">
-                <img src={src} alt="" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
+                <img src={src} alt="" loading="lazy" className="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
               </div>
             ))}
           </motion.div>
@@ -316,8 +345,8 @@ function DestinationSection() {
   return (
     <section ref={ref} className="relative overflow-hidden" style={{ height:'85vh' }}>
       <motion.div className="absolute inset-0 scale-110" style={{ y }}>
-        <img src="https://images.unsplash.com/photo-1617724975854-70b5d0cedb0a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
-          alt="Destination wedding" className="w-full h-full object-cover" />
+        <img src="/images/DSC07192.webp"
+          alt="Destination wedding" loading="lazy" className="w-full h-full object-cover" />
       </motion.div>
       <div className="absolute inset-0 z-10" style={{ background:'linear-gradient(to right,rgba(5,5,5,0.88) 0%,rgba(5,5,5,0.4) 60%,rgba(5,5,5,0.1) 100%)' }} />
 
@@ -358,13 +387,13 @@ function PreWeddingSection() {
         </Reveal>
         <Reveal className="grid md:grid-cols-[1fr_1.5fr_1fr] gap-4" style={{ gridAutoRows:'340px' }}>
           {[
-            { img:'https://images.unsplash.com/photo-1573676048035-9c2a72b6a12a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', label:'Golden Hour Portraits' },
-            { img:'https://images.unsplash.com/photo-1519741196428-6a2175fa2557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=900', label:'Destination Sessions'  },
-            { img:'https://images.unsplash.com/photo-1533091090875-1ff4acc497dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=600', label:'Intimate Detail Shots'  },
+            { img:'/images/Copy%20of%2028.webp', label:'Golden Hour Portraits' },
+            { img:'/images/DSC02888.webp',       label:'Destination Sessions'  },
+            { img:'/images/DSC00845.webp',       label:'Intimate Detail Shots'  },
           ].map(p => (
             <motion.div key={p.label} variants={fadeUp}
               className="relative rounded-2xl overflow-hidden group cursor-pointer">
-              <img src={p.img} alt={p.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
+              <img src={p.img} alt={p.label} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106" />
               <div className="absolute inset-0" style={{ background:'linear-gradient(to top,rgba(5,5,5,0.7) 0%,transparent 55%)' }} />
               <p className="absolute bottom-5 left-5 text-white text-sm" style={{ fontFamily:'var(--font-heading)' }}>{p.label}</p>
             </motion.div>
@@ -439,7 +468,7 @@ function Testimonials() {
               </div>
               <p className="flex-1 italic" style={{ color:'rgba(255,255,255,0.55)', fontSize:'15px', lineHeight:1.85 }}>"{t.text}"</p>
               <div className="flex items-center gap-3 pt-2" style={{ borderTop:'1px solid rgba(255,255,255,0.07)' }}>
-                <img src={t.img} alt={t.name} className="w-10 h-10 rounded-full object-cover" />
+                <img src={t.img} alt={t.name} loading="lazy" decoding="async" className="w-10 h-10 rounded-full object-cover" />
                 <div>
                   <p className="text-white text-sm" style={{ fontFamily:'var(--font-heading)' }}>{t.name}</p>
                   <p style={{ color:'var(--accent-gold)', fontSize:'11px', letterSpacing:'0.08em' }}>{t.project}</p>
@@ -470,7 +499,7 @@ function CTA() {
         <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-3 mt-4">
           <a href={WA} target="_blank" rel="noreferrer"
             className="flex items-center gap-2 px-8 py-4 rounded-full text-sm font-medium transition-all hover:scale-105"
-            style={{ background:'var(--accent-gold)', color:'#0a0a0a', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
+            style={{ background:'#128C7E', color:'#ffffff', fontFamily:'var(--font-heading)', letterSpacing:'0.05em' }}>
             <MessageCircle size={15} /> Book Now on WhatsApp
           </a>
           <Link to="/contact"
