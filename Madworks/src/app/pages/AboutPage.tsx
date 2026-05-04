@@ -28,14 +28,22 @@ const team = [
   {
     name: 'Aniket Patil',
     role: 'Founder & Creative Head',
+<<<<<<< HEAD
     img: FILLER_MALE,
+=======
+    img: '/images/aniket.jpeg',
+>>>>>>> ea7da798edf3d3cb686e75555a161e7004368459
     thought: 'Founder of Madworks since 2017, Aniket started his journey with international editing projects before stepping into full-scale production and shooting. With a strong creative vision and hands-on approach, he leads the team with a focus on storytelling, innovation, and high-quality visual experiences.',
     index: '01',
   },
   {
     name: 'Manali Patil',
     role: 'Creative Director & Co-Founder',
+<<<<<<< HEAD
     img: FILLER_FEMALE,
+=======
+    img: '/images/manali.jpeg',
+>>>>>>> ea7da798edf3d3cb686e75555a161e7004368459
     thought: 'Manali plays a key role in shaping the creative direction of Madworks. Beyond being a constant support system, she contributes through candid photography and overall creative guidance, ensuring every project carries a unique and refined touch.',
     index: '02',
   },
@@ -49,7 +57,11 @@ const team = [
   {
     name: 'Mahesh Suroshe',
     role: 'Cinematographer',
+<<<<<<< HEAD
     img: FILLER_MALE,
+=======
+    img: '/images/mahesh.jpeg',
+>>>>>>> ea7da798edf3d3cb686e75555a161e7004368459
     thought: 'Mahesh is a passionate cinematographer who strives for perfection in every frame. His ability to go the extra mile ensures that every visual captured meets the highest standards of quality and creativity.',
     index: '04',
   },
@@ -212,6 +224,7 @@ function MemberCard({ member, i }: { member: (typeof team)[0]; i: number }) {
         <img
           src={member.img}
           alt={member.name}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
         />
         {/* gold wash */}

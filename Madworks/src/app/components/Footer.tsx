@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Youtube, Mail, Phone } from 'lucide-react';
+import { Instagram, Facebook, Youtube, Mail, Phone, MapPin } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -13,8 +13,20 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-2">
             <Phone size={18} className="text-[var(--accent-gold)]" />
-            <a href="tel:+919876543210" className="hover:text-[var(--accent-gold)] transition-colors">
-              +91 98765 43210
+            <a href="tel:+919769721010" className="hover:text-[var(--accent-gold)] transition-colors">
+              +91 97697 21010
+            </a>
+          </div>
+          <div className="flex items-start gap-2">
+            <MapPin size={18} className="text-[var(--accent-gold)] mt-0.5 flex-shrink-0" />
+            <a
+              href="https://share.google/B3mDKVTe3jlzVnmjP"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[var(--accent-gold)] transition-colors text-sm leading-snug"
+            >
+              Ganesh Chowk, Shop no. 110, First Floor,<br />
+              Patil Arcade, Badlapur, Maharashtra 421503
             </a>
           </div>
         </div>
@@ -30,7 +42,7 @@ export function Footer() {
             <Instagram size={24} />
           </a>
           <a
-            href="https://facebook.com"
+            href="https://www.facebook.com/share/17DWd7NcMJ/?mibextid=wwXIfr"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[var(--accent-gold)] transition-colors"
@@ -39,7 +51,7 @@ export function Footer() {
             <Facebook size={24} />
           </a>
           <a
-            href="https://youtube.com"
+            href="https://www.youtube.com/@madworksvideoproduction8038"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[var(--accent-gold)] transition-colors"

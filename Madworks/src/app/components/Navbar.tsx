@@ -41,19 +41,15 @@ export function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 
-        ${isScrolled 
-          ? 'backdrop-blur-xs bg-white/70 dark:bg-black/60 border-b border-white/20 dark:border-white/10 shadow-sm' 
-          : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          isScrolled ? 'bg-white border-b border-black/10 shadow-sm' : 'bg-transparent'
         }`}
       >
         <div className="px-10 h-[72px] max-w-[1400px] mx-auto flex items-center justify-between">
 
           {/* Logo */}
           <div className="flex-1">
-            <Link
-              to="/"
-            >
+            <Link to="/">
               <img src={logo} className='md:h-52 w-44 -ml-7 md:ml-0'/>
             </Link>
           </div>
@@ -67,7 +63,9 @@ export function Navbar() {
                 className={`whitespace-nowrap text-sm transition-colors ${
                   location.pathname === link.path
                     ? 'text-[var(--accent-gold)]'
-                    : 'text-[var(--dark)] dark:text-white hover:text-[var(--accent-gold)]'
+                    : isScrolled
+                      ? 'text-[#1a1a1a] hover:text-[var(--accent-gold)]'
+                      : 'text-white hover:text-[var(--accent-gold)]'
                 }`}
               >
                 {link.name}
@@ -81,7 +79,7 @@ export function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-[var(--dark)] dark:text-white z-50"
+              className={`md:hidden z-50 ${isScrolled ? 'text-[#1a1a1a]' : 'text-white'}`}
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
